@@ -1,3 +1,6 @@
+var tailcall = require('./libs/tailcall.js');
+tailcall();
+
 var express = require('express');
 var https = require("https");
 var encoding = require('text-encoding');
