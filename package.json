@@ -7,11 +7,12 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node --harmony-tailcalls index.js"
   },
   "dependencies": {
     "ejs": "2.4.1",
-    "express": "4.13.3"
+    "express": "4.13.3",
+    "text-encoding": "0.6.0"
   },
   "repository": {
     "type": "git",
