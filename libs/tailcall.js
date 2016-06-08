@@ -1,11 +1,6 @@
-var log = require('npmlog');
-var semver = require('semver');
 var child_process = require('child_process');
 var path = require('path');
 var pkg = require(path.resolve(path.dirname(module.parent.filename), 'package'));
-
-log.heading = pkg.name;
-log.level = process.env.LOG_LEVEL || 'info';
 
 module.exports = function () {
     if (!~process.execArgv.indexOf('--harmony-tailcalls')) {
@@ -15,7 +10,6 @@ module.exports = function () {
                 cwd: process.cwd(),
                 stdio: 'inherit'
             });
-        console.log('Restarting with tailcalls!')
         while(1);
     }
 };
