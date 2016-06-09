@@ -411,14 +411,22 @@ var uniques = function (stream4) {
                throw "Unhandled case? This is a type error!";
            }
         };
+var _2a_ = rts.builtins.Prelude["*"];
+var parsePosInt = function (text2) {
+           return fold({stream: fromBytes(text2)
+                       ,initial: 0.0
+                       ,binop: function (local_99) {
+                          return _2b_({infixl: _2a_({infixl: local_99.acc,infixr: 10.0})
+                                      ,infixr: _2d_({infixl: local_99.item
+                                                    ,infixr: 48.0})});
+                       }});
+        };
 var iacTimeOfDayOrder = function (local_98) {
-           var parts1 = toArray(split({text1: local_98
-                                      ,seperator: rts.bytesFromAscii(" ")}));
-           var tod = item1({index: 1.0,object: parts1});
-           return toBytes(_23_({h: length(tod)
-                               ,t: function (local_99) {
-                                  return fromBytes(tod);
-                               }}));
+           return parsePosInt(item1({index: 0.0
+                                    ,object: toArray(split({text1: item1({index: 1.0
+                                                                         ,object: toArray(split({text1: local_98
+                                                                                                ,seperator: rts.bytesFromAscii(" ")}))})
+                                                           ,seperator: rts.bytesFromAscii(":")}))}));
         };
 var iacTablesCss = {root: rts.bytesFromAscii("<style>")
                    ,subTrees: arraySingle(htmlTextNode(rts.bytesFromAscii("th, td {\n    border: 1px solid black;\n}\n")))};
@@ -704,43 +712,71 @@ var formatHtml = function (tree) {
                                     }})
                        ,sep: rts.bytesFromAscii("")});
         };
-var __while1 = function (local_176) {
-           var x = local_176.iter(local_176.init);
+var _25_ = rts.builtins.Prelude["mod"];
+var _2f__2f_ = rts.builtins.Prelude["div"];
+var littleEndianDigits = function (local_147) {
+           var x = _3d__3d_({infixl: local_147.num1,infixr: 0.0});
+           switch (x.tag)
+           {
+             case "False":
+               var local_148 = x.data;
+               return _23_({h: _25_({infixl: local_147.num1,infixr: local_147.base})
+                           ,t: function (local_149) {
+                              return littleEndianDigits({base: local_147.base
+                                                        ,num1: _2f__2f_({infixl: local_147.num1
+                                                                        ,infixr: local_147.base})});
+                           }});
+             case "True":
+               var local_150 = x.data;
+               return {tag: "Empty",data: {}};
+             default:
+               throw "Unhandled case? This is a type error!";
+           }
+        };
+var showPosInt = function (num) {
+           return toBytes(map({stream: fromArray(reverse(littleEndianDigits({base: 10.0
+                                                                            ,num1: num})))
+                              ,mapping: function (local_151) {
+                                 return _2b_({infixl: local_151,infixr: 48.0});
+                              }}));
+        };
+var __while1 = function (local_184) {
+           var x = local_184.iter(local_184.init);
            switch (x.tag)
            {
              case "Continue":
-               var local_177 = x.data;
-               return __while1({iter: local_176.iter,init: local_177});
+               var local_185 = x.data;
+               return __while1({iter: local_184.iter,init: local_185});
              case "Done":
                return id(x.data);
              default:
                throw "Unhandled case? This is a type error!";
            }
         };
-var split1 = function (local_170) {
-           return __while1({iter: function (local_171) {
-                              var done = function (local_172) {
+var split1 = function (local_178) {
+           return __while1({iter: function (local_179) {
+                              var done = function (local_180) {
                                          return {tag: "Done"
-                                                ,data: {post: local_171.post
-                                                       ,pre: reverse(local_171.pre)}};
+                                                ,data: {post: local_179.post
+                                                       ,pre: reverse(local_179.pre)}};
                                       };
-                              var x = _3d__3d_({infixl: local_171.rem,infixr: 0.0});
+                              var x = _3d__3d_({infixl: local_179.rem,infixr: 0.0});
                               switch (x.tag)
                               {
                                 case "False":
-                                  var local_173 = x.data;
-                                  var x = local_171.post;
+                                  var local_181 = x.data;
+                                  var x = local_179.post;
                                   switch (x.tag)
                                   {
                                     case "NonEmpty":
-                                      var local_174 = x.data;
+                                      var local_182 = x.data;
                                       return {tag: "Continue"
-                                             ,data: {post: local_174.tail({})
-                                                    ,pre: _23_({h: local_174.head
-                                                               ,t: function (local_175) {
-                                                                  return local_171.pre;
+                                             ,data: {post: local_182.tail({})
+                                                    ,pre: _23_({h: local_182.head
+                                                               ,t: function (local_183) {
+                                                                  return local_179.pre;
                                                                }})
-                                                    ,rem: _2d_({infixl: local_171.rem
+                                                    ,rem: _2d_({infixl: local_179.rem
                                                                ,infixr: 1.0})}};
                                     case "Empty":
                                       return done(x.data);
@@ -753,81 +789,53 @@ var split1 = function (local_170) {
                                   throw "Unhandled case? This is a type error!";
                               }
                            }
-                           ,init: {post: local_170.stream9
+                           ,init: {post: local_178.stream9
                                   ,pre: {tag: "Empty",data: {}}
-                                  ,rem: local_170.at}});
+                                  ,rem: local_178.at}});
         };
-var groups1 = function (local_168) {
-           var x = local_168.stream8;
+var groups1 = function (local_176) {
+           var x = local_176.stream8;
            switch (x.tag)
            {
              case "NonEmpty":
-               var local_169 = x.data;
-               var local_178 = split1({stream9: local_168.stream8
-                                      ,at: local_168.ofLength});
-               return _23_({h: local_178.pre
-                           ,t: function (local_179) {
-                              return groups1({ofLength: local_168.ofLength
-                                             ,stream8: local_178.post});
+               var local_177 = x.data;
+               var local_186 = split1({stream9: local_176.stream8
+                                      ,at: local_176.ofLength});
+               return _23_({h: local_186.pre
+                           ,t: function (local_187) {
+                              return groups1({ofLength: local_176.ofLength
+                                             ,stream8: local_186.post});
                            }});
              case "Empty":
-               var local_180 = x.data;
-               return {tag: "Empty",data: {}};
-             default:
-               throw "Unhandled case? This is a type error!";
-           }
-        };
-var _25_ = rts.builtins.Prelude["mod"];
-var _2f__2f_ = rts.builtins.Prelude["div"];
-var littleEndianDigits = function (local_185) {
-           var x = _3d__3d_({infixl: local_185.num1,infixr: 0.0});
-           switch (x.tag)
-           {
-             case "False":
-               var local_186 = x.data;
-               return _23_({h: _25_({infixl: local_185.num1,infixr: local_185.base})
-                           ,t: function (local_187) {
-                              return littleEndianDigits({base: local_185.base
-                                                        ,num1: _2f__2f_({infixl: local_185.num1
-                                                                        ,infixr: local_185.base})});
-                           }});
-             case "True":
                var local_188 = x.data;
                return {tag: "Empty",data: {}};
              default:
                throw "Unhandled case? This is a type error!";
            }
         };
-var showPosInt = function (num) {
-           return toBytes(map({stream: fromArray(reverse(littleEndianDigits({base: 10.0
-                                                                            ,num1: num})))
-                              ,mapping: function (local_189) {
-                                 return _2b_({infixl: local_189,infixr: 48.0});
-                              }}));
-        };
 var _3c__3d_ = rts.builtins.Prelude["<="];
-var drop1 = function (local_199) {
-           var x = _3c__3d_({infixl: local_199.count,infixr: 0.0});
+var drop1 = function (local_202) {
+           var x = _3c__3d_({infixl: local_202.count,infixr: 0.0});
            switch (x.tag)
            {
              case "False":
-               var local_200 = x.data;
-               var x = local_199.stream;
+               var local_203 = x.data;
+               var x = local_202.stream;
                switch (x.tag)
                {
                  case "NonEmpty":
-                   var local_201 = x.data;
-                   return drop1({stream: local_201.tail({})
-                                ,count: _2d_({infixl: local_199.count,infixr: 1.0})});
+                   var local_204 = x.data;
+                   return drop1({stream: local_204.tail({})
+                                ,count: _2d_({infixl: local_202.count,infixr: 1.0})});
                  case "Empty":
-                   var local_202 = x.data;
+                   var local_205 = x.data;
                    return {tag: "Empty",data: {}};
                  default:
                    throw "Unhandled case? This is a type error!";
                }
              case "True":
-               var local_203 = x.data;
-               return local_199.stream;
+               var local_206 = x.data;
+               return local_202.stream;
              default:
                throw "Unhandled case? This is a type error!";
            }
@@ -839,19 +847,33 @@ var detailedTable = function (local_144) {
                                                      return startsWith({prefix: day1
                                                                        ,text1: local_145.when});
                                                   }}));
+                      var cellsInRow = _2a_({infixl: local_144.classesPerRow
+                                            ,infixr: 4.0});
                       return _23_({h: {root: rts.bytesFromAscii("<tr>")
-                                      ,subTrees: arraySingle({root: rts.bytesFromAscii("<th colspan=9 style=\"border-top: 3px solid black\">")
+                                      ,subTrees: arraySingle({root: join({texts: _23_({h: rts.bytesFromAscii("<th colspan=")
+                                                                                      ,t: function (local_146) {
+                                                                                         return _23_({h: showPosInt(_2b_({infixl: 1.0
+                                                                                                                         ,infixr: cellsInRow}))
+                                                                                                     ,t: function (local_152) {
+                                                                                                        return _23_({h: rts.bytesFromAscii(" style=\"border-top: 3px solid black\">")
+                                                                                                                    ,t: function (local_153) {
+                                                                                                                       return {tag: "Empty"
+                                                                                                                              ,data: {}};
+                                                                                                                    }});
+                                                                                                     }});
+                                                                                      }})
+                                                                         ,sep: rts.bytesFromAscii("")})
                                                              ,subTrees: arraySingle(htmlTextNode(day1))})}
-                                  ,t: function (local_146) {
-                                     var tdColor = function (local_147) {
+                                  ,t: function (local_154) {
+                                     var tdColor = function (local_155) {
                                                 return join({texts: _23_({h: rts.bytesFromAscii("<td style=\"background-color:")
-                                                                         ,t: function (local_148) {
-                                                                            return _23_({h: local_147.color1
-                                                                                        ,t: function (local_149) {
-                                                                                           return _23_({h: local_147.more
-                                                                                                       ,t: function (local_150) {
+                                                                         ,t: function (local_156) {
+                                                                            return _23_({h: local_155.color1
+                                                                                        ,t: function (local_157) {
+                                                                                           return _23_({h: local_155.more
+                                                                                                       ,t: function (local_158) {
                                                                                                           return _23_({h: rts.bytesFromAscii("\">")
-                                                                                                                      ,t: function (local_151) {
+                                                                                                                      ,t: function (local_159) {
                                                                                                                          return {tag: "Empty"
                                                                                                                                 ,data: {}};
                                                                                                                       }});
@@ -860,110 +882,110 @@ var detailedTable = function (local_144) {
                                                                          }})
                                                             ,sep: rts.bytesFromAscii("")});
                                              };
-                                     var baseCells = function (local_152) {
+                                     var baseCells = function (local_160) {
                                                 return _23_({h: {root: tdColor({more: rts.bytesFromAscii(";border-left: 3px solid black")
-                                                                               ,color1: local_152.color})
+                                                                               ,color1: local_160.color})
                                                                 ,subTrees: arraySingle({root: rts.bytesFromAscii("<b>")
-                                                                                       ,subTrees: arraySingle(htmlTextNode(local_152.where))})}
-                                                            ,t: function (local_153) {
+                                                                                       ,subTrees: arraySingle(htmlTextNode(local_160.where))})}
+                                                            ,t: function (local_161) {
                                                                return _23_({h: {root: tdColor({more: rts.bytesFromAscii("")
-                                                                                              ,color1: local_152.color})
+                                                                                              ,color1: local_160.color})
                                                                                ,subTrees: classCellItems({getLang1: local_144.getLang2
-                                                                                                         ,info1: local_152})}
-                                                                           ,t: function (local_154) {
+                                                                                                         ,info1: local_160})}
+                                                                           ,t: function (local_162) {
                                                                               return {tag: "Empty"
                                                                                      ,data: {}};
                                                                            }});
                                                             }});
                                              };
                                      return concat(map({stream: sortOn({stream6: uniques(map({stream: fromArray(onDay1)
-                                                                                             ,mapping: function (local_155) {
-                                                                                                return local_155.when;
+                                                                                             ,mapping: function (local_163) {
+                                                                                                return local_163.when;
                                                                                              }}))
                                                                        ,on: iacTimeOfDayOrder})
                                                        ,mapping: function (time) {
                                                           var onTime =
                                                                   toArray(filter({stream: fromArray(onDay1)
-                                                                                 ,keep: function (local_156) {
-                                                                                    return _3d__3d_({infixl: local_156.when
+                                                                                 ,keep: function (local_164) {
+                                                                                    return _3d__3d_({infixl: local_164.when
                                                                                                     ,infixr: time});
                                                                                  }}));
                                                           var groups =
                                                                   partition({stream: fromArray(onTime)
-                                                                            ,by: function (local_157) {
-                                                                               return _7c__7c_({l: _2f__3d_({infixl: local_144.getLang2(local_157.desc)
+                                                                            ,by: function (local_165) {
+                                                                               return _7c__7c_({l: _2f__3d_({infixl: local_144.getLang2(local_165.desc)
                                                                                                             ,infixr: rts.bytesFromAscii("")})
-                                                                                               ,r: function (local_158) {
-                                                                                                  return _2f__3d_({infixl: local_144.getLang2(local_157.prereqs)
+                                                                                               ,r: function (local_166) {
+                                                                                                  return _2f__3d_({infixl: local_144.getLang2(local_165.prereqs)
                                                                                                                   ,infixr: rts.bytesFromAscii("")});
                                                                                                }});
                                                                             }});
                                                           var rows =
-                                                                  toArray(map({stream: groups1({ofLength: 8.0
+                                                                  toArray(map({stream: groups1({ofLength: cellsInRow
                                                                                                ,stream8: concat(_2b__2b_({l: map({stream: fromArray(groups.True)
-                                                                                                                                 ,mapping: function (local_159) {
-                                                                                                                                    return _2b__2b_({l: baseCells({prereqs: local_159.prereqs
-                                                                                                                                                                  ,where: local_159.where
-                                                                                                                                                                  ,color: local_159.color
-                                                                                                                                                                  ,what: local_159.what
-                                                                                                                                                                  ,who: local_159.who
-                                                                                                                                                                  ,desc: local_159.desc
-                                                                                                                                                                  ,when: local_159.when})
-                                                                                                                                                    ,r: function (local_160) {
+                                                                                                                                 ,mapping: function (local_167) {
+                                                                                                                                    return _2b__2b_({l: baseCells({prereqs: local_167.prereqs
+                                                                                                                                                                  ,where: local_167.where
+                                                                                                                                                                  ,color: local_167.color
+                                                                                                                                                                  ,what: local_167.what
+                                                                                                                                                                  ,who: local_167.who
+                                                                                                                                                                  ,desc: local_167.desc
+                                                                                                                                                                  ,when: local_167.when})
+                                                                                                                                                    ,r: function (local_168) {
                                                                                                                                                        return _23_({h: {root: tdColor({more: rts.bytesFromAscii("")
-                                                                                                                                                                                      ,color1: local_159.color})
+                                                                                                                                                                                      ,color1: local_167.color})
                                                                                                                                                                        ,subTrees: toArray(_23_({h: {root: rts.bytesFromAscii("<b>")
                                                                                                                                                                                                    ,subTrees: arraySingle(htmlTextNode(rts.bytesFromAscii("Description:")))}
-                                                                                                                                                                                               ,t: function (local_161) {
-                                                                                                                                                                                                  return _23_({h: htmlTextNode(local_144.getLang2(local_159.desc))
-                                                                                                                                                                                                              ,t: function (local_162) {
+                                                                                                                                                                                               ,t: function (local_169) {
+                                                                                                                                                                                                  return _23_({h: htmlTextNode(local_144.getLang2(local_167.desc))
+                                                                                                                                                                                                              ,t: function (local_170) {
                                                                                                                                                                                                                  return {tag: "Empty"
                                                                                                                                                                                                                         ,data: {}};
                                                                                                                                                                                                               }});
                                                                                                                                                                                                }}))}
-                                                                                                                                                                   ,t: function (local_163) {
+                                                                                                                                                                   ,t: function (local_171) {
                                                                                                                                                                       return _23_({h: {root: tdColor({more: rts.bytesFromAscii("")
-                                                                                                                                                                                                     ,color1: local_159.color})
+                                                                                                                                                                                                     ,color1: local_167.color})
                                                                                                                                                                                       ,subTrees: toArray(_23_({h: {root: rts.bytesFromAscii("<b>")
                                                                                                                                                                                                                   ,subTrees: arraySingle(htmlTextNode(rts.bytesFromAscii("Pre-reqs:")))}
-                                                                                                                                                                                                              ,t: function (local_164) {
-                                                                                                                                                                                                                 return _23_({h: htmlTextNode(local_144.getLang2(local_159.prereqs))
-                                                                                                                                                                                                                             ,t: function (local_165) {
+                                                                                                                                                                                                              ,t: function (local_172) {
+                                                                                                                                                                                                                 return _23_({h: htmlTextNode(local_144.getLang2(local_167.prereqs))
+                                                                                                                                                                                                                             ,t: function (local_173) {
                                                                                                                                                                                                                                 return {tag: "Empty"
                                                                                                                                                                                                                                        ,data: {}};
                                                                                                                                                                                                                              }});
                                                                                                                                                                                                               }}))}
-                                                                                                                                                                                  ,t: function (local_166) {
+                                                                                                                                                                                  ,t: function (local_174) {
                                                                                                                                                                                      return {tag: "Empty"
                                                                                                                                                                                             ,data: {}};
                                                                                                                                                                                   }});
                                                                                                                                                                    }});
                                                                                                                                                     }});
                                                                                                                                  }})
-                                                                                                                         ,r: function (local_167) {
+                                                                                                                         ,r: function (local_175) {
                                                                                                                             return map({stream: fromArray(groups.False)
                                                                                                                                        ,mapping: baseCells});
                                                                                                                          }}))})
-                                                                              ,mapping: function (local_181) {
+                                                                              ,mapping: function (local_189) {
                                                                                  var len2 =
-                                                                                         length1(local_181);
+                                                                                         length1(local_189);
                                                                                  var x =
                                                                                          _3d__3d_({infixl: len2
-                                                                                                  ,infixr: 8.0});
+                                                                                                  ,infixr: cellsInRow});
                                                                                  switch (x.tag)
                                                                                  {
                                                                                    case "False":
-                                                                                     var local_182 =
+                                                                                     var local_190 =
                                                                                              x.data;
-                                                                                     return toArray(_2b__2b_({l: fromArray(local_181)
-                                                                                                             ,r: function (local_183) {
+                                                                                     return toArray(_2b__2b_({l: fromArray(local_189)
+                                                                                                             ,r: function (local_191) {
                                                                                                                 return _23_({h: {root: join({texts: _23_({h: rts.bytesFromAscii("<td style=\"border-left: 3px solid black\" colspan=")
-                                                                                                                                                         ,t: function (local_184) {
-                                                                                                                                                            return _23_({h: showPosInt(_2d_({infixl: 8.0
+                                                                                                                                                         ,t: function (local_192) {
+                                                                                                                                                            return _23_({h: showPosInt(_2d_({infixl: cellsInRow
                                                                                                                                                                                             ,infixr: len2}))
-                                                                                                                                                                        ,t: function (local_190) {
+                                                                                                                                                                        ,t: function (local_193) {
                                                                                                                                                                            return _23_({h: rts.bytesFromAscii(">")
-                                                                                                                                                                                       ,t: function (local_191) {
+                                                                                                                                                                                       ,t: function (local_194) {
                                                                                                                                                                                           return {tag: "Empty"
                                                                                                                                                                                                  ,data: {}};
                                                                                                                                                                                        }});
@@ -971,26 +993,26 @@ var detailedTable = function (local_144) {
                                                                                                                                                          }})
                                                                                                                                             ,sep: rts.bytesFromAscii("")})
                                                                                                                                 ,subTrees: arraySingle(htmlTextNode(rts.bytesFromAscii("-")))}
-                                                                                                                            ,t: function (local_192) {
+                                                                                                                            ,t: function (local_195) {
                                                                                                                                return {tag: "Empty"
                                                                                                                                       ,data: {}};
                                                                                                                             }});
                                                                                                              }}));
                                                                                    case "True":
-                                                                                     var local_193 =
+                                                                                     var local_196 =
                                                                                              x.data;
-                                                                                     return local_181;
+                                                                                     return local_189;
                                                                                    default:
                                                                                      throw "Unhandled case? This is a type error!";
                                                                                  }
                                                                               }}));
                                                           return _23_({h: {root: rts.bytesFromAscii("<tr class=\"top\">")
                                                                           ,subTrees: toArray(_23_({h: {root: join({texts: _23_({h: rts.bytesFromAscii("<th rowspan=")
-                                                                                                                               ,t: function (local_194) {
+                                                                                                                               ,t: function (local_197) {
                                                                                                                                   return _23_({h: showPosInt(length1(rows))
-                                                                                                                                              ,t: function (local_195) {
+                                                                                                                                              ,t: function (local_198) {
                                                                                                                                                  return _23_({h: rts.bytesFromAscii(">")
-                                                                                                                                                             ,t: function (local_196) {
+                                                                                                                                                             ,t: function (local_199) {
                                                                                                                                                                 return {tag: "Empty"
                                                                                                                                                                        ,data: {}};
                                                                                                                                                              }});
@@ -998,16 +1020,16 @@ var detailedTable = function (local_144) {
                                                                                                                                }})
                                                                                                                   ,sep: rts.bytesFromAscii("")})
                                                                                                       ,subTrees: arraySingle(htmlTextNode(time))}
-                                                                                                  ,t: function (local_197) {
+                                                                                                  ,t: function (local_200) {
                                                                                                      return fromArray(item1({index: 0.0
                                                                                                                             ,object: rows}));
                                                                                                   }}))}
-                                                                      ,t: function (local_198) {
+                                                                      ,t: function (local_201) {
                                                                          return map({stream: drop1({stream: fromArray(rows)
                                                                                                    ,count: 1.0})
-                                                                                    ,mapping: function (local_204) {
+                                                                                    ,mapping: function (local_207) {
                                                                                        return {root: rts.bytesFromAscii("<tr>")
-                                                                                              ,subTrees: local_204};
+                                                                                              ,subTrees: local_207};
                                                                                     }});
                                                                       }});
                                                        }}));
@@ -1018,25 +1040,25 @@ var detailedTable = function (local_144) {
                                               ,subTrees: toArray(_23_({h: {root: rts.bytesFromAscii("<meta charset=\"UTF-8\" />")
                                                                           ,subTrees: toArray({tag: "Empty"
                                                                                              ,data: {}})}
-                                                                      ,t: function (local_205) {
+                                                                      ,t: function (local_208) {
                                                                          return _23_({h: {root: rts.bytesFromAscii("<title>")
                                                                                          ,subTrees: arraySingle(htmlTextNode(rts.bytesFromAscii("IAC 2016 Detailed Schedule")))}
-                                                                                     ,t: function (local_206) {
+                                                                                     ,t: function (local_209) {
                                                                                         return _23_({h: {root: rts.bytesFromAscii("<style>")
                                                                                                         ,subTrees: arraySingle(htmlTextNode(rts.bytesFromAscii("\nth {\n    border: 1px solid black;\n    border-top: 4px solid black;\n}\ntd {\n    border: 0.5px solid black;\n    border-top: 2px solid black;\n}\n.top td {\n    border-top: 4px solid black;\n}\n")))}
-                                                                                                    ,t: function (local_207) {
+                                                                                                    ,t: function (local_210) {
                                                                                                        return {tag: "Empty"
                                                                                                               ,data: {}};
                                                                                                     }});
                                                                                      }});
                                                                       }}))}
-                                          ,t: function (local_208) {
+                                          ,t: function (local_211) {
                                              return _23_({h: {root: rts.bytesFromAscii("<body>")
                                                              ,subTrees: arraySingle({root: rts.bytesFromAscii("<table cellspacing=0>")
                                                                                     ,subTrees: arraySingle({root: rts.bytesFromAscii("<tbody>")
                                                                                                            ,subTrees: toArray(concat(map({stream: fromArray(iacDaysOrder)
                                                                                                                                          ,mapping: perDay1})))})})}
-                                                         ,t: function (local_209) {
+                                                         ,t: function (local_212) {
                                                             return {tag: "Empty"
                                                                    ,data: {}};
                                                          }});
@@ -1058,7 +1080,7 @@ var parseHtmlTree = function (html) {
                switch (x.tag)
                {
                  case "False":
-                   var local_210 = x.data;
+                   var local_213 = x.data;
                    var x = find({__bytes1: html,slice: rts.bytesFromAscii(">")});
                    switch (x.tag)
                    {
@@ -1074,28 +1096,28 @@ var parseHtmlTree = function (html) {
                        switch (x.tag)
                        {
                          case "False":
-                           var local_211 = x.data;
-                           var local_217 = __while1({iter: function (local_212) {
+                           var local_214 = x.data;
+                           var local_220 = __while1({iter: function (local_215) {
                                                        var x = startsWith({prefix: closer
-                                                                          ,text1: local_212.state});
+                                                                          ,text1: local_215.state});
                                                        switch (x.tag)
                                                        {
                                                          case "False":
-                                                           var local_213 = x.data;
-                                                           var local_214 =
-                                                                   parseHtmlTree(local_212.state);
+                                                           var local_216 = x.data;
+                                                           var local_217 =
+                                                                   parseHtmlTree(local_215.state);
                                                            return {tag: "Continue"
-                                                                  ,data: {state: local_214.state
-                                                                         ,val: _23_({h: local_214.val
-                                                                                    ,t: function (local_215) {
-                                                                                       return local_212.val;
+                                                                  ,data: {state: local_217.state
+                                                                         ,val: _23_({h: local_217.val
+                                                                                    ,t: function (local_218) {
+                                                                                       return local_215.val;
                                                                                     }})}};
                                                          case "True":
-                                                           var local_216 = x.data;
+                                                           var local_219 = x.data;
                                                            return {tag: "Done"
-                                                                  ,data: {state: drop({__bytes1: local_212.state
+                                                                  ,data: {state: drop({__bytes1: local_215.state
                                                                                       ,count: length(closer)})
-                                                                         ,val: local_212.val}};
+                                                                         ,val: local_215.val}};
                                                          default:
                                                            throw "Unhandled case? This is a type error!";
                                                        }
@@ -1105,11 +1127,11 @@ var parseHtmlTree = function (html) {
                                                                                      ,infixr: 1.0})})
                                                            ,val: {tag: "Empty"
                                                                  ,data: {}}}});
-                           return {state: local_217.state
+                           return {state: local_220.state
                                   ,val: {root: tagItem2
-                                        ,subTrees: reverse(local_217.val)}};
+                                        ,subTrees: reverse(local_220.val)}};
                          case "True":
-                           var local_218 = x.data;
+                           var local_221 = x.data;
                            var x = find({__bytes1: html,slice: closer});
                            switch (x.tag)
                            {
@@ -1125,12 +1147,12 @@ var parseHtmlTree = function (html) {
                                                                                       ,stop: scriptEnd})
                                                                         ,subTrees: toArray({tag: "Empty"
                                                                                            ,data: {}})}
-                                                                    ,t: function (local_219) {
+                                                                    ,t: function (local_222) {
                                                                        return {tag: "Empty"
                                                                               ,data: {}};
                                                                     }}))}};
                              case "Nothing":
-                               var local_220 = x.data;
+                               var local_223 = x.data;
                                throw "Reached hole!";
                              default:
                                throw "Unhandled case? This is a type error!";
@@ -1139,19 +1161,19 @@ var parseHtmlTree = function (html) {
                            throw "Unhandled case? This is a type error!";
                        }
                      case "Nothing":
-                       var local_221 = x.data;
+                       var local_224 = x.data;
                        throw "Reached hole!";
                      default:
                        throw "Unhandled case? This is a type error!";
                    }
                  case "True":
-                   var local_222 = x.data;
+                   var local_225 = x.data;
                    return simpleItem(openPos);
                  default:
                    throw "Unhandled case? This is a type error!";
                }
              case "Nothing":
-               var local_223 = x.data;
+               var local_226 = x.data;
                return simpleItem(length(html));
              default:
                throw "Unhandled case? This is a type error!";
@@ -1159,19 +1181,19 @@ var parseHtmlTree = function (html) {
         };
 var subtrees = function (tree1) {
            return _23_({h: tree1
-                       ,t: function (local_224) {
+                       ,t: function (local_227) {
                           return concat(map({stream: fromArray(tree1.subTrees)
                                             ,mapping: subtrees}));
                        }});
         };
 var htmlText = function (tree2) {
            return join({texts: filter({stream: map({stream: subtrees(tree2)
-                                                   ,mapping: function (local_226) {
-                                                      return local_226.root;
+                                                   ,mapping: function (local_229) {
+                                                      return local_229.root;
                                                    }})
-                                      ,keep: function (local_227) {
+                                      ,keep: function (local_230) {
                                          return not(startsWith({prefix: rts.bytesFromAscii("<")
-                                                               ,text1: local_227}));
+                                                               ,text1: local_230}));
                                       }})
                        ,sep: rts.bytesFromAscii("")});
         };
@@ -1179,53 +1201,53 @@ var parsePage = function (page) {
            var parsedHtml = parseHtmlTree(drop({__bytes1: page
                                                ,count: length(rts.bytesFromAscii("<!DOCTYPE html>"))})).val;
            var styles = toArray(concat(map({stream: filter({stream: subtrees(parsedHtml)
-                                                           ,keep: function (local_225) {
-                                                              return _3d__3d_({infixl: local_225.root
+                                                           ,keep: function (local_228) {
+                                                              return _3d__3d_({infixl: local_228.root
                                                                               ,infixr: rts.bytesFromAscii("<style type=\"text/css\">")});
                                                            }})
                                            ,mapping: function (cssNode) {
                                               return concat(map({stream: split({text1: htmlText(cssNode)
                                                                                ,seperator: rts.bytesFromAscii("}.")})
-                                                                ,mapping: function (local_228) {
+                                                                ,mapping: function (local_231) {
                                                                    var x =
-                                                                           split({text1: local_228
+                                                                           split({text1: local_231
                                                                                  ,seperator: rts.bytesFromAscii("{")});
                                                                    switch (x.tag)
                                                                    {
                                                                      case "NonEmpty":
-                                                                       var local_229 =
+                                                                       var local_232 =
                                                                                x.data;
                                                                        var x =
-                                                                               local_229.tail({});
+                                                                               local_232.tail({});
                                                                        switch (x.tag)
                                                                        {
                                                                          case "NonEmpty":
-                                                                           var local_230 =
+                                                                           var local_233 =
                                                                                    x.data;
-                                                                           return concat(map({stream: split({text1: local_230.head
+                                                                           return concat(map({stream: split({text1: local_233.head
                                                                                                             ,seperator: rts.bytesFromAscii(";")})
-                                                                                             ,mapping: function (local_231) {
+                                                                                             ,mapping: function (local_234) {
                                                                                                 var bgTag =
                                                                                                         rts.bytesFromAscii("background-color:");
                                                                                                 var x =
                                                                                                         startsWith({prefix: bgTag
-                                                                                                                   ,text1: local_231});
+                                                                                                                   ,text1: local_234});
                                                                                                 switch (x.tag)
                                                                                                 {
                                                                                                   case "False":
-                                                                                                    var local_232 =
+                                                                                                    var local_235 =
                                                                                                             x.data;
                                                                                                     return {tag: "Empty"
                                                                                                            ,data: {}};
                                                                                                   case "True":
-                                                                                                    var local_233 =
+                                                                                                    var local_236 =
                                                                                                             x.data;
-                                                                                                    return _23_({h: {background: slice1({object: local_231
+                                                                                                    return _23_({h: {background: slice1({object: local_234
                                                                                                                                         ,start: length(bgTag)
                                                                                                                                         ,stop: _2b_({infixl: length(bgTag)
                                                                                                                                                     ,infixr: 7.0})})
-                                                                                                                    ,htmlClass: local_229.head}
-                                                                                                                ,t: function (local_234) {
+                                                                                                                    ,htmlClass: local_232.head}
+                                                                                                                ,t: function (local_237) {
                                                                                                                    return {tag: "Empty"
                                                                                                                           ,data: {}};
                                                                                                                 }});
@@ -1234,7 +1256,7 @@ var parsePage = function (page) {
                                                                                                 }
                                                                                              }}));
                                                                          case "Empty":
-                                                                           var local_235 =
+                                                                           var local_238 =
                                                                                    x.data;
                                                                            return {tag: "Empty"
                                                                                   ,data: {}};
@@ -1242,7 +1264,7 @@ var parsePage = function (page) {
                                                                            throw "Unhandled case? This is a type error!";
                                                                        }
                                                                      case "Empty":
-                                                                       var local_236 =
+                                                                       var local_239 =
                                                                                x.data;
                                                                        throw "Reached hole!";
                                                                      default:
@@ -1252,19 +1274,19 @@ var parsePage = function (page) {
                                            }})));
            var table = item1({index: 1.0
                              ,object: toArray(filter({stream: subtrees(parsedHtml)
-                                                     ,keep: function (local_237) {
+                                                     ,keep: function (local_240) {
                                                         return startsWith({prefix: rts.bytesFromAscii("<table ")
-                                                                          ,text1: local_237.root});
+                                                                          ,text1: local_240.root});
                                                      }}))});
            var tbody = item1({index: 0.0,object: table.subTrees});
            var contentRows = toArray(filter({stream: fromArray(tbody.subTrees)
-                                            ,keep: function (local_238) {
-                                               var local_239 = htmlText(item1({index: 0.0
-                                                                              ,object: local_238.subTrees}));
-                                               return _26__26_({l: _2f__3d_({infixl: local_239
+                                            ,keep: function (local_241) {
+                                               var local_242 = htmlText(item1({index: 0.0
+                                                                              ,object: local_241.subTrees}));
+                                               return _26__26_({l: _2f__3d_({infixl: local_242
                                                                             ,infixr: rts.bytesFromAscii("Date/time")})
-                                                               ,r: function (local_240) {
-                                                                  return _2f__3d_({infixl: local_239
+                                                               ,r: function (local_243) {
+                                                                  return _2f__3d_({infixl: local_242
                                                                                   ,infixr: rts.bytesFromAscii("(This may change! Check schedule)")});
                                                                }});
                                             }}));
@@ -1282,11 +1304,11 @@ var parsePage = function (page) {
                                             switch (x.tag)
                                             {
                                               case "NonEmpty":
-                                                var local_241 = x.data;
-                                                return split({text1: local_241.head
+                                                var local_244 = x.data;
+                                                return split({text1: local_244.head
                                                              ,seperator: rts.bytesFromAscii(" ")});
                                               case "Empty":
-                                                var local_242 = x.data;
+                                                var local_245 = x.data;
                                                 return {tag: "Empty",data: {}};
                                               default:
                                                 throw "Unhandled case? This is a type error!";
@@ -1299,23 +1321,23 @@ var parsePage = function (page) {
                                         ,where: item1({index: 1.0,object: cellTexts})
                                         ,color: function () {
                                            var x = concat(map({stream: firstCellClasses
-                                                              ,mapping: function (local_243) {
+                                                              ,mapping: function (local_246) {
                                                                  return map({stream: filter({stream: fromArray(styles)
-                                                                                            ,keep: function (local_244) {
-                                                                                               return _3d__3d_({infixl: local_244.htmlClass
-                                                                                                               ,infixr: local_243});
+                                                                                            ,keep: function (local_247) {
+                                                                                               return _3d__3d_({infixl: local_247.htmlClass
+                                                                                                               ,infixr: local_246});
                                                                                             }})
-                                                                            ,mapping: function (local_245) {
-                                                                               return local_245.background;
+                                                                            ,mapping: function (local_248) {
+                                                                               return local_248.background;
                                                                             }});
                                                               }}));
                                            switch (x.tag)
                                            {
                                              case "NonEmpty":
-                                               var local_246 = x.data;
-                                               return local_246.head;
+                                               var local_249 = x.data;
+                                               return local_249.head;
                                              case "Empty":
-                                               var local_247 = x.data;
+                                               var local_250 = x.data;
                                                return rts.bytesFromAscii("#000000");
                                              default:
                                                throw "Unhandled case? This is a type error!";
@@ -1332,18 +1354,20 @@ var parsePage = function (page) {
                                         ,when: item1({index: 0.0,object: cellTexts})};
                               }}));
         };
-var repl = {makeBrief: function (local_1) {
-              return formatHtml(overviewTable({info: local_1
-                                              ,getLang: function (local_2) {
-                                                 return local_2.eng;
-                                              }}));
-           }
-           ,makeDetailed: function (local_142) {
-              return formatHtml(detailedTable({getLang2: function (local_143) {
-                                                 return local_143.eng;
-                                              }
-                                              ,info2: local_142}));
-           }
-           ,parse: parsePage};
+var forJs = {makeBrief: function (local_1) {
+               return formatHtml(overviewTable({info: local_1
+                                               ,getLang: function (local_2) {
+                                                  return local_2.eng;
+                                               }}));
+            }
+            ,makeDetailed: function (local_142) {
+               return formatHtml(detailedTable({classesPerRow: 2.0
+                                               ,getLang2: function (local_143) {
+                                                  return local_143.eng;
+                                               }
+                                               ,info2: local_142}));
+            }
+            ,parse: parsePage};
+var repl = forJs;
 rts.logRepl(repl);
 module.exports = repl;
