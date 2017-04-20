@@ -71,6 +71,9 @@ var encode = function() {
             if (Function.prototype.isPrototypeOf(value)) {
                 return { func: {} };
             }
+            if (typeof value == "number" && !isFinite(value)) {
+                return { "number": String(value) }
+            }
             if (typeof value != "object" || key === "array" || key === "bytes") {
                 return value;
             }
@@ -154,7 +157,13 @@ module.exports = {
             "/": function (x) { return x[infixlTag] / x[infixrTag]; },
             "^": function (x) { return Math.pow(x[infixlTag], x[infixrTag]); },
             div: function (x) { return Math.floor(x[infixlTag] / x[infixrTag]); },
-            mod: function (x) { return x[infixlTag] % x[infixrTag]; },
+            mod: function (x) {
+                var modulus = x[infixrTag];
+                var r = x[infixlTag] % modulus;
+                if (r < 0)
+                    r += modulus;
+                return r;
+            },
             negate: function (x) { return -x; },
             "==": function (x) { return bool(isEqual(x[infixlTag], x[infixrTag])); },
             "/=": function (x) { return bool(!isEqual(x[infixlTag], x[infixrTag])); },
@@ -184,7 +193,13 @@ module.exports = {
                 read: function (x) { return function() { return x[objTag][x[indexTag]]; } },
                 write: function (x) { return function() { x[objTag][x[indexTag]] = x[valTag]; return {}; } },
                 fromStream: function (x) { return function () { return arrayFromStream(x); } },
-                run: function(st) { return st(); },
+                run: function(st) {
+                    var result = st();
+                    if (result.hasOwnProperty("cacheId")) {
+                        delete result.cacheId;
+                    }
+                    return result;
+                },
             },
         },
         IO: {
