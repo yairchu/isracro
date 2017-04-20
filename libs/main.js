@@ -2710,17 +2710,20 @@ var makeSchedules = function (source) {
                                                  ,classes1: filtered}))
              ,heb: htmlToText(formatClassesTable({lang: langHebrew,classes1: filtered}))};
    };
-   return {lvl012: make(function (local_279) {
-             return _2264_({infixl: local_279,infixr: 2.0});
+   return {all: make(function (local_279) {
+             return {tag: "True",data: {}};
           })
-          ,lvl23: make(function (local_280) {
-             return _26__26_({l: _2265_({infixl: local_280,infixr: 2.0})
-                             ,r: function (local_281) {
-                                return _2264_({infixl: local_280,infixr: 3.0});
+          ,lvl012: make(function (local_280) {
+             return _2264_({infixl: local_280,infixr: 2.0});
+          })
+          ,lvl23: make(function (local_281) {
+             return _26__26_({l: _2265_({infixl: local_281,infixr: 2.0})
+                             ,r: function (local_282) {
+                                return _2264_({infixl: local_281,infixr: 3.0});
                              }});
           })
-          ,lvl34: make(function (local_282) {
-             return _2265_({infixl: local_282,infixr: 3.0});
+          ,lvl34: make(function (local_283) {
+             return _2265_({infixl: local_283,infixr: 3.0});
           })};
 };
 var repl = makeSchedules;

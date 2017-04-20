@@ -38,6 +38,7 @@ var update_doc = function() {
                 x.eng = decoder.decode(x.eng);
                 x.heb = decoder.decode(x.heb);
             };
+            decode(results.all);
             decode(results.lvl012);
             decode(results.lvl23);
             decode(results.lvl34);
@@ -54,6 +55,14 @@ app.get('/update', function(request, response) {
 
 app.get('/source', function(request, response) {
     response.send(cache.doc);
+});
+
+app.get('/eng', function(request, response) {
+    response.send(cache.results.all.eng);
+});
+
+app.get('/heb', function(request, response) {
+    response.send(cache.results.all.heb);
 });
 
 app.get('/lvl012eng', function(request, response) {
