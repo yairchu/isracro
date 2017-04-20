@@ -1,6 +1,6 @@
 {
   "name": "node-js-getting-started",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A sample Node.js app using Express 4",
   "engines": {
     "node": "6.2.0"
@@ -10,8 +10,8 @@
     "start": "node --harmony-tailcalls index.js"
   },
   "dependencies": {
-    "ejs": "2.4.1",
-    "express": "4.13.3",
+    "ejs": "2.5.6",
+    "express": "4.15.2",
     "text-encoding": "0.6.0"
   },
   "repository": {
