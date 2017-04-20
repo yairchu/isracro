@@ -1450,13 +1450,12 @@ var classRow = function (local_235) {
                                                                    }}};
                                                    case "Nothing":
                                                      var local_249 = x.data;
-                                                     return {tag: "NonEmpty"
-                                                            ,data: {head: leaf({tag: "Data"
-                                                                               ,data: where1})
-                                                                   ,tail: function (local_250) {
-                                                                      return {tag: "Empty"
-                                                                             ,data: {}};
-                                                                   }}};
+                                                     return map({stream: split({text8: where1
+                                                                               ,seperator: rts.bytesFromAscii("\n")})
+                                                                ,mapping: function (local_250) {
+                                                                   return xmlTagWithData({__tag1: rts.bytesFromAscii("p")
+                                                                                         ,contents: local_250});
+                                                                }});
                                                    default:
                                                      throw "Unhandled case? This is a type error!";
                                                  }
