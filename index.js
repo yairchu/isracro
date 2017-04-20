@@ -21,7 +21,7 @@ var update_doc = function() {
     var options = {
       host: 'docs.google.com',
       port: 443,
-      path: '/document/d/1vMFIUDE61TAzxZ-4D36gKlsddAd4XTB05ci0fh81bhY/pub'
+      path: '/document/d/1qXmd1YjZk88QxhorD0IPgJggRKLD5_5DaGcZlU8nDKw/pub'
     };
     https.get(options, function(res) {
         res.setEncoding("utf8");
@@ -31,12 +31,17 @@ var update_doc = function() {
         });
         res.on("end", function () {
             cache.doc = content;
-
             var coder = new encoding.TextEncoder();
             var decoder = new encoding.TextDecoder();
-            cache.parsed = main.parse(coder.encode(cache.doc));
-            cache.brief = decoder.decode(main.makeBrief(cache.parsed));
-            cache.detailed = decoder.decode(main.makeDetailed(cache.parsed));
+            var results = main(coder.encode(cache.doc))
+            var decode = function(x) {
+                x.eng = decoder.decode(x.eng);
+                x.heb = decoder.decode(x.heb);
+            };
+            decode(results.lvl012);
+            decode(results.lvl23);
+            decode(results.lvl34);
+            cache.results = results;
         });
     });
 };
@@ -51,16 +56,28 @@ app.get('/source', function(request, response) {
     response.send(cache.doc);
 });
 
-app.get('/brief', function(request, response) {
-    response.send(cache.brief);
+app.get('/lvl012eng', function(request, response) {
+    response.send(cache.results.lvl012.eng);
 });
 
-app.get('/details', function(request, response) {
-    response.send(cache.detailed);
+app.get('/lvl012heb', function(request, response) {
+    response.send(cache.results.lvl012.heb);
 });
 
-app.get('/', function(request, response) {
-    response.send(cache.brief);
+app.get('/lvl23eng', function(request, response) {
+    response.send(cache.results.lvl23.eng);
+});
+
+app.get('/lvl23heb', function(request, response) {
+    response.send(cache.results.lvl23.heb);
+});
+
+app.get('/lvl34eng', function(request, response) {
+    response.send(cache.results.lvl34.eng);
+});
+
+app.get('/lvl34heb', function(request, response) {
+    response.send(cache.results.lvl34.heb);
 });
 
 app.listen(app.get('port'), function() {
