@@ -99,11 +99,6 @@ var encode = function() {
     };
 }();
 
-var STArray = function(arr) {
-    this.arr = arr;
-    return this;
-};
-
 module.exports = {
     logRepl: conf.logRepl,
     logResult: function (scope, exprId, result) {
@@ -192,6 +187,7 @@ module.exports = {
                 length: function (x) { return x.length; },
                 read: function (x) { return function() { return x[objTag][x[indexTag]]; } },
                 write: function (x) { return function() { x[objTag][x[indexTag]] = x[valTag]; return {}; } },
+                append: function (x) { return function() { x[objTag].push(x[valTag]); return {}; } },
                 fromStream: function (x) { return function () { return arrayFromStream(x); } },
                 run: function(st) {
                     var result = st();
@@ -200,6 +196,11 @@ module.exports = {
                     }
                     return result;
                 },
+            },
+            Ref: {
+                new: function (x) { return function() {return {val: x}; } },
+                read: function (x) { return function() {return x.val;} },
+                write: function (x) { return function() {x[objTag].val = x[valTag]; return {};} },
             },
         },
         IO: {
