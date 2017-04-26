@@ -2405,7 +2405,27 @@ var hebrewTranslations = function (local_279) {
                                                                      ,215
                                                                      ,153
                                                                      ,215
-                                                                     ,148])
+                                                                     ,148
+                                                                     ,59
+                                                                     ,215
+                                                                     ,158
+                                                                     ,215
+                                                                     ,153
+                                                                     ,215
+                                                                     ,168
+                                                                     ,215
+                                                                     ,148
+                                                                     ,59
+                                                                     ,215
+                                                                     ,144
+                                                                     ,215
+                                                                     ,145
+                                                                     ,215
+                                                                     ,153
+                                                                     ,215
+                                                                     ,169
+                                                                     ,215
+                                                                     ,146])
                                                    ,seperator: rts.bytesFromAscii(";")})
                                    ,streamA: split({text8: rts.bytes([83
                                                                      ,117
@@ -2807,7 +2827,20 @@ var hebrewTranslations = function (local_279) {
                                                                      ,76
                                                                      ,105
                                                                      ,121
-                                                                     ,97])
+                                                                     ,97
+                                                                     ,59
+                                                                     ,77
+                                                                     ,105
+                                                                     ,114
+                                                                     ,97
+                                                                     ,59
+                                                                     ,65
+                                                                     ,118
+                                                                     ,105
+                                                                     ,115
+                                                                     ,104
+                                                                     ,97
+                                                                     ,103])
                                                    ,seperator: rts.bytesFromAscii(";")})}));
 var binarySearch = function (start2) {
    var x = _3d__3d_({infixl: start2.start1,infixr: start2.stop1});
