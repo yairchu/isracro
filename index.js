@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 
 var cache = {doc: 'getting'}
 
-var update_doc = function() {
+var update_doc = function(response) {
     var options = {
       host: 'docs.google.com',
       port: 443,
@@ -33,7 +33,22 @@ var update_doc = function() {
             cache.doc = content;
             var coder = new encoding.TextEncoder();
             var decoder = new encoding.TextDecoder();
-            var results = main(coder.encode(cache.doc))
+            var results;
+            try {
+                results = main(coder.encode(cache.doc))
+            } catch (exception) {
+                if (response === undefined)
+                    return;
+                response.send('parse failure');
+                return;
+            }
+            if (results === undefined)
+            {
+                if (response === undefined)
+                    return;
+                response.send('parse failure');
+                return;
+            }
             var decode = function(x) {
                 x.eng = decoder.decode(x.eng);
                 x.heb = decoder.decode(x.heb);
@@ -43,14 +58,16 @@ var update_doc = function() {
             decode(results.lvl23);
             decode(results.lvl34);
             cache.results = results;
+            if (response === undefined)
+                return;
+            response.send(cache.doc);
         });
     });
 };
 update_doc();
 
 app.get('/update', function(request, response) {
-    update_doc();
-    response.send(cache.doc);
+    update_doc(response);
 });
 
 app.get('/source', function(request, response) {
