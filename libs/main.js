@@ -129,11 +129,11 @@ var xmlTagName = function (fullTag) {
    }
 };
 var _7c__7c_ = function (local_26) {
-   var x = local_26.l;
+   var x = local_26.infixl;
    switch (x.tag)
    {
      case "False":
-       return local_26.r(x.data);
+       return local_26.infixr(x.data);
      case "True":
        var local_27 = x.data;
        return {tag: "True",data: {}};
@@ -264,7 +264,66 @@ var parseMXmlOpenTag = parseMXmlTag(function (local_32) {
                               throw "Unhandled case? This is a type error!";
                           }
                        });
-var toArray = rts.builtins.Array["fromStream"];
+var newMutArray = rts.builtins.Mut.Array["new"];
+var appendMutArray = rts.builtins.Mut.Array["append"];
+var foldLazy = function (local_60) {
+   var x = local_60.stream;
+   switch (x.tag)
+   {
+     case "NonEmpty":
+       var local_61 = x.data;
+       return local_60.binop({rest: function (local_62) {
+                                var dummy = _3d__3d_({infixl: local_62,infixr: {}});
+                                return foldLazy({stream: local_61.tail({})
+                                                ,initial: local_60.initial
+                                                ,binop: local_60.binop});
+                             }
+                             ,item: local_61.head});
+     case "Empty":
+       return local_60.initial(x.data);
+     default:
+       throw "Unhandled case? This is a type error!";
+   }
+};
+var map = function (local_57) {
+   return foldLazy({stream: local_57.stream
+                   ,initial: function (local_58) {
+                      return {tag: "Empty",data: {}};
+                   }
+                   ,binop: function (local_59) {
+                      return {tag: "NonEmpty"
+                             ,data: {head: local_57.mapping(local_59.item)
+                                    ,tail: local_59.rest}};
+                   }});
+};
+var __return1 = rts.builtins.Mut["return"];
+var _3b_1 = rts.builtins.Mut["bind"];
+var sequence__ = function (stream2) {
+   return foldLazy({stream: stream2
+                   ,initial: function (local_63) {
+                      return __return1({});
+                   }
+                   ,binop: function (local_64) {
+                      return _3b_1({infixl: local_64.item
+                                   ,infixr: function (local_65) {
+                                      return local_64.rest({});
+                                   }});
+                   }});
+};
+var runMutArray = rts.builtins.Mut.Array["run"];
+var toArray = function (stream1) {
+   return runMutArray(_3b_1({infixl: newMutArray
+                            ,infixr: function (arr) {
+                               return _3b_1({infixl: sequence__(map({stream: stream1
+                                                                    ,mapping: function (local_56) {
+                                                                       return appendMutArray({object: arr
+                                                                                             ,val: local_56});
+                                                                    }}))
+                                            ,infixr: function (local_66) {
+                                               return __return1(arr);
+                                            }});
+                            }}));
+};
 var leaf = function (local_55) {
    return {root: local_55,subTrees: toArray({tag: "Empty",data: {}})};
 };
@@ -276,9 +335,9 @@ var endsWith = function (text5) {
                                    ,stop: len})
                    ,infixr: text5.suffix1});
 };
-var parseMXmlCloseTag = parseMXmlTag(function (local_57) {
+var parseMXmlCloseTag = parseMXmlTag(function (local_68) {
                            return removePrefix({prefix1: rts.bytesFromAscii("/")
-                                               ,text2: local_57});
+                                               ,text2: local_68});
                         });
 var parseMany = function (parseOne) {
    return _3b_({infixl: parseOne
@@ -292,12 +351,12 @@ var parseMany = function (parseOne) {
                                   ,infixr: function (xs) {
                                      return __return({tag: "NonEmpty"
                                                      ,data: {head: __x
-                                                            ,tail: function (local_67) {
+                                                            ,tail: function (local_78) {
                                                                return xs;
                                                             }}});
                                   }});
                     case "Nothing":
-                      var local_68 = x.data;
+                      var local_79 = x.data;
                       return __return({tag: "Empty",data: {}});
                     default:
                       throw "Unhandled case? This is a type error!";
@@ -305,59 +364,29 @@ var parseMany = function (parseOne) {
                }});
 };
 var byteAt = rts.builtins.Bytes["byteAt"];
-var foldLazy = function (local_76) {
-   var x = local_76.stream;
-   switch (x.tag)
-   {
-     case "NonEmpty":
-       var local_77 = x.data;
-       return local_76.binop({rest: function (local_78) {
-                                var dummy = _3d__3d_({infixl: local_78,infixr: {}});
-                                return foldLazy({stream: local_77.tail({})
-                                                ,initial: local_76.initial
-                                                ,binop: local_76.binop});
-                             }
-                             ,item: local_77.head});
-     case "Empty":
-       return local_76.initial(x.data);
-     default:
-       throw "Unhandled case? This is a type error!";
-   }
-};
-var map = function (local_73) {
-   return foldLazy({stream: local_73.stream
-                   ,initial: function (local_74) {
-                      return {tag: "Empty",data: {}};
-                   }
-                   ,binop: function (local_75) {
-                      return {tag: "NonEmpty"
-                             ,data: {head: local_73.mapping(local_75.item)
-                                    ,tail: local_75.rest}};
-                   }});
-};
 var fromBytes = function (__bytes1) {
    var len1 = length(__bytes1);
    return map({stream: _2e__2e_({start: 0.0,stop: len1})
-              ,mapping: function (local_72) {
-                 return byteAt({index: local_72,object: __bytes1});
+              ,mapping: function (local_83) {
+                 return byteAt({index: local_83,object: __bytes1});
               }});
 };
-var _2b__2b_2 = function (local_80) {
-   return foldLazy({stream: local_80.l
-                   ,initial: local_80.r
-                   ,binop: function (local_81) {
+var _2b__2b_2 = function (local_85) {
+   return foldLazy({stream: local_85.infixl
+                   ,initial: local_85.infixr
+                   ,binop: function (local_86) {
                       return {tag: "NonEmpty"
-                             ,data: {head: local_81.item,tail: local_81.rest}};
+                             ,data: {head: local_86.item,tail: local_86.rest}};
                    }});
 };
-var toBytes = rts.builtins.Bytes["fromStream"];
-var _2b__2b_1 = function (local_71) {
-   return toBytes(_2b__2b_2({l: fromBytes(local_71.a)
-                            ,r: function (local_79) {
-                               return fromBytes(local_71.b);
-                            }}));
+var toBytes = rts.builtins.Bytes["fromArray"];
+var _2b__2b_1 = function (local_82) {
+   return toBytes(toArray(_2b__2b_2({infixl: fromBytes(local_82.a)
+                                    ,infixr: function (local_84) {
+                                       return fromBytes(local_82.b);
+                                    }})));
 };
-var _2b__2b_ = function (local_70) { return _2b__2b_1({a: local_70.a,b: local_70.b});};
+var _2b__2b_ = function (local_81) { return _2b__2b_1({a: local_81.a,b: local_81.b});};
 var parseUntil = function (sep) {
    return function (src2) {
           var x = find({__bytes: src2,slice: sep});
@@ -368,7 +397,7 @@ var parseUntil = function (sep) {
               return {state: slice1({object: src2,start: pos1,stop: length(src2)})
                      ,val: slice1({object: src2,start: 0.0,stop: pos1})};
             case "Nothing":
-              var local_82 = x.data;
+              var local_87 = x.data;
               return {state: rts.bytesFromAscii(""),val: src2};
             default:
               throw "Unhandled case? This is a type error!";
@@ -391,21 +420,21 @@ var parseXmlElem = function (tagInfo) {
                       switch (x.tag)
                       {
                         case "False":
-                          var local_56 = x.data;
+                          var local_67 = x.data;
                           var parseCloser = function (onGood) {
                              return _3b_({infixl: parseMXmlCloseTag
-                                         ,infixr: function (local_58) {
+                                         ,infixr: function (local_69) {
                                             var err = function (msg) {
                                                return __return({root: {tag: "Tag"
                                                                       ,data: msg}
                                                                ,subTrees: toArray({tag: "NonEmpty"
                                                                                   ,data: {head: onGood
-                                                                                         ,tail: function (local_59) {
+                                                                                         ,tail: function (local_70) {
                                                                                             return {tag: "Empty"
                                                                                                    ,data: {}};
                                                                                          }}})});
                                             };
-                                            var x = local_58;
+                                            var x = local_69;
                                             switch (x.tag)
                                             {
                                               case "Just":
@@ -415,16 +444,16 @@ var parseXmlElem = function (tagInfo) {
                                                 switch (x.tag)
                                                 {
                                                   case "False":
-                                                    var local_60 = x.data;
+                                                    var local_71 = x.data;
                                                     return err(rts.bytesFromAscii("ERR CLOSER MISMATCH"));
                                                   case "True":
-                                                    var local_61 = x.data;
+                                                    var local_72 = x.data;
                                                     return __return(onGood);
                                                   default:
                                                     throw "Unhandled case? This is a type error!";
                                                 }
                                               case "Nothing":
-                                                var local_62 = x.data;
+                                                var local_73 = x.data;
                                                 return err(rts.bytesFromAscii("ERR NO CLOSER"));
                                               default:
                                                 throw "Unhandled case? This is a type error!";
@@ -437,20 +466,20 @@ var parseXmlElem = function (tagInfo) {
                             case "SingleTag":
                               return singleTag(x.data);
                             case "Normal":
-                              var local_63 = x.data;
+                              var local_74 = x.data;
                               return _3b_({infixl: parseMany(_3b_({infixl: get
                                                                   ,infixr: function (remain) {
                                                                      var x =
-                                                                     _7c__7c_({l: _3d__3d_({infixl: remain
-                                                                                           ,infixr: rts.bytesFromAscii("")})
-                                                                              ,r: function (local_64) {
+                                                                     _7c__7c_({infixl: _3d__3d_({infixl: remain
+                                                                                                ,infixr: rts.bytesFromAscii("")})
+                                                                              ,infixr: function (local_75) {
                                                                                  return startsWith({text: remain
                                                                                                    ,prefix: rts.bytesFromAscii("</")});
                                                                               }});
                                                                      switch (x.tag)
                                                                      {
                                                                        case "False":
-                                                                         var local_65 =
+                                                                         var local_76 =
                                                                          x.data;
                                                                          return _3b_({infixl: parseXmlElem(tagInfo)
                                                                                      ,infixr: function (res1) {
@@ -458,7 +487,7 @@ var parseXmlElem = function (tagInfo) {
                                                                                                         ,data: res1});
                                                                                      }});
                                                                        case "True":
-                                                                         var local_66 =
+                                                                         var local_77 =
                                                                          x.data;
                                                                          return __return({tag: "Nothing"
                                                                                          ,data: {}});
@@ -472,16 +501,16 @@ var parseXmlElem = function (tagInfo) {
                                                                 ,subTrees: toArray(elems)});
                                           }});
                             case "CData":
-                              var local_69 = x.data;
+                              var local_80 = x.data;
                               return _3b_({infixl: parseUntil(_2b__2b_({a: rts.bytesFromAscii("</")
                                                                        ,b: xmlTagName(fullTag1)}))
-                                          ,infixr: function (local_83) {
+                                          ,infixr: function (local_88) {
                                              return parseCloser({root: {tag: "Tag"
                                                                        ,data: fullTag1}
                                                                 ,subTrees: toArray({tag: "NonEmpty"
                                                                                    ,data: {head: leaf({tag: "Data"
-                                                                                                      ,data: local_83})
-                                                                                          ,tail: function (local_84) {
+                                                                                                      ,data: local_88})
+                                                                                          ,tail: function (local_89) {
                                                                                              return {tag: "Empty"
                                                                                                     ,data: {}};
                                                                                           }}})});
@@ -495,10 +524,10 @@ var parseXmlElem = function (tagInfo) {
                           throw "Unhandled case? This is a type error!";
                       }
                     case "Nothing":
-                      var local_85 = x.data;
+                      var local_90 = x.data;
                       return _3b_({infixl: parseUntil(rts.bytesFromAscii("<"))
-                                  ,infixr: function (local_86) {
-                                     return __return(leaf({tag: "Data",data: local_86}));
+                                  ,infixr: function (local_91) {
+                                     return __return(leaf({tag: "Data",data: local_91}));
                                   }});
                     default:
                       throw "Unhandled case? This is a type error!";
@@ -506,9 +535,9 @@ var parseXmlElem = function (tagInfo) {
                }});
 };
 var parseHtmlElem = parseXmlElem(function (local_1) {
-                       var x = _7c__7c_({l: _3d__3d_({infixl: local_1
-                                                     ,infixr: rts.bytesFromAscii("br")})
-                                        ,r: function (local_2) {
+                       var x = _7c__7c_({infixl: _3d__3d_({infixl: local_1
+                                                          ,infixr: rts.bytesFromAscii("br")})
+                                        ,infixr: function (local_2) {
                                            return _3d__3d_({infixl: xmlTagName(local_1)
                                                            ,infixr: rts.bytesFromAscii("link")});
                                         }});
@@ -536,16 +565,16 @@ var parseHtmlElem = parseXmlElem(function (local_1) {
                            throw "Unhandled case? This is a type error!";
                        }
                     });
-var isTree = function (local_89) {
-   var x = local_89.tree.root;
+var isTree = function (local_94) {
+   var x = local_94.tree.root;
    switch (x.tag)
    {
      case "Data":
-       var local_90 = x.data;
+       var local_95 = x.data;
        return {tag: "False",data: {}};
      case "Tag":
-       var local_91 = x.data;
-       return _3d__3d_({infixl: xmlTagName(local_91),infixr: local_89.ofTag});
+       var local_96 = x.data;
+       return _3d__3d_({infixl: xmlTagName(local_96),infixr: local_94.ofTag});
      default:
        throw "Unhandled case? This is a type error!";
    }
@@ -555,17 +584,17 @@ var item1 = rts.builtins.Array["item"];
 var fromArray = function (__array) {
    var len2 = length1(__array);
    return map({stream: _2e__2e_({start: 0.0,stop: len2})
-              ,mapping: function (local_93) {
-                 return item1({index: local_93,object: __array});
+              ,mapping: function (local_98) {
+                 return item1({index: local_98,object: __array});
               }});
 };
-var concat = function (stream1) {
-   return foldLazy({stream: stream1
-                   ,initial: function (local_95) {
+var concat = function (stream3) {
+   return foldLazy({stream: stream3
+                   ,initial: function (local_100) {
                       return {tag: "Empty",data: {}};
                    }
-                   ,binop: function (local_96) {
-                      return _2b__2b_2({l: local_96.item,r: local_96.rest});
+                   ,binop: function (local_101) {
+                      return _2b__2b_2({infixl: local_101.item,infixr: local_101.rest});
                    }});
 };
 var findSubTrees = function (tree2) {
@@ -573,65 +602,65 @@ var findSubTrees = function (tree2) {
    switch (x.tag)
    {
      case "False":
-       var local_92 = x.data;
+       var local_97 = x.data;
        return concat(map({stream: fromArray(tree2.tree1.subTrees)
-                         ,mapping: function (local_94) {
-                            return findSubTrees({which: tree2.which,tree1: local_94});
+                         ,mapping: function (local_99) {
+                            return findSubTrees({which: tree2.which,tree1: local_99});
                          }}));
      case "True":
-       var local_97 = x.data;
+       var local_102 = x.data;
        return {tag: "NonEmpty"
               ,data: {head: tree2.tree1
-                     ,tail: function (local_98) {
+                     ,tail: function (local_103) {
                         return {tag: "Empty",data: {}};
                      }}};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var split = function (local_105) {
-   var x = find({__bytes: local_105.text8,slice: local_105.seperator});
+var split = function (local_110) {
+   var x = find({__bytes: local_110.text8,slice: local_110.seperator});
    switch (x.tag)
    {
      case "Just":
        var sepIndex = x.data;
        return {tag: "NonEmpty"
-              ,data: {head: slice1({object: local_105.text8,start: 0.0,stop: sepIndex})
-                     ,tail: function (local_106) {
-                        return split({text8: slice1({object: local_105.text8
+              ,data: {head: slice1({object: local_110.text8,start: 0.0,stop: sepIndex})
+                     ,tail: function (local_111) {
+                        return split({text8: slice1({object: local_110.text8
                                                     ,start: _2b_({infixl: sepIndex
-                                                                 ,infixr: length(local_105.seperator)})
-                                                    ,stop: length(local_105.text8)})
-                                     ,seperator: local_105.seperator});
+                                                                 ,infixr: length(local_110.seperator)})
+                                                    ,stop: length(local_110.text8)})
+                                     ,seperator: local_110.seperator});
                      }}};
      case "Nothing":
-       var local_107 = x.data;
+       var local_112 = x.data;
        return {tag: "NonEmpty"
-              ,data: {head: local_105.text8
-                     ,tail: function (local_108) {
+              ,data: {head: local_110.text8
+                     ,tail: function (local_113) {
                         return {tag: "Empty",data: {}};
                      }}};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var intersperse = function (local_110) {
-   var x = local_110.stream;
+var intersperse = function (local_115) {
+   var x = local_115.stream;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_111 = x.data;
+       var local_116 = x.data;
        return {tag: "NonEmpty"
-              ,data: {head: local_111.head
-                     ,tail: function (local_112) {
-                        return concat(map({stream: local_111.tail({})
-                                          ,mapping: function (local_113) {
+              ,data: {head: local_116.head
+                     ,tail: function (local_117) {
+                        return concat(map({stream: local_116.tail({})
+                                          ,mapping: function (local_118) {
                                              return {tag: "NonEmpty"
-                                                    ,data: {head: local_110.item
-                                                           ,tail: function (local_114) {
+                                                    ,data: {head: local_115.item
+                                                           ,tail: function (local_119) {
                                                               return {tag: "NonEmpty"
-                                                                     ,data: {head: local_113
-                                                                            ,tail: function (local_115) {
+                                                                     ,data: {head: local_118
+                                                                            ,tail: function (local_120) {
                                                                                return {tag: "Empty"
                                                                                       ,data: {}};
                                                                             }}};
@@ -639,26 +668,26 @@ var intersperse = function (local_110) {
                                           }}));
                      }}};
      case "Empty":
-       var local_116 = x.data;
+       var local_121 = x.data;
        return {tag: "Empty",data: {}};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var concat2 = function (stream3) {
-   return toBytes(concat(map({stream: stream3
-                             ,mapping: function (local_118) {
-                                return fromBytes(local_118);
-                             }})));
+var concat2 = function (stream5) {
+   return toBytes(toArray(concat(map({stream: stream5
+                                     ,mapping: function (local_123) {
+                                        return fromBytes(local_123);
+                                     }}))));
 };
-var concat1 = function (stream2) {
-   return concat2(map({stream: stream2
-                      ,mapping: function (local_117) {
-                         return local_117;
+var concat1 = function (stream4) {
+   return concat2(map({stream: stream4
+                      ,mapping: function (local_122) {
+                         return local_122;
                       }}));
 };
-var join = function (local_109) {
-   return concat1(intersperse({stream: local_109.texts,item: local_109.sep1}));
+var join = function (local_114) {
+   return concat1(intersperse({stream: local_114.texts,item: local_114.sep1}));
 };
 var replace = function (text7) {
    return join({texts: split({text8: text7.text6,seperator: text7.from}),sep1: text7.to});
@@ -667,22 +696,22 @@ var unwords = function (words) {
    return join({texts: words,sep1: rts.bytesFromAscii(" ")});
 };
 var htmlText = function (tree3) {
-   return join({texts: foldLazy({stream: map({stream: findSubTrees({which: function (local_100) {
+   return join({texts: foldLazy({stream: map({stream: findSubTrees({which: function (local_105) {
                                                                       var x =
-                                                                      local_100.root;
+                                                                      local_105.root;
                                                                       switch (x.tag)
                                                                       {
                                                                         case "Data":
-                                                                          var local_101 =
+                                                                          var local_106 =
                                                                           x.data;
                                                                           return {tag: "True"
                                                                                  ,data: {}};
                                                                         case "Tag":
                                                                           var __tag =
                                                                           x.data;
-                                                                          return _7c__7c_({l: _3d__3d_({infixl: xmlTagName(__tag)
-                                                                                                       ,infixr: rts.bytesFromAscii("p")})
-                                                                                          ,r: function (local_102) {
+                                                                          return _7c__7c_({infixl: _3d__3d_({infixl: xmlTagName(__tag)
+                                                                                                            ,infixr: rts.bytesFromAscii("p")})
+                                                                                          ,infixr: function (local_107) {
                                                                                              return _3d__3d_({infixl: __tag
                                                                                                              ,infixr: rts.bytesFromAscii("br")});
                                                                                           }});
@@ -691,31 +720,31 @@ var htmlText = function (tree3) {
                                                                       }
                                                                    }
                                                                    ,tree1: tree3})
-                                             ,mapping: function (local_103) {
-                                                var x = local_103.root;
+                                             ,mapping: function (local_108) {
+                                                var x = local_108.root;
                                                 switch (x.tag)
                                                 {
                                                   case "Data":
-                                                    var local_104 = x.data;
+                                                    var local_109 = x.data;
                                                     return {sep2: rts.bytesFromAscii(" ")
-                                                           ,text9: replace({text6: replace({text6: local_104
+                                                           ,text9: replace({text6: replace({text6: local_109
                                                                                            ,from: rts.bytesFromAscii("&nbsp;")
                                                                                            ,to: rts.bytesFromAscii(" ")})
                                                                            ,from: rts.bytesFromAscii("&amp;")
                                                                            ,to: rts.bytesFromAscii("&")})};
                                                   case "Tag":
-                                                    var local_119 = x.data;
-                                                    var x = _3d__3d_({infixl: local_119
+                                                    var local_124 = x.data;
+                                                    var x = _3d__3d_({infixl: local_124
                                                                      ,infixr: rts.bytesFromAscii("br")});
                                                     switch (x.tag)
                                                     {
                                                       case "False":
-                                                        var local_120 = x.data;
+                                                        var local_125 = x.data;
                                                         return {sep2: rts.bytesFromAscii("\n")
-                                                               ,text9: unwords(map({stream: fromArray(local_103.subTrees)
+                                                               ,text9: unwords(map({stream: fromArray(local_108.subTrees)
                                                                                    ,mapping: htmlText}))};
                                                       case "True":
-                                                        var local_121 = x.data;
+                                                        var local_126 = x.data;
                                                         return {sep2: rts.bytesFromAscii("")
                                                                ,text9: rts.bytesFromAscii("\n")};
                                                       default:
@@ -725,26 +754,26 @@ var htmlText = function (tree3) {
                                                     throw "Unhandled case? This is a type error!";
                                                 }
                                              }})
-                                ,initial: function (local_122) {
+                                ,initial: function (local_127) {
                                    return {tag: "Empty",data: {}};
                                 }
-                                ,binop: function (local_123) {
+                                ,binop: function (local_128) {
                                    return {tag: "NonEmpty"
-                                          ,data: {head: local_123.item.text9
-                                                 ,tail: function (local_124) {
-                                                    var x = local_123.rest({});
+                                          ,data: {head: local_128.item.text9
+                                                 ,tail: function (local_129) {
+                                                    var x = local_128.rest({});
                                                     switch (x.tag)
                                                     {
                                                       case "NonEmpty":
-                                                        var local_125 = x.data;
+                                                        var local_130 = x.data;
                                                         return {tag: "NonEmpty"
-                                                               ,data: {head: local_123.item.sep2
-                                                                      ,tail: function (local_126) {
+                                                               ,data: {head: local_128.item.sep2
+                                                                      ,tail: function (local_131) {
                                                                          return {tag: "NonEmpty"
-                                                                                ,data: local_125};
+                                                                                ,data: local_130};
                                                                       }}};
                                                       case "Empty":
-                                                        var local_127 = x.data;
+                                                        var local_132 = x.data;
                                                         return {tag: "Empty",data: {}};
                                                       default:
                                                         throw "Unhandled case? This is a type error!";
@@ -758,12 +787,12 @@ var textAfter = function (text11) {
    switch (x.tag)
    {
      case "Just":
-       var local_132 = x.data;
+       var local_137 = x.data;
        return slice1({object: text11.text10
-                     ,start: _2b_({infixl: local_132,infixr: length(text11.sep3)})
+                     ,start: _2b_({infixl: local_137,infixr: length(text11.sep3)})
                      ,stop: length(text11.text10)});
      case "Nothing":
-       var local_133 = x.data;
+       var local_138 = x.data;
        throw "Reached hole!";
      default:
        throw "Unhandled case? This is a type error!";
@@ -777,58 +806,58 @@ var textUntil = function (text13) {
        var pos2 = x.data;
        return slice1({object: text13.text12,start: 0.0,stop: pos2});
      case "Nothing":
-       var local_134 = x.data;
+       var local_139 = x.data;
        return text13.text12;
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var splitAt = function (stream7) {
-   var x = _3d__3d_({infixl: stream7.index1,infixr: 0.0});
+var splitAt = function (stream9) {
+   var x = _3d__3d_({infixl: stream9.index1,infixr: 0.0});
    switch (x.tag)
    {
      case "False":
-       var local_137 = x.data;
-       var x = stream7.stream6;
+       var local_142 = x.data;
+       var x = stream9.stream8;
        switch (x.tag)
        {
          case "NonEmpty":
-           var local_138 = x.data;
-           var local_139 = splitAt({index1: _2d_({infixl: stream7.index1,infixr: 1.0})
-                                   ,stream6: local_138.tail({})});
+           var local_143 = x.data;
+           var local_144 = splitAt({index1: _2d_({infixl: stream9.index1,infixr: 1.0})
+                                   ,stream8: local_143.tail({})});
            return {prefix2: {tag: "NonEmpty"
-                            ,data: {head: local_138.head
-                                   ,tail: function (local_140) {
-                                      return local_139.prefix2;
+                            ,data: {head: local_143.head
+                                   ,tail: function (local_145) {
+                                      return local_144.prefix2;
                                    }}}
-                  ,suffix2: local_139.suffix2};
+                  ,suffix2: local_144.suffix2};
          case "Empty":
-           var local_141 = x.data;
+           var local_146 = x.data;
            return {prefix2: {tag: "Empty",data: {}},suffix2: {tag: "Empty",data: {}}};
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "True":
-       var local_142 = x.data;
-       return {prefix2: {tag: "Empty",data: {}},suffix2: stream7.stream6};
+       var local_147 = x.data;
+       return {prefix2: {tag: "Empty",data: {}},suffix2: stream9.stream8};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var groups = function (stream5) {
-   var x = stream5.stream4;
+var groups = function (stream7) {
+   var x = stream7.stream6;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_136 = x.data;
-       var local_143 = splitAt({index1: stream5.size,stream6: stream5.stream4});
+       var local_141 = x.data;
+       var local_148 = splitAt({index1: stream7.size,stream8: stream7.stream6});
        return {tag: "NonEmpty"
-              ,data: {head: local_143.prefix2
-                     ,tail: function (local_144) {
-                        return groups({size: stream5.size,stream4: local_143.suffix2});
+              ,data: {head: local_148.prefix2
+                     ,tail: function (local_149) {
+                        return groups({size: stream7.size,stream6: local_148.suffix2});
                      }}};
      case "Empty":
-       var local_145 = x.data;
+       var local_150 = x.data;
        return {tag: "Empty",data: {}};
      default:
        throw "Unhandled case? This is a type error!";
@@ -838,84 +867,85 @@ var _2a_ = rts.builtins.Prelude["*"];
 var ord = function (txt) { return byteAt({index: 0.0,object: txt});};
 var _2265_ = rts.builtins.Prelude[">="];
 var _2264_ = rts.builtins.Prelude["<="];
-var _26__26_ = function (local_150) {
-   var x = local_150.l;
+var _26__26_ = function (local_155) {
+   var x = local_155.infixl;
    switch (x.tag)
    {
      case "False":
-       var local_151 = x.data;
+       var local_156 = x.data;
        return {tag: "False",data: {}};
      case "True":
-       return local_150.r(x.data);
+       return local_155.infixr(x.data);
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var digitVal = function (local_148) {
-   var x = _26__26_({l: _2265_({infixl: local_148,infixr: ord(rts.bytesFromAscii("0"))})
-                    ,r: function (local_149) {
-                       return _2264_({infixl: local_148
+var digitVal = function (local_153) {
+   var x = _26__26_({infixl: _2265_({infixl: local_153
+                                    ,infixr: ord(rts.bytesFromAscii("0"))})
+                    ,infixr: function (local_154) {
+                       return _2264_({infixl: local_153
                                      ,infixr: ord(rts.bytesFromAscii("9"))});
                     }});
    switch (x.tag)
    {
      case "False":
-       var local_152 = x.data;
-       var x = _26__26_({l: _2265_({infixl: local_148
-                                   ,infixr: ord(rts.bytesFromAscii("a"))})
-                        ,r: function (local_153) {
-                           return _2264_({infixl: local_148
+       var local_157 = x.data;
+       var x = _26__26_({infixl: _2265_({infixl: local_153
+                                        ,infixr: ord(rts.bytesFromAscii("a"))})
+                        ,infixr: function (local_158) {
+                           return _2264_({infixl: local_153
                                          ,infixr: ord(rts.bytesFromAscii("z"))});
                         }});
        switch (x.tag)
        {
          case "False":
-           var local_154 = x.data;
-           var x = _26__26_({l: _2265_({infixl: local_148
-                                       ,infixr: ord(rts.bytesFromAscii("A"))})
-                            ,r: function (local_155) {
-                               return _2264_({infixl: local_148
+           var local_159 = x.data;
+           var x = _26__26_({infixl: _2265_({infixl: local_153
+                                            ,infixr: ord(rts.bytesFromAscii("A"))})
+                            ,infixr: function (local_160) {
+                               return _2264_({infixl: local_153
                                              ,infixr: ord(rts.bytesFromAscii("Z"))});
                             }});
            switch (x.tag)
            {
              case "False":
-               var local_156 = x.data;
+               var local_161 = x.data;
                throw "Reached hole!";
              case "True":
-               var local_157 = x.data;
-               return _2d_({infixl: _2b_({infixl: 10.0,infixr: local_148})
+               var local_162 = x.data;
+               return _2d_({infixl: _2b_({infixl: 10.0,infixr: local_153})
                            ,infixr: ord(rts.bytesFromAscii("A"))});
              default:
                throw "Unhandled case? This is a type error!";
            }
          case "True":
-           var local_158 = x.data;
-           return _2d_({infixl: _2b_({infixl: 10.0,infixr: local_148})
+           var local_163 = x.data;
+           return _2d_({infixl: _2b_({infixl: 10.0,infixr: local_153})
                        ,infixr: ord(rts.bytesFromAscii("a"))});
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "True":
-       var local_159 = x.data;
-       return _2d_({infixl: local_148,infixr: ord(rts.bytesFromAscii("0"))});
+       var local_164 = x.data;
+       return _2d_({infixl: local_153,infixr: ord(rts.bytesFromAscii("0"))});
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var fold = function (local_160) {
-   var x = local_160.stream;
+var fold = function (local_165) {
+   var x = local_165.stream;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_161 = x.data;
-       return fold({stream: local_161.tail({})
-                   ,initial: local_160.binop({acc: local_160.initial
-                                             ,item: local_161.head})
-                   ,binop: local_160.binop});
+       var local_166 = x.data;
+       return fold({stream: local_166.tail({})
+                   ,initial: local_165.binop({acc: local_165.initial
+                                             ,item: local_166.head})
+                   ,binop: local_165.binop});
      case "Empty":
-       var local_162 = x.data;
-       return local_160.initial;
+       var local_167 = x.data;
+       return local_165.initial;
      default:
        throw "Unhandled case? This is a type error!";
    }
@@ -923,54 +953,55 @@ var fold = function (local_160) {
 var parsePosInt = function (text15) {
    return fold({stream: fromBytes(text15.text14)
                ,initial: 0.0
-               ,binop: function (local_147) {
-                  return _2b_({infixl: _2a_({infixl: local_147.acc,infixr: text15.base})
-                              ,infixr: digitVal(local_147.item)});
+               ,binop: function (local_152) {
+                  return _2b_({infixl: _2a_({infixl: local_152.acc,infixr: text15.base})
+                              ,infixr: digitVal(local_152.item)});
                }});
 };
-var parseHexBytes = function (local_135) {
-   return toArray(map({stream: groups({size: 2.0,stream4: fromBytes(local_135)})
-                      ,mapping: function (local_146) {
-                         return parsePosInt({text14: toBytes(local_146),base: 16.0});
+var parseHexBytes = function (local_140) {
+   return toArray(map({stream: groups({size: 2.0,stream6: fromBytes(local_140)})
+                      ,mapping: function (local_151) {
+                         return parsePosInt({text14: toBytes(toArray(local_151))
+                                            ,base: 16.0});
                       }}));
 };
 var sqr = function (__x1) { return _2a_({infixl: __x1,infixr: __x1});};
-var zipWith = function (local_165) {
-   var x = local_165.streamA;
+var zipWith = function (local_170) {
+   var x = local_170.streamA;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_166 = x.data;
-       var x = local_165.streamB;
+       var local_171 = x.data;
+       var x = local_170.streamB;
        switch (x.tag)
        {
          case "NonEmpty":
-           var local_167 = x.data;
+           var local_172 = x.data;
            return {tag: "NonEmpty"
-                  ,data: {head: local_165.combineAB({a: local_166.head,b: local_167.head})
-                         ,tail: function (local_168) {
-                            return zipWith({combineAB: local_165.combineAB
-                                           ,streamB: local_167.tail({})
-                                           ,streamA: local_166.tail({})});
+                  ,data: {head: local_170.combineAB({a: local_171.head,b: local_172.head})
+                         ,tail: function (local_173) {
+                            return zipWith({combineAB: local_170.combineAB
+                                           ,streamB: local_172.tail({})
+                                           ,streamA: local_171.tail({})});
                          }}};
          case "Empty":
-           var local_169 = x.data;
+           var local_174 = x.data;
            return {tag: "Empty",data: {}};
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "Empty":
-       var local_170 = x.data;
+       var local_175 = x.data;
        return {tag: "Empty",data: {}};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var sum = function (stream8) {
-   return fold({stream: stream8
+var sum = function (stream10) {
+   return fold({stream: stream10
                ,initial: 0.0
-               ,binop: function (local_171) {
-                  return _2b_({infixl: local_171.item,infixr: local_171.acc});
+               ,binop: function (local_176) {
+                  return _2b_({infixl: local_176.item,infixr: local_176.acc});
                }});
 };
 var id = function (__x2) { return __x2;};
@@ -979,68 +1010,68 @@ toArray(map({stream: split({text8: rts.bytesFromAscii("ffffff d1e6c9 fff0c1 e4c5
                            ,seperator: rts.bytesFromAscii(" ")})
             ,mapping: parseHexBytes}));
 var levelForColor = function (color) {
-   var x = first({that: function (local_163) {
-                    return _3c_({infixl: sum(zipWith({combineAB: function (local_164) {
-                                                        return sqr(_2d_({infixl: local_164.a
-                                                                        ,infixr: local_164.b}));
+   var x = first({that: function (local_168) {
+                    return _3c_({infixl: sum(zipWith({combineAB: function (local_169) {
+                                                        return sqr(_2d_({infixl: local_169.a
+                                                                        ,infixr: local_169.b}));
                                                      }
-                                                     ,streamB: fromArray(local_163.b)
+                                                     ,streamB: fromArray(local_168.b)
                                                      ,streamA: fromArray(color)}))
                                 ,infixr: 300.0});
                  }
                  ,stream: zipWith({combineAB: id
                                   ,streamB: fromArray(levelColors)
                                   ,streamA: iterate({initial: 0.0
-                                                    ,next: function (local_172) {
-                                                       return _2b_({infixl: local_172
+                                                    ,next: function (local_177) {
+                                                       return _2b_({infixl: local_177
                                                                    ,infixr: 1.0});
                                                     }})})});
    switch (x.tag)
    {
      case "Just":
-       var local_173 = x.data;
-       return local_173.a;
+       var local_178 = x.data;
+       return local_178.a;
      case "Nothing":
-       var local_174 = x.data;
+       var local_179 = x.data;
        return 0.0;
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var parseClassLevels = function (local_87) {
-   return toArray(concat(map({stream: findSubTrees({which: function (local_88) {
-                                                      return isTree({tree: local_88
+var parseClassLevels = function (local_92) {
+   return toArray(concat(map({stream: findSubTrees({which: function (local_93) {
+                                                      return isTree({tree: local_93
                                                                     ,ofTag: rts.bytesFromAscii("style")});
                                                    }
-                                                   ,tree1: local_87})
-                             ,mapping: function (local_99) {
+                                                   ,tree1: local_92})
+                             ,mapping: function (local_104) {
                                 var styleText = htmlText(item1({index: 0.0
-                                                               ,object: local_99.subTrees}));
+                                                               ,object: local_104.subTrees}));
                                 return concat(map({stream: split({text8: styleText
                                                                  ,seperator: rts.bytesFromAscii("}")})
-                                                  ,mapping: function (local_128) {
-                                                     var local_129 =
-                                                     toArray(split({text8: local_128
+                                                  ,mapping: function (local_133) {
+                                                     var local_134 =
+                                                     toArray(split({text8: local_133
                                                                    ,seperator: rts.bytesFromAscii("background-color:#")}));
                                                      var x =
-                                                     _3d__3d_({infixl: length1(local_129)
+                                                     _3d__3d_({infixl: length1(local_134)
                                                               ,infixr: 2.0});
                                                      switch (x.tag)
                                                      {
                                                        case "False":
-                                                         var local_130 = x.data;
+                                                         var local_135 = x.data;
                                                          return {tag: "Empty",data: {}};
                                                        case "True":
-                                                         var local_131 = x.data;
+                                                         var local_136 = x.data;
                                                          return {tag: "NonEmpty"
                                                                 ,data: {head: {key: textUntil({text12: textAfter({text10: item1({index: 0.0
-                                                                                                                                ,object: local_129})
+                                                                                                                                ,object: local_134})
                                                                                                                  ,sep3: rts.bytesFromAscii(".")})
                                                                                               ,sep4: rts.bytesFromAscii("{")})
                                                                               ,val: levelForColor(parseHexBytes(textUntil({text12: item1({index: 1.0
-                                                                                                                                         ,object: local_129})
+                                                                                                                                         ,object: local_134})
                                                                                                                           ,sep4: rts.bytesFromAscii(";")})))}
-                                                                       ,tail: function (local_175) {
+                                                                       ,tail: function (local_180) {
                                                                           return {tag: "Empty"
                                                                                  ,data: {}};
                                                                        }}};
@@ -1050,75 +1081,75 @@ var parseClassLevels = function (local_87) {
                                                   }}));
                              }})));
 };
-var drop = function (local_177) {
-   var x = _2264_({infixl: local_177.count,infixr: 0.0});
+var drop = function (local_182) {
+   var x = _2264_({infixl: local_182.count,infixr: 0.0});
    switch (x.tag)
    {
      case "False":
-       var local_178 = x.data;
-       var x = local_177.stream;
+       var local_183 = x.data;
+       var x = local_182.stream;
        switch (x.tag)
        {
          case "NonEmpty":
-           var local_179 = x.data;
-           return drop({stream: local_179.tail({})
-                       ,count: _2d_({infixl: local_177.count,infixr: 1.0})});
+           var local_184 = x.data;
+           return drop({stream: local_184.tail({})
+                       ,count: _2d_({infixl: local_182.count,infixr: 1.0})});
          case "Empty":
-           var local_180 = x.data;
+           var local_185 = x.data;
            return {tag: "Empty",data: {}};
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "True":
-       var local_181 = x.data;
-       return local_177.stream;
+       var local_186 = x.data;
+       return local_182.stream;
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var max = function (local_194) {
-   var x = _2265_({infixl: local_194.__x3,infixr: local_194.y});
+var max = function (local_199) {
+   var x = _2265_({infixl: local_199.__x3,infixr: local_199.y});
    switch (x.tag)
    {
      case "False":
-       var local_195 = x.data;
-       return local_194.y;
+       var local_200 = x.data;
+       return local_199.y;
      case "True":
-       var local_196 = x.data;
-       return local_194.__x3;
+       var local_201 = x.data;
+       return local_199.__x3;
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var nonEmptyFold = function (local_197) {
-   var x = local_197.stream;
+var nonEmptyFold = function (local_202) {
+   var x = local_202.stream;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_198 = x.data;
+       var local_203 = x.data;
        return {tag: "Just"
-              ,data: fold({stream: local_198.tail({})
-                          ,initial: local_198.head
-                          ,binop: local_197.binop})};
+              ,data: fold({stream: local_203.tail({})
+                          ,initial: local_203.head
+                          ,binop: local_202.binop})};
      case "Empty":
-       var local_199 = x.data;
+       var local_204 = x.data;
        return {tag: "Nothing",data: {}};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var maximum = function (stream9) {
-   return nonEmptyFold({stream: stream9
-                       ,binop: function (local_193) {
-                          return max({y: local_193.item,__x3: local_193.acc});
+var maximum = function (stream11) {
+   return nonEmptyFold({stream: stream11
+                       ,binop: function (local_198) {
+                          return max({y: local_198.item,__x3: local_198.acc});
                        }});
 };
 var parseClassesTable = function (source1) {
    var parsedHtml = parseHtmlElem(source1).val;
    var classLevels = parseClassLevels(parsedHtml);
    var table = function () {
-                  var x = drop({stream: findSubTrees({which: function (local_176) {
-                                                        return isTree({tree: local_176
+                  var x = drop({stream: findSubTrees({which: function (local_181) {
+                                                        return isTree({tree: local_181
                                                                       ,ofTag: rts.bytesFromAscii("table")});
                                                      }
                                                      ,tree1: parsedHtml})
@@ -1126,27 +1157,27 @@ var parseClassesTable = function (source1) {
                   switch (x.tag)
                   {
                     case "NonEmpty":
-                      var local_182 = x.data;
-                      return local_182.head;
+                      var local_187 = x.data;
+                      return local_187.head;
                     case "Empty":
-                      var local_183 = x.data;
+                      var local_188 = x.data;
                       throw "Reached hole!";
                     default:
                       throw "Unhandled case? This is a type error!";
                   }
                }();
-   return map({stream: drop({stream: findSubTrees({which: function (local_184) {
-                                                     return isTree({tree: local_184
+   return map({stream: drop({stream: findSubTrees({which: function (local_189) {
+                                                     return isTree({tree: local_189
                                                                    ,ofTag: rts.bytesFromAscii("tr")});
                                                   }
                                                   ,tree1: table})
                             ,count: 1.0})
-              ,mapping: function (local_185) {
-                 var cells = toArray(findSubTrees({which: function (local_186) {
-                                                     return isTree({tree: local_186
+              ,mapping: function (local_190) {
+                 var cells = toArray(findSubTrees({which: function (local_191) {
+                                                     return isTree({tree: local_191
                                                                    ,ofTag: rts.bytesFromAscii("td")});
                                                   }
-                                                  ,tree1: local_185}));
+                                                  ,tree1: local_190}));
                  var whenItems = item1({index: 0.0,object: cells}).subTrees;
                  return {description: {eng: htmlText(item1({index: 4.0,object: cells}))
                                       ,heb: htmlText(item1({index: 7.0,object: cells}))}
@@ -1155,28 +1186,28 @@ var parseClassesTable = function (source1) {
                            switch (x.tag)
                            {
                              case "Data":
-                               var local_187 = x.data;
+                               var local_192 = x.data;
                                throw "Reached hole!";
                              case "Tag":
-                               var local_188 = x.data;
+                               var local_193 = x.data;
                                var x =
-                               maximum(map({stream: split({text8: textUntil({text12: textAfter({text10: local_188
+                               maximum(map({stream: split({text8: textUntil({text12: textAfter({text10: local_193
                                                                                                ,sep3: rts.bytesFromAscii(" class=\"")})
                                                                             ,sep4: rts.bytesFromAscii("\"")})
                                                           ,seperator: rts.bytesFromAscii(" ")})
-                                           ,mapping: function (local_189) {
-                                              var x = first({that: function (local_190) {
-                                                               return _3d__3d_({infixl: local_189
-                                                                               ,infixr: local_190.key});
+                                           ,mapping: function (local_194) {
+                                              var x = first({that: function (local_195) {
+                                                               return _3d__3d_({infixl: local_194
+                                                                               ,infixr: local_195.key});
                                                             }
                                                             ,stream: fromArray(classLevels)});
                                               switch (x.tag)
                                               {
                                                 case "Just":
-                                                  var local_191 = x.data;
-                                                  return local_191.val;
+                                                  var local_196 = x.data;
+                                                  return local_196.val;
                                                 case "Nothing":
-                                                  var local_192 = x.data;
+                                                  var local_197 = x.data;
                                                   return 0.0;
                                                 default:
                                                   throw "Unhandled case? This is a type error!";
@@ -1187,7 +1218,7 @@ var parseClassesTable = function (source1) {
                                  case "Just":
                                    return id(x.data);
                                  case "Nothing":
-                                   var local_200 = x.data;
+                                   var local_205 = x.data;
                                    throw "Reached hole!";
                                  default:
                                    throw "Unhandled case? This is a type error!";
@@ -1207,30 +1238,29 @@ var parseClassesTable = function (source1) {
                         ,who: htmlText(item1({index: 2.0,object: cells}))};
               }});
 };
-var _2260_ = rts.builtins.Prelude["/="];
-var filter = function (local_204) {
-   var x = local_204.stream;
+var filter = function (local_207) {
+   var x = local_207.stream;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_205 = x.data;
-       var rest1 = function (local_206) {
-          return filter({stream: local_205.tail({}),keep: local_204.keep});
+       var local_208 = x.data;
+       var rest1 = function (local_209) {
+          return filter({stream: local_208.tail({}),keep: local_207.keep});
        };
-       var x = local_204.keep(local_205.head);
+       var x = local_207.keep(local_208.head);
        switch (x.tag)
        {
          case "False":
-           var local_207 = x.data;
+           var local_210 = x.data;
            return rest1({});
          case "True":
-           var local_208 = x.data;
-           return {tag: "NonEmpty",data: {head: local_205.head,tail: rest1}};
+           var local_211 = x.data;
+           return {tag: "NonEmpty",data: {head: local_208.head,tail: rest1}};
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "Empty":
-       var local_209 = x.data;
+       var local_212 = x.data;
        return {tag: "Empty",data: {}};
      default:
        throw "Unhandled case? This is a type error!";
@@ -1241,70 +1271,70 @@ var langEnglish =
                        ,seperator: rts.bytesFromAscii(" ")}))
 ,dir: rts.bytesFromAscii("ltr")
 ,fromEng: id
-,getLang: function (local_210) {
-   return local_210.eng;
+,getLang: function (local_213) {
+   return local_213.eng;
 }};
 var xmlTagWithData = function (__data) {
    return {root: {tag: "Tag",data: __data.__tag1}
           ,subTrees: toArray({tag: "NonEmpty"
                              ,data: {head: leaf({tag: "Data",data: __data.contents})
-                                    ,tail: function (local_212) {
+                                    ,tail: function (local_215) {
                                        return {tag: "Empty",data: {}};
                                     }}})};
 };
 var classesTableHeader = function (lang1) {
    return {root: {tag: "Tag",data: rts.bytesFromAscii("tr")}
           ,subTrees: toArray(map({stream: fromArray(lang1.header)
-                                 ,mapping: function (local_211) {
+                                 ,mapping: function (local_214) {
                                     return xmlTagWithData({__tag1: rts.bytesFromAscii("th")
-                                                          ,contents: local_211});
+                                                          ,contents: local_214});
                                  }}))};
 };
-var group = function (stream11) {
-   var x = stream11.stream10;
+var group = function (stream13) {
+   var x = stream13.stream12;
    switch (x.tag)
    {
      case "NonEmpty":
-       var local_215 = x.data;
-       var single = function (local_216) {
+       var local_218 = x.data;
+       var single = function (local_219) {
           return {tag: "NonEmpty"
-                 ,data: {head: local_215.head
-                        ,tail: function (local_217) {
+                 ,data: {head: local_218.head
+                        ,tail: function (local_220) {
                            return {tag: "Empty",data: {}};
                         }}};
        };
-       var t = local_215.tail({});
+       var t = local_218.tail({});
        var x = t;
        switch (x.tag)
        {
          case "NonEmpty":
-           var local_218 = x.data;
-           var rest2 = function (local_219) {
-              return group({stream10: t,on: stream11.on});
+           var local_221 = x.data;
+           var rest2 = function (local_222) {
+              return group({stream12: t,on: stream13.on});
            };
-           var x = _3d__3d_({infixl: stream11.on(local_215.head)
-                            ,infixr: stream11.on(local_218.head)});
+           var x = _3d__3d_({infixl: stream13.on(local_218.head)
+                            ,infixr: stream13.on(local_221.head)});
            switch (x.tag)
            {
              case "False":
-               var local_220 = x.data;
+               var local_223 = x.data;
                return {tag: "NonEmpty",data: {head: single({}),tail: rest2}};
              case "True":
-               var local_221 = x.data;
+               var local_224 = x.data;
                var x = rest2({});
                switch (x.tag)
                {
                  case "NonEmpty":
-                   var local_222 = x.data;
+                   var local_225 = x.data;
                    return {tag: "NonEmpty"
                           ,data: {head: {tag: "NonEmpty"
-                                        ,data: {head: local_215.head
-                                               ,tail: function (local_223) {
-                                                  return local_222.head;
+                                        ,data: {head: local_218.head
+                                               ,tail: function (local_226) {
+                                                  return local_225.head;
                                                }}}
-                                 ,tail: local_222.tail}};
+                                 ,tail: local_225.tail}};
                  case "Empty":
-                   var local_224 = x.data;
+                   var local_227 = x.data;
                    throw "Reached hole!";
                  default:
                    throw "Unhandled case? This is a type error!";
@@ -1313,39 +1343,39 @@ var group = function (stream11) {
                throw "Unhandled case? This is a type error!";
            }
          case "Empty":
-           var local_225 = x.data;
+           var local_228 = x.data;
            return {tag: "NonEmpty"
                   ,data: {head: single({})
-                         ,tail: function (local_226) {
+                         ,tail: function (local_229) {
                             return {tag: "Empty",data: {}};
                          }}};
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "Empty":
-       var local_227 = x.data;
+       var local_230 = x.data;
        return {tag: "Empty",data: {}};
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var classesGroupTimeHeader = function (local_228) {
+var classesGroupTimeHeader = function (local_231) {
    var w = function () {
-              var x = local_228.group2;
+              var x = local_231.group2;
               switch (x.tag)
               {
                 case "NonEmpty":
-                  var local_229 = x.data;
-                  return local_229.head.when;
+                  var local_232 = x.data;
+                  return local_232.head.when;
                 case "Empty":
-                  var local_230 = x.data;
+                  var local_233 = x.data;
                   throw "Reached hole!";
                 default:
                   throw "Unhandled case? This is a type error!";
               }
            }();
    return xmlTagWithData({__tag1: rts.bytesFromAscii("td colspan=4 class=\"when\"")
-                         ,contents: _2b__2b_({a: _2b__2b_({a: local_228.lang2.fromEng(w.day)
+                         ,contents: _2b__2b_({a: _2b__2b_({a: local_231.lang2.fromEng(w.day)
                                                           ,b: rts.bytesFromAscii(" ")})
                                              ,b: w.timeOfDay})});
 };
@@ -1353,25 +1383,25 @@ var _2f__2f_ = rts.builtins.Prelude["div"];
 var _25_ = rts.builtins.Prelude["mod"];
 var digits = function (__number2) {
    return map({stream: take({stream: iterate({initial: __number2.__number1
-                                             ,next: function (local_236) {
-                                                return _2f__2f_({infixl: local_236
+                                             ,next: function (local_239) {
+                                                return _2f__2f_({infixl: local_239
                                                                 ,infixr: __number2.base1});
                                              }})
-                            ,__while: function (local_237) {
-                               return _3e_({infixl: local_237,infixr: 0.0});
+                            ,__while: function (local_240) {
+                               return _3e_({infixl: local_240,infixr: 0.0});
                             }})
-              ,mapping: function (local_238) {
-                 return _25_({infixl: local_238,infixr: __number2.base1});
+              ,mapping: function (local_241) {
+                 return _25_({infixl: local_241,infixr: __number2.base1});
               }});
 };
-var reverse = function (stream12) {
-   return fold({stream: stream12
+var reverse = function (stream14) {
+   return fold({stream: stream14
                ,initial: {tag: "Empty",data: {}}
-               ,binop: function (local_239) {
+               ,binop: function (local_242) {
                   return {tag: "NonEmpty"
-                         ,data: {head: local_239.item
-                                ,tail: function (local_240) {
-                                   return local_239.acc;
+                         ,data: {head: local_242.item
+                                ,tail: function (local_243) {
+                                   return local_242.acc;
                                 }}};
                }});
 };
@@ -1381,33 +1411,34 @@ var showInt = function (__number) {
    switch (x.tag)
    {
      case "False":
-       var local_234 = x.data;
+       var local_237 = x.data;
        var x = _3c_({infixl: __number,infixr: 0.0});
        switch (x.tag)
        {
          case "False":
-           var local_235 = x.data;
-           return toBytes(map({stream: reverse(digits({__number1: __number,base1: 10.0}))
-                              ,mapping: function (local_241) {
-                                 return _2b_({infixl: local_241,infixr: 48.0});
-                              }}));
+           var local_238 = x.data;
+           return toBytes(toArray(map({stream: reverse(digits({__number1: __number
+                                                              ,base1: 10.0}))
+                                      ,mapping: function (local_244) {
+                                         return _2b_({infixl: local_244,infixr: 48.0});
+                                      }})));
          case "True":
-           var local_242 = x.data;
+           var local_245 = x.data;
            return _2b__2b_({a: rts.bytesFromAscii("-"),b: showInt(negate(__number))});
          default:
            throw "Unhandled case? This is a type error!";
        }
      case "True":
-       var local_243 = x.data;
+       var local_246 = x.data;
        return rts.bytesFromAscii("0");
      default:
        throw "Unhandled case? This is a type error!";
    }
 };
-var classRow = function (local_233) {
+var classRow = function (local_236) {
    return {root: {tag: "Tag"
                  ,data: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("tr class=\"level-")
-                                              ,b: showInt(local_233.__class.level)})
+                                              ,b: showInt(local_236.__class.level)})
                                  ,b: rts.bytesFromAscii("\"")})}
           ,subTrees: toArray({tag: "NonEmpty"
                              ,data: {head: function (where1) {
@@ -1419,46 +1450,46 @@ var classRow = function (local_233) {
                                                  switch (x.tag)
                                                  {
                                                    case "Just":
-                                                     var local_244 = x.data;
+                                                     var local_247 = x.data;
                                                      return {tag: "NonEmpty"
                                                             ,data: {head: xmlTagWithData({__tag1: rts.bytesFromAscii("p")
                                                                                          ,contents: slice1({object: where1
                                                                                                            ,start: 0.0
-                                                                                                           ,stop: local_244})})
-                                                                   ,tail: function (local_245) {
+                                                                                                           ,stop: local_247})})
+                                                                   ,tail: function (local_248) {
                                                                       return {tag: "NonEmpty"
                                                                              ,data: {head: xmlTagWithData({__tag1: rts.bytesFromAscii("p")
                                                                                                           ,contents: slice1({object: where1
-                                                                                                                            ,start: _2b_({infixl: local_244
+                                                                                                                            ,start: _2b_({infixl: local_247
                                                                                                                                          ,infixr: 1.0})
                                                                                                                             ,stop: length(where1)})})
-                                                                                    ,tail: function (local_246) {
+                                                                                    ,tail: function (local_249) {
                                                                                        return {tag: "Empty"
                                                                                               ,data: {}};
                                                                                     }}};
                                                                    }}};
                                                    case "Nothing":
-                                                     var local_247 = x.data;
+                                                     var local_250 = x.data;
                                                      return map({stream: split({text8: where1
                                                                                ,seperator: rts.bytesFromAscii("\n")})
-                                                                ,mapping: function (local_248) {
+                                                                ,mapping: function (local_251) {
                                                                    return xmlTagWithData({__tag1: rts.bytesFromAscii("p")
-                                                                                         ,contents: local_248});
+                                                                                         ,contents: local_251});
                                                                 }});
                                                    default:
                                                      throw "Unhandled case? This is a type error!";
                                                  }
                                               }())};
-                                    }(local_233.lang3.fromEng(local_233.__class.where))
-                                    ,tail: function (local_249) {
+                                    }(local_236.lang3.fromEng(local_236.__class.where))
+                                    ,tail: function (local_252) {
                                        return {tag: "NonEmpty"
                                               ,data: {head: xmlTagWithData({__tag1: rts.bytesFromAscii("td")
-                                                                           ,contents: local_233.lang3.fromEng(local_233.__class.who)})
-                                                     ,tail: function (local_250) {
+                                                                           ,contents: local_236.lang3.fromEng(local_236.__class.who)})
+                                                     ,tail: function (local_253) {
                                                         var desc =
-                                                        local_233.lang3.getLang(local_233.__class.description);
+                                                        local_236.lang3.getLang(local_236.__class.description);
                                                         var what1 =
-                                                        local_233.lang3.getLang(local_233.__class.what);
+                                                        local_236.lang3.getLang(local_236.__class.what);
                                                         return {tag: "NonEmpty"
                                                                ,data: {head: {root: {tag: "Tag"
                                                                                     ,data: rts.bytesFromAscii("td")}
@@ -1469,28 +1500,28 @@ var classRow = function (local_233) {
                                                                                 switch (x.tag)
                                                                                 {
                                                                                   case "False":
-                                                                                    var local_251 =
+                                                                                    var local_254 =
                                                                                     x.data;
                                                                                     return {tag: "NonEmpty"
                                                                                            ,data: {head: xmlTagWithData({__tag1: rts.bytesFromAscii("p class=\"workshop\"")
                                                                                                                         ,contents: _2b__2b_({a: what1
                                                                                                                                             ,b: rts.bytesFromAscii(":")})})
-                                                                                                  ,tail: function (local_252) {
+                                                                                                  ,tail: function (local_255) {
                                                                                                      return {tag: "NonEmpty"
                                                                                                             ,data: {head: xmlTagWithData({__tag1: rts.bytesFromAscii("p")
                                                                                                                                          ,contents: desc})
-                                                                                                                   ,tail: function (local_253) {
+                                                                                                                   ,tail: function (local_256) {
                                                                                                                       return {tag: "Empty"
                                                                                                                              ,data: {}};
                                                                                                                    }}};
                                                                                                   }}};
                                                                                   case "True":
-                                                                                    var local_254 =
+                                                                                    var local_257 =
                                                                                     x.data;
                                                                                     return {tag: "NonEmpty"
                                                                                            ,data: {head: leaf({tag: "Data"
                                                                                                               ,data: what1})
-                                                                                                  ,tail: function (local_255) {
+                                                                                                  ,tail: function (local_258) {
                                                                                                      return {tag: "Empty"
                                                                                                             ,data: {}};
                                                                                                   }}};
@@ -1498,11 +1529,11 @@ var classRow = function (local_233) {
                                                                                     throw "Unhandled case? This is a type error!";
                                                                                 }
                                                                              }())}
-                                                                      ,tail: function (local_256) {
+                                                                      ,tail: function (local_259) {
                                                                          return {tag: "NonEmpty"
                                                                                 ,data: {head: xmlTagWithData({__tag1: rts.bytesFromAscii("td")
-                                                                                                             ,contents: local_233.lang3.getLang(local_233.__class.prereqs)})
-                                                                                       ,tail: function (local_257) {
+                                                                                                             ,contents: local_236.lang3.getLang(local_236.__class.prereqs)})
+                                                                                       ,tail: function (local_260) {
                                                                                           return {tag: "Empty"
                                                                                                  ,data: {}};
                                                                                        }}};
@@ -1511,12 +1542,12 @@ var classRow = function (local_233) {
                                     }}})};
 };
 var classesTableStyle =
-rts.bytesFromAscii(".level-0 { background-color: #f0f0f0; }\n.level-1 { background-color: #d9ead3; }\n.level-2 { background-color: #fff2cc; }\n.level-3 { background-color: #ead1dc; }\n.level-4 { background-color: #ea9999; }\ntable { border-collapse: collapse; }\nth {\n  font-size: 125%;\n  padding: 5pt;\n}\ntd {\n  border: 2pt solid white;\n  padding: 3pt;\n}\np {\n  margin-top: 1px;\n  margin-bottom: 1px;\n}\n.when {\n  font-size: 150%;\n  padding: 5pt;\n  border-top: 3pt solid black;\n}\n.workshop { font-weight: bold; }\n.where { white-space: nowrap; }\n");
-var styleElem = function (local_258) {
+rts.bytesFromAscii(".level-1 { background-color: #d9ead3; }\n.level-2 { background-color: #fff2cc; }\n.level-3 { background-color: #ead1dc; }\n.level-4 { background-color: #ea9999; }\ntable { border-collapse: collapse; }\nth {\n  font-size: 125%;\n  padding: 5pt;\n}\ntd {\n  border: 2pt solid white;\n  padding: 3pt;\n}\np {\n  margin-top: 1px;\n  margin-bottom: 1px;\n}\n.when {\n  font-size: 150%;\n  padding: 5pt;\n  border-top: 3pt solid black;\n}\n.workshop { font-weight: bold; }\n.where { white-space: nowrap; }\n");
+var styleElem = function (local_261) {
    return {root: {tag: "Tag",data: rts.bytesFromAscii("style type=\"text/css\"")}
           ,subTrees: toArray({tag: "NonEmpty"
-                             ,data: {head: leaf({tag: "Data",data: local_258})
-                                    ,tail: function (local_259) {
+                             ,data: {head: leaf({tag: "Data",data: local_261})
+                                    ,tail: function (local_262) {
                                        return {tag: "Empty",data: {}};
                                     }}})};
 };
@@ -1530,13 +1561,13 @@ var htmlDoc = function (body1) {
                                            ,subTrees: toArray({tag: "NonEmpty"
                                                               ,data: {head: leaf({tag: "Tag"
                                                                                  ,data: rts.bytesFromAscii("meta charset=\"utf-8\"")})
-                                                                     ,tail: function (local_264) {
+                                                                     ,tail: function (local_267) {
                                                                         return body1.header1;
                                                                      }}})}
-                                    ,tail: function (local_265) {
+                                    ,tail: function (local_268) {
                                        return {tag: "NonEmpty"
                                               ,data: {head: body1.body
-                                                     ,tail: function (local_266) {
+                                                     ,tail: function (local_269) {
                                                         return {tag: "Empty",data: {}};
                                                      }}};
                                     }}})};
@@ -1545,19 +1576,19 @@ var formatClassesTable = function (classes2) {
    var table1 = {root: {tag: "Tag",data: rts.bytesFromAscii("table")}
                 ,subTrees: toArray({tag: "NonEmpty"
                                    ,data: {head: classesTableHeader(classes2.lang)
-                                          ,tail: function (local_213) {
-                                             return concat(map({stream: group({stream10: classes2.classes1
-                                                                              ,on: function (local_214) {
-                                                                                 return local_214.when;
+                                          ,tail: function (local_216) {
+                                             return concat(map({stream: group({stream12: classes2.classes1
+                                                                              ,on: function (local_217) {
+                                                                                 return local_217.when;
                                                                               }})
                                                                ,mapping: function (group1) {
                                                                   return {tag: "NonEmpty"
                                                                          ,data: {head: classesGroupTimeHeader({lang2: classes2.lang
                                                                                                               ,group2: group1})
-                                                                                ,tail: function (local_231) {
+                                                                                ,tail: function (local_234) {
                                                                                    return map({stream: group1
-                                                                                              ,mapping: function (local_232) {
-                                                                                                 return classRow({__class: local_232
+                                                                                              ,mapping: function (local_235) {
+                                                                                                 return classRow({__class: local_235
                                                                                                                  ,lang3: classes2.lang});
                                                                                               }});
                                                                                 }}};
@@ -1565,10 +1596,10 @@ var formatClassesTable = function (classes2) {
                                           }}})};
    return htmlDoc({header1: {tag: "NonEmpty"
                             ,data: {head: styleElem(classesTableStyle)
-                                   ,tail: function (local_260) {
+                                   ,tail: function (local_263) {
                                       return {tag: "NonEmpty"
                                              ,data: {head: analyticsCode
-                                                    ,tail: function (local_261) {
+                                                    ,tail: function (local_264) {
                                                        return {tag: "Empty",data: {}};
                                                     }}};
                                    }}}
@@ -1576,18 +1607,18 @@ var formatClassesTable = function (classes2) {
                                 ,data: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("body dir=\"")
                                                              ,b: classes2.lang.dir})
                                                 ,b: rts.bytesFromAscii("\"")})}
-                         ,subTrees: toArray(_2b__2b_2({l: fromArray(classes2.headerMessages)
-                                                      ,r: function (local_262) {
+                         ,subTrees: toArray(_2b__2b_2({infixl: fromArray(classes2.headerMessages)
+                                                      ,infixr: function (local_265) {
                                                          return {tag: "NonEmpty"
                                                                 ,data: {head: table1
-                                                                       ,tail: function (local_263) {
+                                                                       ,tail: function (local_266) {
                                                                           return {tag: "Empty"
                                                                                  ,data: {}};
                                                                        }}};
                                                       }}))}});
 };
-var htmlToText = function (local_267) {
-   var x = local_267.root;
+var htmlToText = function (local_270) {
+   var x = local_270.root;
    switch (x.tag)
    {
      case "Data":
@@ -1596,33 +1627,33 @@ var htmlToText = function (local_267) {
        var __tag2 = x.data;
        return join({texts: {tag: "NonEmpty"
                            ,data: {head: rts.bytesFromAscii("<")
-                                  ,tail: function (local_268) {
+                                  ,tail: function (local_271) {
                                      return {tag: "NonEmpty"
                                             ,data: {head: __tag2
-                                                   ,tail: function (local_269) {
-                                                      var sub = local_267.subTrees;
+                                                   ,tail: function (local_272) {
+                                                      var sub = local_270.subTrees;
                                                       var x =
                                                       _3d__3d_({infixl: length1(sub)
                                                                ,infixr: 0.0});
                                                       switch (x.tag)
                                                       {
                                                         case "False":
-                                                          var local_270 = x.data;
+                                                          var local_273 = x.data;
                                                           return {tag: "NonEmpty"
                                                                  ,data: {head: rts.bytesFromAscii(">")
-                                                                        ,tail: function (local_271) {
-                                                                           return _2b__2b_2({l: map({stream: fromArray(sub)
-                                                                                                    ,mapping: htmlToText})
-                                                                                            ,r: function (local_272) {
+                                                                        ,tail: function (local_274) {
+                                                                           return _2b__2b_2({infixl: map({stream: fromArray(sub)
+                                                                                                         ,mapping: htmlToText})
+                                                                                            ,infixr: function (local_275) {
                                                                                                return {tag: "NonEmpty"
                                                                                                       ,data: {head: rts.bytesFromAscii("</")
-                                                                                                             ,tail: function (local_273) {
+                                                                                                             ,tail: function (local_276) {
                                                                                                                 return {tag: "NonEmpty"
                                                                                                                        ,data: {head: xmlTagName(__tag2)
-                                                                                                                              ,tail: function (local_274) {
+                                                                                                                              ,tail: function (local_277) {
                                                                                                                                  return {tag: "NonEmpty"
                                                                                                                                         ,data: {head: rts.bytesFromAscii(">")
-                                                                                                                                               ,tail: function (local_275) {
+                                                                                                                                               ,tail: function (local_278) {
                                                                                                                                                   return {tag: "Empty"
                                                                                                                                                          ,data: {}};
                                                                                                                                                }}};
@@ -1631,10 +1662,10 @@ var htmlToText = function (local_267) {
                                                                                             }});
                                                                         }}};
                                                         case "True":
-                                                          var local_276 = x.data;
+                                                          var local_279 = x.data;
                                                           return {tag: "NonEmpty"
                                                                  ,data: {head: rts.bytesFromAscii("/>")
-                                                                        ,tail: function (local_277) {
+                                                                        ,tail: function (local_280) {
                                                                            return {tag: "Empty"
                                                                                   ,data: {}};
                                                                         }}};
@@ -1648,26 +1679,10 @@ var htmlToText = function (local_267) {
        throw "Unhandled case? This is a type error!";
    }
 };
-var newMutArray = rts.builtins.Mut.Array["fromStream"];
-var appendMutArray = rts.builtins.Mut.Array["append"];
-var __return1 = rts.builtins.Mut["return"];
-var _3b_1 = rts.builtins.Mut["bind"];
-var sequence__ = function (stream13) {
-   return foldLazy({stream: stream13
-                   ,initial: function (local_284) {
-                      return __return1({});
-                   }
-                   ,binop: function (local_285) {
-                      return _3b_1({infixl: local_285.item
-                                   ,infixr: function (local_286) {
-                                      return local_285.rest({});
-                                   }});
-                   }});
-};
 var length2 = rts.builtins.Mut.Array["length"];
 var readMutArray = rts.builtins.Mut.Array["read"];
-var sequence = function (stream14) {
-   return foldLazy({stream: stream14
+var sequence = function (stream15) {
+   return foldLazy({stream: stream15
                    ,initial: function (local_288) {
                       return __return1({tag: "Empty",data: {}});
                    }
@@ -1685,14 +1700,14 @@ var sequence = function (stream14) {
                                    }});
                    }});
 };
-var freezeMutArray = function (arr) {
-   return _3b_1({infixl: length2(arr)
+var freezeMutArray = function (arr1) {
+   return _3b_1({infixl: length2(arr1)
                 ,infixr: function (len3) {
                    return _3b_1({infixl: sequence(map({stream: _2e__2e_({start: 0.0
                                                                         ,stop: len3})
                                                       ,mapping: function (i1) {
                                                          return readMutArray({index: i1
-                                                                             ,object: arr});
+                                                                             ,object: arr1});
                                                       }}))
                                 ,infixr: function (local_293) {
                                    return __return1(toArray(local_293));
@@ -1705,12 +1720,12 @@ var sort = function (__array2) {
    switch (x.tag)
    {
      case "False":
-       var local_281 = x.data;
+       var local_284 = x.data;
        var pivot = item1({index: 0.0,object: __array2.__array1});
        var pivotVal = __array2.on1(pivot);
-       return runMut(_3b_1({infixl: newMutArray({tag: "Empty",data: {}})
+       return runMut(_3b_1({infixl: newMutArray
                            ,infixr: function (less) {
-                              return _3b_1({infixl: newMutArray({tag: "Empty",data: {}})
+                              return _3b_1({infixl: newMutArray
                                            ,infixr: function (more) {
                                               return _3b_1({infixl: sequence__(map({stream: _2e__2e_({start: 1.0
                                                                                                      ,stop: length1(__array2.__array1)})
@@ -1725,11 +1740,11 @@ var sort = function (__array2) {
                                                                                                                switch (x.tag)
                                                                                                                {
                                                                                                                  case "False":
-                                                                                                                   var local_282 =
+                                                                                                                   var local_285 =
                                                                                                                    x.data;
                                                                                                                    return more;
                                                                                                                  case "True":
-                                                                                                                   var local_283 =
+                                                                                                                   var local_286 =
                                                                                                                    x.data;
                                                                                                                    return less;
                                                                                                                  default:
@@ -1776,13 +1791,13 @@ var sort = function (__array2) {
        throw "Unhandled case? This is a type error!";
    }
 };
-var hebrewTranslations = function (local_279) {
-                            return sort({__array1: toArray(local_279)
-                                        ,on1: function (local_280) {
-                                           return local_280.key1;
+var hebrewTranslations = function (local_282) {
+                            return sort({__array1: toArray(local_282)
+                                        ,on1: function (local_283) {
+                                           return local_283.key1;
                                         }});
-                         }(zipWith({combineAB: function (local_278) {
-                                      return {key1: local_278.a,val1: local_278.b};
+                         }(zipWith({combineAB: function (local_281) {
+                                      return {key1: local_281.a,val1: local_281.b};
                                    }
                                    ,streamB: split({text8: rts.bytes([215
                                                                      ,168
@@ -2150,7 +2165,7 @@ var hebrewTranslations = function (local_279) {
                                                                      ,153
                                                                      ,59
                                                                      ,215
-                                                                     ,162
+                                                                     ,144
                                                                      ,215
                                                                      ,153
                                                                      ,215
@@ -2405,27 +2420,7 @@ var hebrewTranslations = function (local_279) {
                                                                      ,215
                                                                      ,153
                                                                      ,215
-                                                                     ,148
-                                                                     ,59
-                                                                     ,215
-                                                                     ,158
-                                                                     ,215
-                                                                     ,153
-                                                                     ,215
-                                                                     ,168
-                                                                     ,215
-                                                                     ,148
-                                                                     ,59
-                                                                     ,215
-                                                                     ,144
-                                                                     ,215
-                                                                     ,145
-                                                                     ,215
-                                                                     ,153
-                                                                     ,215
-                                                                     ,169
-                                                                     ,215
-                                                                     ,146])
+                                                                     ,148])
                                                    ,seperator: rts.bytesFromAscii(";")})
                                    ,streamA: split({text8: rts.bytes([83
                                                                      ,117
@@ -2827,20 +2822,7 @@ var hebrewTranslations = function (local_279) {
                                                                      ,76
                                                                      ,105
                                                                      ,121
-                                                                     ,97
-                                                                     ,59
-                                                                     ,77
-                                                                     ,105
-                                                                     ,114
-                                                                     ,97
-                                                                     ,59
-                                                                     ,65
-                                                                     ,118
-                                                                     ,105
-                                                                     ,115
-                                                                     ,104
-                                                                     ,97
-                                                                     ,103])
+                                                                     ,97])
                                                    ,seperator: rts.bytesFromAscii(";")})}));
 var binarySearch = function (start2) {
    var x = _3d__3d_({infixl: start2.start1,infixr: start2.stop1});
@@ -3040,16 +3022,8 @@ var makeSchedules = function (source) {
    var classes = toArray(parseClassesTable(source));
    var make = function (filterLevel) {
       var filtered = filter({stream: fromArray(classes)
-                            ,keep: function (local_201) {
-                               return _26__26_({l: _7c__7c_({l: filterLevel.filterLevel1(local_201.level)
-                                                            ,r: function (local_202) {
-                                                               return _3d__3d_({infixl: local_201.what.eng
-                                                                               ,infixr: rts.bytesFromAscii("Free training")});
-                                                            }})
-                                               ,r: function (local_203) {
-                                                  return _2260_({infixl: local_201.what.eng
-                                                                ,infixr: rts.bytesFromAscii("")});
-                                               }});
+                            ,keep: function (local_206) {
+                               return filterLevel.filterLevel1(local_206.level);
                             }});
       return {eng: htmlToText(formatClassesTable({headerMessages: filterLevel.message.eng
                                                  ,lang: langEnglish
@@ -3103,8 +3077,8 @@ var makeSchedules = function (source) {
                         }
                         ,message: noMessage})
           ,lvl23: make({filterLevel1: function (local_323) {
-                          return _26__26_({l: _2265_({infixl: local_323,infixr: 2.0})
-                                          ,r: function (local_324) {
+                          return _26__26_({infixl: _2265_({infixl: local_323,infixr: 2.0})
+                                          ,infixr: function (local_324) {
                                              return _2264_({infixl: local_323
                                                            ,infixr: 3.0});
                                           }});
