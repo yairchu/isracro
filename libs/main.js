@@ -4421,14 +4421,11 @@ var httpServer = rts.memo(function () {
 var pestoval = rts.memo(function () {
                   return _3b_()({infixl: pestovalDb()
                                 ,infixr: function (database1) {
-                                  console.log("Connected to database");
                                    return _3b_()({infixl: environment()(rts.bytesFromAscii("PORT"))
                                                  ,infixr: function (port1) {
                                                     return httpServer()({host: rts.bytesFromAscii("0.0.0.0")
                                                                         ,port: function () {
                                                                            var x = port1;
-                                                                           console.log("Port:");
-                                                                           console.log(x);
                                                                            switch (x.tag)
                                                                            {
                                                                              case "just":
