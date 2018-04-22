@@ -1,33 +1,13 @@
+/* jshint node: true */
+/* jshint esversion: 6 */
 "use strict";
 
-process.stdout._handle.setBlocking(true);
-
-var conf = require('./rtsConfig.js')
-
-// Tag names must match those in Lamdu.Builtins.Anchors
-var trueTag = conf.builtinTagName('true');
-var falseTag = conf.builtinTagName('false');
-var objTag = conf.builtinTagName('object');
-var infixlTag = conf.builtinTagName('infixl');
-var infixrTag = conf.builtinTagName('infixr');
-var indexTag = conf.builtinTagName('index');
-var startTag = conf.builtinTagName('start');
-var stopTag = conf.builtinTagName('stop');
-var valTag = conf.builtinTagName('val');
-var oldPathTag = conf.builtinTagName('oldPath');
-var newPathTag = conf.builtinTagName('newPath');
-var filePathTag = conf.builtinTagName('filePath');
-var fileDescTag = conf.builtinTagName('fileDesc');
-var dataTag = conf.builtinTagName('data');
-var modeTag = conf.builtinTagName('mode');
-var sizeTag = conf.builtinTagName('size');
-var srcPathTag = conf.builtinTagName('srcPath');
-var dstPathTag = conf.builtinTagName('dstPath');
-var flagsTag = conf.builtinTagName('flags');
+var anchors = require("./anchors.js");
+var tags = anchors.tags;
 
 var bool = function (x) {
-    return {tag: x ? trueTag : falseTag, data: {}};
-}
+    return {tag: x ? tags.true : tags.false, data: {}};
+};
 
 // Assumes "a" and "b" are of same type, and it is an object created by
 // Lamdu's JS backend - this need not work for all JS objects..
@@ -42,71 +22,78 @@ var isEqual = function (a, b) {
         if (p != 'cacheId' && !isEqual(a[p], b[p]))
             return false;
     return true;
-}
+};
 
 var bytes = function (list) {
-    return new Uint8Array(list);;
-}
+    return new Uint8Array(list);
+};
 
-var encode = function() {
-    var cacheId = 0;
-    return function (x) {
-        var replacer = function(key, value) {
-            if (value == null) { // or undefined due to auto-coercion
-                return {};
-            }
-            if (Function.prototype.isPrototypeOf(value)) {
-                return { func: {} };
-            }
-            if (typeof value == "number" && !isFinite(value)) {
-                return { "number": String(value) }
-            }
-            if (typeof value != "object" || key === "array" || key === "bytes") {
-                return value;
-            }
-            if (value.hasOwnProperty("cacheId")) {
-                return { cachedVal: value.cacheId };
-            }
-            value.cacheId = cacheId++;
-            if (Array.prototype.isPrototypeOf(value)) {
-                return {
-                    array: value,
-                    cacheId: value.cacheId,
-                };
-            }
-            if (Uint8Array.prototype.isPrototypeOf(value)) {
-                return {
-                    bytes: Array.from(value),
-                    cacheId: value.cacheId,
-                };
-            }
-            return value;
+var bytesFromAscii = function (str) {
+    var arr = new Uint8Array(str.length);
+    for (var i = 0; i < str.length; ++i) {
+        arr[i] = str.charCodeAt(i);
+    }
+    return arr;
+};
+
+var toString = function (bytes) {
+    // This is a nodejs only method to convert a UInt8Array to a string.
+    // For the browser we'll need to augment this.
+    return Buffer(bytes).toString();
+};
+
+var makeOpaque = function (obj) {
+    obj.cacheId = -1;
+};
+
+var mutFunc = function (inner) {
+    return function(x) {
+        return function(cont) {
+            return cont(inner(x));
         };
-        return JSON.stringify(x, replacer);
     };
-}();
+};
+
+// Create a parameterized Mut action which returns nothing (void),
+// from a call with a nodejs callback which may get an error.
+var mutVoidWithError = function (inner) {
+    return function(x) {
+        return function(cont) {
+            inner(x)(err => {
+                if (err) throw err;
+                cont({});
+            });
+        };
+    };
+};
+
+var conf = require('./rtsConfig.js');
+
+var curried_error = function(name) {
+    return function(desc, globalId, exprId) {
+        return conf.error(name, desc, globalId, exprId);
+    };
+};
 
 module.exports = {
     logRepl: conf.logRepl,
-    logResult: function (scope, exprId, result) {
-        process.stdout.write(encode(
-            { event:"Result"
-              , scope:scope
-              , exprId:exprId
-              , result:result
-            }));
-        process.stdout.write("\n");
-        return result;
+    logReplErr: conf.logReplErr,
+    logResult: conf.logResult,
+    logNewScope: conf.logNewScope,
+    exceptions: {
+        BrokenDef: curried_error("BrokenDef"),
+        ReachedHole: curried_error("ReachedHole"),
+        LamduBug: curried_error("LamduBug"),
     },
-    logNewScope: function (parentScope, scope, lamId, arg) {
-        process.stdout.write(encode(
-            { event:"NewScope"
-              , parentScope:parentScope
-              , scope:scope
-              , lamId:lamId
-              , arg:arg
-            }));
-        process.stdout.write("\n");
+    memo: function (thunk) {
+        var done = false;
+        var memo;
+        return function() {
+            if(done) return memo;
+            memo = thunk();
+            done = true;
+            return memo;
+        };
     },
     wrap: function (fast, slow) {
         var count = 0;
@@ -120,64 +107,66 @@ module.exports = {
         };
         return function () {
             return callee.apply(this, arguments);
-        }
+        };
     },
     bytes: bytes,
-    bytesFromAscii: function (str) {
-        var arr = new Uint8Array(str.length);
-        for (var i = 0; i < str.length; ++i) {
-            arr[i] = str.charCodeAt(i);
-        }
-        return arr;
-    },
+    bytesFromAscii: bytesFromAscii,
     builtins: {
         Prelude: {
             sqrt: Math.sqrt,
-            "+": function (x) { return x[infixlTag] + x[infixrTag]; },
-            "-": function (x) { return x[infixlTag] - x[infixrTag]; },
-            "*": function (x) { return x[infixlTag] * x[infixrTag]; },
-            "/": function (x) { return x[infixlTag] / x[infixrTag]; },
-            "^": function (x) { return Math.pow(x[infixlTag], x[infixrTag]); },
-            div: function (x) { return Math.floor(x[infixlTag] / x[infixrTag]); },
+            "+": function (x) { return x[tags.infixl] + x[tags.infixr]; },
+            "-": function (x) { return x[tags.infixl] - x[tags.infixr]; },
+            "*": function (x) { return x[tags.infixl] * x[tags.infixr]; },
+            "/": function (x) { return x[tags.infixl] / x[tags.infixr]; },
+            "^": function (x) { return Math.pow(x[tags.infixl], x[tags.infixr]); },
+            div: function (x) { return Math.floor(x[tags.infixl] / x[tags.infixr]); },
             mod: function (x) {
-                var modulus = x[infixrTag];
-                var r = x[infixlTag] % modulus;
+                var modulus = x[tags.infixr];
+                var r = x[tags.infixl] % modulus;
                 if (r < 0)
                     r += modulus;
                 return r;
             },
             negate: function (x) { return -x; },
-            "==": function (x) { return bool(isEqual(x[infixlTag], x[infixrTag])); },
-            "/=": function (x) { return bool(!isEqual(x[infixlTag], x[infixrTag])); },
-            ">=": function (x) { return bool(x[infixlTag] >= x[infixrTag]); },
-            ">": function (x) { return bool(x[infixlTag] > x[infixrTag]); },
-            "<=": function (x) { return bool(x[infixlTag] <= x[infixrTag]); },
-            "<": function (x) { return bool(x[infixlTag] < x[infixrTag]); },
+            "==": function (x) { return bool(isEqual(x[tags.infixl], x[tags.infixr])); },
+            "/=": function (x) { return bool(!isEqual(x[tags.infixl], x[tags.infixr])); },
+            ">=": function (x) { return bool(x[tags.infixl] >= x[tags.infixr]); },
+            ">": function (x) { return bool(x[tags.infixl] > x[tags.infixr]); },
+            "<=": function (x) { return bool(x[tags.infixl] <= x[tags.infixr]); },
+            "<": function (x) { return bool(x[tags.infixl] < x[tags.infixr]); },
         },
         Bytes: {
             length: function (x) { return x.length; },
-            byteAt: function (x) { return x[objTag][x[indexTag]]; },
-            slice: function (x) { return x[objTag].subarray(x[startTag], x[stopTag]); },
+            byteAt: function (x) { return x[tags.obj][x[tags.index]]; },
+            slice: function (x) { return x[tags.obj].subarray(x[tags.start], x[tags.stop]); },
             unshare: function (x) { return x.slice(); },
             fromArray: function (x) { return bytes(x); },
         },
         Array: {
             length: function (x) { return x.length; },
-            item: function (x) { return x[objTag][x[indexTag]]; },
+            item: function (x) { return x[tags.obj][x[tags.index]]; },
         },
         Mut: {
-            return: function(x) { return function() { return x; }; },
-            bind: function(x) { return function () { return x[infixrTag](x[infixlTag]())(); } },
-            run: function(st) { return st(); },
+            return: mutFunc(x => x),
+            bind: function(x) {
+                return function (cont) {
+                    return x[tags.infixl](res => x[tags.infixr](res)(cont));
+                };
+            },
+            run: function(st) { return st(x => x); },
             Array: {
-                length: function (x) { return function() { return x.length; } },
-                read: function (x) { return function() { return x[objTag][x[indexTag]]; } },
-                write: function (x) { return function() { x[objTag][x[indexTag]] = x[valTag]; return {}; } },
-                append: function (x) { return function() { x[objTag].push(x[valTag]); return {}; } },
-                pop: function (x) { return function() { return x.pop(); } },
-                new: function() { return []; },
+                length: mutFunc(x => x.length),
+                read: mutFunc(x => x[tags.obj][x[tags.index]]),
+                write: mutFunc(x => { x[tags.obj][x[tags.index]] = x[tags.val]; return {}; } ),
+                append: mutFunc(x => { x[tags.obj].push(x[tags.val]); return {}; } ),
+                truncate: mutFunc(x => {
+                    var arr = x[tags.obj];
+                    arr.length = Math.min(arr.length, x[tags.stop]);
+                    return {};
+                }),
+                new: cont => cont([]),
                 run: function(st) {
-                    var result = st();
+                    var result = st(x => x);
                     if (result.hasOwnProperty("cacheId")) {
                         delete result.cacheId;
                     }
@@ -185,77 +174,126 @@ module.exports = {
                 },
             },
             Ref: {
-                new: function (x) { return function() {return {val: x}; } },
-                read: function (x) { return function() {return x.val;} },
-                write: function (x) { return function() {x[objTag].val = x[valTag]; return {};} },
+                new: mutFunc(x => { return {val: x}; }),
+                read: mutFunc(x => x.val),
+                write: mutFunc(x => { x[tags.obj].val = x[tags.val]; return {}; }),
             },
         },
         IO: {
             file: {
-                unlink: function(path) {
-                    return function() { require('fs').unlinkSync(path); };
-                },
-                rename: function(x) {
-                    return function() { require('fs').renameSync(x[oldPathTag], x[newPathTag]); };
-                },
-                chmod: function(x) {
-                    return function() { require('fs').chmodSync(x[filePathTag], x[modeTag]); };
-                },
-                close: function(fd) {
-                    return function() { require('fs').closeSync(fd); };
-                },
-                fchmod: function(x) {
-                    return function() { require('fs').fchmodSync(x[fileDescTag], x[modeTag]); };
-                },
-                fstat: function(fd) {
-                    return function() { return require('fs').fstatSync(fd); };
-                    // { dev: 66306,
-                    //   mode: 33188,
-                    //   nlink: 1,
-                    //   uid: 0,
-                    //   gid: 0,
-                    //   rdev: 0,
-                    //   blksize: 4096,
-                    //   ino: 7733458,
-                    //   size: 2243,
-                    //   blocks: 8,
-                    //   atime: 2016-06-02T11:35:58.456Z,
-                    //   mtime: 2016-05-02T22:06:47.124Z,
-                    //   ctime: 2016-05-02T22:06:47.132Z,
-                    // }
-                },
-                fsync: function(fd) {
-                    return function() { require('fs').fsyncSync(fd); };
-                },
-                ftruncate: function(x) {
-                    return function() { require('fs').ftruncateSync(x[fileDescTag], x[sizeTag]); };
-                },
-                link: function(x) {
-                    return function() { require('fs').linkSync(x[srcPathTag], x[dstPathTag]); };
-                },
-                lstat: function(path) {
-                    // see fstat for result example
-                    return function() { return require('fs').lstatSync(path); };
-                },
-                mkdir: function(path) {
-                    return function() { require('fs').mkdirSync(path); };
-                },
-                open: function(x) {
-                    return function() { return require('fs').openSync(x[filePathTag], x[flagsTag], x[modeTag]); };
-                },
+                unlink: mutVoidWithError(path =>
+                    require('fs').unlink.bind(null, toString(path))),
+                rename: mutVoidWithError(x =>
+                    require('fs').rename.bind(null, toString(x[tags.oldPath]), toString(x[tags.newPath]))),
+                chmod: mutVoidWithError(x =>
+                    require('fs').chmod.bind(null, toString(x[tags.filePath]), x[tags.mode])),
+                link: mutVoidWithError(x =>
+                    require('fs').link.bind(null, toString(x[tags.srcPath]), toString(x[tags.dstPath]))),
                 readFile: function(path) {
-                    return function() { return bytes(require('fs').readFileSync(path)); };
+                    return function(cont) {
+                        require('fs').readFile(toString(path), (err, data) => {
+                            if (err) throw err;
+                            cont(bytes(data));
+                        });
+                    };
                 },
-                readLink: function(path) {
-                    return function() { return bytes(require('fs').readlinkSync(path, 'buffer')); };
+                appendFile: mutVoidWithError(x =>
+                    require('fs').appendFile.bind(null, toString(x[tags.filePath]), Buffer.from(x[tags.data]), null)),
+                writeFile: mutVoidWithError(x =>
+                    require('fs').writeFile.bind(null, toString(x[tags.filePath]), Buffer.from(x[tags.data])), null),
+            },
+            os: {
+                // TODO: When Lamdu has dicts, maybe just expose the whole env as one piece?
+                env: mutFunc(x => {
+                    var name = toString(x);
+                    if (process.env.hasOwnProperty(name))
+                    {
+                        return {
+                            tag: tags.just,
+                            data: bytes(Buffer.from(process.env[name]))
+                        };
+                    }
+                    return {
+                        tag: tags.nothing,
+                        data: {}
+                    };
+                })
+            },
+            network: {
+                openTcpServer: mutFunc(x => {
+                    var server = require('net').Server(socket => {
+                        makeOpaque(socket);
+                        x[tags.connectionHandler](socket)(dataHandler =>
+                            socket.on('data', data => { dataHandler(new Uint8Array(data))(x => null); } )
+                        );
+                    });
+                    server.listen({
+                        host: toString(x[tags.host]),
+                        port: x[tags.port],
+                        exclusive: bool(x[tags.exclusive])
+                    });
+                    makeOpaque(server);
+                    return server;
+                }),
+                closeTcpServer: function (server) {
+                    return function (cont) {
+                        server.close(cont);
+                    };
                 },
-                appendFile: function(x) {
-                    return function() { require('fs').appendFileSync(x[filePathTag], x[dataTag]); };
-                },
-                writeFile: function(x) {
-                    return function() { require('fs').writeFileSync(x[filePathTag], x[dataTag]); };
-                },
+                socketSend: function (x) {
+                    return function (cont) {
+                        x[tags.socket].write(Buffer.from(x[tags.data]), null, cont);
+                    };
+                }
+            },
+            database: {
+                postgres: {
+                    connect: function(x) {
+                        return function(cont) {
+                            var pg = require('pg');
+                            var client = new pg.Client({
+                                host: toString(x[tags.host]),
+                                port: x[tags.port],
+                                database: toString(x[tags.database]),
+                                user: toString(x[tags.user]),
+                                password: toString(x[tags.password])
+                            });
+                            makeOpaque(client);
+                            client.connect(err => {
+                                if (err) throw err;
+                                cont(client);
+                            });
+                        };
+                    },
+                    query: function(x) {
+                        return function(cont) {
+                            x[tags.database].query(toString(x[tags.obj]), (err, resJs) => {
+                                if (err) {
+                                    cont({tag: tags.error, data: bytesFromAscii(err.message)});
+                                    return;
+                                }
+                                var fields = [];
+                                for (var i = 0; i < resJs.fields.length; ++i) {
+                                    fields.push(bytesFromAscii(resJs.fields[i].name));
+                                }
+                                var rows = [];
+                                for (i = 0; i < resJs.rows.length; ++i) {
+                                    var jsRow = resJs.rows[i];
+                                    var row = [];
+                                    for (var k = 0; k < resJs.fields.length; ++k) {
+                                        row.push(bytesFromAscii(String(jsRow[resJs.fields[k].name])));
+                                    }
+                                    rows.push(row);
+                                }
+                                var resLamdu = {};
+                                resLamdu[tags.fields] = fields;
+                                resLamdu[tags.data] = rows;
+                                cont({tag: tags.success, data: resLamdu});
+                            });
+                        };
+                    }
+                }
             }
         }
-    },
+    }
 };

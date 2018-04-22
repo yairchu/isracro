@@ -1,11 +1,10 @@
+/* jshint node: true */
 "use strict";
 
 var nameMap = {
-    true: 'True',
-    false: 'False',
-    cons: 'NonEmpty',
-    data: '__data1'
-}
+    data: '__data',
+    val: 'value'
+};
 
 module.exports = {
     builtinTagName: function (x) {
@@ -14,4 +13,11 @@ module.exports = {
         return x;
     },
     logRepl: function (x) { console.log(String.fromCharCode.apply(null, x)); },
-}
+    logReplErr: function (x) { console.log("Error: " + String.fromCharCode.apply(null, x)); },
+    // Not used in JS export:
+    logResult: undefined,
+    logNewScope: undefined,
+    error: function (name, desc, globalId, exprId) {
+        throw name;
+    }
+};
