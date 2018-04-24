@@ -10,19 +10,16 @@
     "start": "node --harmony-tailcalls index.js"
   },
   "dependencies": {
-    "ejs": "2.5.6",
-    "express": "4.15.2",
     "pg": "^7.4.1",
-    "text-encoding": "0.6.0"
+    "utf8": "^3.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/yairchu/isracro"
   },
   "keywords": [
     "node",
-    "heroku",
-    "express"
+    "heroku"
   ],
   "license": "MIT"
 }

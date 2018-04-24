@@ -1,8 +1,8 @@
 {
-  "name": "Start on Heroku: Node.js",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
+  "name": "Start on Heroku: Lamdu",
+  "description": "An app using lamdu",
+  "repository": "https://github.com/yairchu/isracro",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "heroku"],
+  "keywords": ["node", "heroku"],
   "image": "heroku/nodejs"
 }
