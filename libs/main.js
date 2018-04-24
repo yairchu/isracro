@@ -375,26 +375,26 @@ var pestovalDb = _3b_({infixl: environment(rts.bytesFromAscii("DATABASE_URL"))
 var fromArray = function (__array1) {
    var length3 = length1(__array1);
    return map({stream: _2e__2e_({start: 0.0,stop: length3})
-              ,mapping: function (local_70) {
-                 return item1({index: local_70,object: __array1});
+              ,mapping: function (local_74) {
+                 return item1({index: local_74,object: __array1});
               }});
 };
 var _2264_ = rts.builtins.Prelude["<="];
-var drop = function (local_71) {
-   var x = _2264_({infixl: local_71.count,infixr: 0.0});
+var drop = function (local_75) {
+   var x = _2264_({infixl: local_75.count,infixr: 0.0});
    switch (x.tag)
    {
      case "false":
-       var local_72 = x.data;
-       var x = local_71.stream;
+       var local_76 = x.data;
+       var x = local_75.stream;
        switch (x.tag)
        {
          case "nonEmpty":
-           var local_73 = x.data;
-           return drop({stream: local_73.tail({})
-                       ,count: _2d_({infixl: local_71.count,infixr: 1.0})});
+           var local_77 = x.data;
+           return drop({stream: local_77.tail({})
+                       ,count: _2d_({infixl: local_75.count,infixr: 1.0})});
          case "empty":
-           var local_74 = x.data;
+           var local_78 = x.data;
            return {tag: "empty",data: {}};
          default:
            throw rts.exceptions.LamduBug("Unhandled case"
@@ -402,75 +402,75 @@ var drop = function (local_71) {
                                         ,"3484afddcc5745189195b1b977bc31a4");
        }
      case "true":
-       var local_75 = x.data;
-       return local_71.stream;
+       var local_79 = x.data;
+       return local_75.stream;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_efdcd00625534eb5b480c13776995953"
                                     ,"f4402d1f89754f369b736a668f8d2784");
    }
 };
-var _2b__2b_2 = function (local_85) {
-   return foldLazy({stream: local_85.infixl
-                   ,initial: local_85.infixr
-                   ,binop: function (local_86) {
+var _2b__2b_2 = function (local_89) {
+   return foldLazy({stream: local_89.infixl
+                   ,initial: local_89.infixr
+                   ,binop: function (local_90) {
                       return {tag: "nonEmpty"
-                             ,data: {head: local_86.item,tail: local_86.rest}};
+                             ,data: {head: local_90.item,tail: local_90.rest}};
                    }});
 };
 var toBytes = rts.builtins.Bytes["fromArray"];
-var _2b__2b_1 = function (local_83) {
-   return toBytes(toArray(_2b__2b_2({infixl: fromBytes(local_83.a)
-                                    ,infixr: function (local_84) {
-                                       return fromBytes(local_83.b);
+var _2b__2b_1 = function (local_87) {
+   return toBytes(toArray(_2b__2b_2({infixl: fromBytes(local_87.a)
+                                    ,infixr: function (local_88) {
+                                       return fromBytes(local_87.b);
                                     }})));
 };
-var _2b__2b_ = function (local_82) { return _2b__2b_1({a: local_82.a,b: local_82.b});};
-var httpNotFound404 = function (local_81) {
-   return {content: {__data: _2b__2b_({a: rts.bytesFromAscii("Not found: "),b: local_81})
+var _2b__2b_ = function (local_86) { return _2b__2b_1({a: local_86.a,b: local_86.b});};
+var httpNotFound404 = function (local_85) {
+   return {content: {__data: _2b__2b_({a: rts.bytesFromAscii("Not found: "),b: local_85})
                     ,mimeType: rts.bytesFromAscii("text/plain")}
           ,status: {message: rts.bytesFromAscii("Not Found"),code: 404.0}};
 };
 var _2f__2f_ = rts.builtins.Prelude["div"];
 var _2260_ = rts.builtins.Prelude["/="];
 var _25_ = rts.builtins.Prelude["mod"];
-var digitsLittleEndian = function (local_92) {
-   return map({stream: take({stream: iterate({initial: local_92.__number
-                                             ,next: function (local_93) {
-                                                return _2f__2f_({infixl: local_93
-                                                                ,infixr: local_92.base});
+var digitsLittleEndian = function (local_96) {
+   return map({stream: take({stream: iterate({initial: local_96.__number
+                                             ,next: function (local_97) {
+                                                return _2f__2f_({infixl: local_97
+                                                                ,infixr: local_96.base});
                                              }})
-                            ,__while: function (local_94) {
-                               return _2260_({infixl: local_94,infixr: 0.0});
+                            ,__while: function (local_98) {
+                               return _2260_({infixl: local_98,infixr: 0.0});
                             }})
-              ,mapping: function (local_95) {
-                 return _25_({infixl: local_95,infixr: local_92.base});
+              ,mapping: function (local_99) {
+                 return _25_({infixl: local_99,infixr: local_96.base});
               }});
 };
 var reverse = function (stream3) {
    return fold({stream: stream3
                ,initial: {tag: "empty",data: {}}
-               ,binop: function (local_96) {
+               ,binop: function (local_100) {
                   return {tag: "nonEmpty"
-                         ,data: {head: local_96.item
-                                ,tail: function (local_97) {
-                                   return local_96.acc;
+                         ,data: {head: local_100.item
+                                ,tail: function (local_101) {
+                                   return local_100.acc;
                                 }}};
                }});
 };
-var showNum = function (local_90) {
-   var x = _3d__3d_({infixl: local_90,infixr: 0.0});
+var showNum = function (local_94) {
+   var x = _3d__3d_({infixl: local_94,infixr: 0.0});
    switch (x.tag)
    {
      case "false":
-       var local_91 = x.data;
-       return toBytes(toArray(map({stream: reverse(digitsLittleEndian({__number: local_90
+       var local_95 = x.data;
+       return toBytes(toArray(map({stream: reverse(digitsLittleEndian({__number: local_94
                                                                       ,base: 10.0}))
-                                  ,mapping: function (local_98) {
-                                     return _2b_({infixl: 48.0,infixr: local_98});
+                                  ,mapping: function (local_102) {
+                                     return _2b_({infixl: 48.0,infixr: local_102});
                                   }})));
      case "true":
-       var local_99 = x.data;
+       var local_103 = x.data;
        return rts.bytesFromAscii("0");
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -480,30 +480,30 @@ var showNum = function (local_90) {
 };
 var concat = function (stream4) {
    return foldLazy({stream: stream4
-                   ,initial: function (local_115) {
+                   ,initial: function (local_119) {
                       return {tag: "empty",data: {}};
                    }
-                   ,binop: function (local_116) {
-                      return _2b__2b_2({infixl: local_116.item,infixr: local_116.rest});
+                   ,binop: function (local_120) {
+                      return _2b__2b_2({infixl: local_120.item,infixr: local_120.rest});
                    }});
 };
-var intersperse = function (local_109) {
-   var x = local_109.stream;
+var intersperse = function (local_113) {
+   var x = local_113.stream;
    switch (x.tag)
    {
      case "nonEmpty":
-       var local_110 = x.data;
+       var local_114 = x.data;
        return {tag: "nonEmpty"
-              ,data: {head: local_110.head
-                     ,tail: function (local_111) {
-                        return concat(map({stream: local_110.tail({})
-                                          ,mapping: function (local_112) {
+              ,data: {head: local_114.head
+                     ,tail: function (local_115) {
+                        return concat(map({stream: local_114.tail({})
+                                          ,mapping: function (local_116) {
                                              return {tag: "nonEmpty"
-                                                    ,data: {head: local_109.item
-                                                           ,tail: function (local_113) {
+                                                    ,data: {head: local_113.item
+                                                           ,tail: function (local_117) {
                                                               return {tag: "nonEmpty"
-                                                                     ,data: {head: local_112
-                                                                            ,tail: function (local_114) {
+                                                                     ,data: {head: local_116
+                                                                            ,tail: function (local_118) {
                                                                                return {tag: "empty"
                                                                                       ,data: {}};
                                                                             }}};
@@ -511,7 +511,7 @@ var intersperse = function (local_109) {
                                           }}));
                      }}};
      case "empty":
-       var local_117 = x.data;
+       var local_121 = x.data;
        return {tag: "empty",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -523,8 +523,191 @@ var concat2 = function (stream6) {
    return toBytes(toArray(concat(map({stream: stream6,mapping: fromBytes}))));
 };
 var concat1 = concat2;
-var join = function (local_108) {
-   return concat1(intersperse({stream: local_108.texts,item: local_108.seperator}));
+var join = function (local_112) {
+   return concat1(intersperse({stream: local_112.texts,item: local_112.seperator}));
+};
+var id2 = function (__x) { return __x;};
+var maybe = function (local_138) {
+   var x = local_138.object;
+   switch (x.tag)
+   {
+     case "just":
+       return id2(x.data);
+     case "nothing":
+       var local_139 = x.data;
+       return local_138.or;
+     default:
+       throw rts.exceptions.LamduBug("Unhandled case"
+                                    ,"DEF_6c78a9bb4dc7418b9c6fcbcdd77f4088"
+                                    ,"df8546f58bdc08635e9f6ff7be4f4953");
+   }
+};
+var queryFieldLang = function (language3) {
+   var x = language3;
+   switch (x.tag)
+   {
+     case "english":
+       var local_131 = x.data;
+       return function (local_132) {
+              return _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: local_132.table
+                                                        ,b: rts.bytesFromAscii(".")})
+                                           ,b: local_132.field})
+                              ,b: function () {
+                                 var x = local_132.as;
+                                 switch (x.tag)
+                                 {
+                                   case "just":
+                                     var local_133 = x.data;
+                                     return _2b__2b_({a: rts.bytesFromAscii(" AS ")
+                                                     ,b: local_133});
+                                   case "nothing":
+                                     var local_134 = x.data;
+                                     return rts.bytesFromAscii("");
+                                   default:
+                                     throw rts.exceptions.LamduBug("Unhandled case"
+                                                                  ,"DEF_20f5f7933f1a478c88b982b963bdfe5f"
+                                                                  ,"601b6d53f526392df53d629ee0c2ad71");
+                                 }
+                              }()});
+           };
+     case "hebrew":
+       var local_135 = x.data;
+       return function (local_136) {
+              var local_137 = _2b__2b_({a: _2b__2b_({a: local_136.table
+                                                    ,b: rts.bytesFromAscii(".")})
+                                       ,b: local_136.field});
+              return _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("COALESCE(NULLIF(")
+                                                                                  ,b: local_137})
+                                                                     ,b: rts.bytesFromAscii("_hebrew, \'\'), ")})
+                                                        ,b: local_137})
+                                           ,b: rts.bytesFromAscii(") AS ")})
+                              ,b: maybe({object: local_136.as,or: local_136.field})});
+           };
+     default:
+       throw rts.exceptions.LamduBug("Unhandled case"
+                                    ,"DEF_20f5f7933f1a478c88b982b963bdfe5f"
+                                    ,"77f1ffdc76bae5c4dbaf326aa2ff70a2");
+   }
+};
+var pestovalQuerySessionsSql = function (local_124) {
+   return join({texts: _3a__3a_({infixl: rts.bytesFromAscii("SELECT\n  pestoval_session.id,\n  pestoval_timeslot.start, pestoval_timeslot.stop,\n  pestoval_location.id AS location_id,\n  pestoval_level.color,")
+                                ,infixr: function (local_125) {
+                                   return _3a__3a_({infixl: join({texts: map({stream: _3a__3a_({infixl: {table: rts.bytesFromAscii("pestoval_session")
+                                                                                                        ,field: rts.bytesFromAscii("name")
+                                                                                                        ,as: {tag: "just"
+                                                                                                             ,data: rts.bytesFromAscii("session_name")}}
+                                                                                               ,infixr: function (local_126) {
+                                                                                                  return _3a__3a_({infixl: {table: rts.bytesFromAscii("pestoval_session")
+                                                                                                                           ,field: rts.bytesFromAscii("description")
+                                                                                                                           ,as: {tag: "nothing"
+                                                                                                                                ,data: {}}}
+                                                                                                                  ,infixr: function (local_127) {
+                                                                                                                     return _3a__3a_({infixl: {table: rts.bytesFromAscii("pestoval_session")
+                                                                                                                                              ,field: rts.bytesFromAscii("prereqs")
+                                                                                                                                              ,as: {tag: "nothing"
+                                                                                                                                                   ,data: {}}}
+                                                                                                                                     ,infixr: function (local_128) {
+                                                                                                                                        return _3a__3a_({infixl: {table: rts.bytesFromAscii("pestoval_location")
+                                                                                                                                                                 ,field: rts.bytesFromAscii("name")
+                                                                                                                                                                 ,as: {tag: "just"
+                                                                                                                                                                      ,data: rts.bytesFromAscii("location_name")}}
+                                                                                                                                                        ,infixr: function (local_129) {
+                                                                                                                                                           return _3a__3a_({infixl: {table: rts.bytesFromAscii("pestoval_level")
+                                                                                                                                                                                    ,field: rts.bytesFromAscii("name")
+                                                                                                                                                                                    ,as: {tag: "just"
+                                                                                                                                                                                         ,data: rts.bytesFromAscii("level_name")}}
+                                                                                                                                                                           ,infixr: function (local_130) {
+                                                                                                                                                                              return {tag: "empty"
+                                                                                                                                                                                     ,data: {}};
+                                                                                                                                                                           }});
+                                                                                                                                                        }});
+                                                                                                                                     }});
+                                                                                                                  }});
+                                                                                               }})
+                                                                             ,mapping: queryFieldLang(local_124.language2)})
+                                                                 ,seperator: rts.bytesFromAscii(", ")})
+                                                   ,infixr: function (local_140) {
+                                                      return _3a__3a_({infixl: local_124.from
+                                                                      ,infixr: function (local_141) {
+                                                                         return _2b__2b_2({infixl: map({stream: _3a__3a_({infixl: {key: rts.bytesFromAscii("when_id")
+                                                                                                                                  ,table: rts.bytesFromAscii("pestoval_timeslot")}
+                                                                                                                         ,infixr: function (local_142) {
+                                                                                                                            return _3a__3a_({infixl: {key: rts.bytesFromAscii("location_id")
+                                                                                                                                                     ,table: rts.bytesFromAscii("pestoval_location")}
+                                                                                                                                            ,infixr: function (local_143) {
+                                                                                                                                               return _3a__3a_({infixl: {key: rts.bytesFromAscii("level_id")
+                                                                                                                                                                        ,table: rts.bytesFromAscii("pestoval_level")}
+                                                                                                                                                               ,infixr: function (local_144) {
+                                                                                                                                                                  return {tag: "empty"
+                                                                                                                                                                         ,data: {}};
+                                                                                                                                                               }});
+                                                                                                                                            }});
+                                                                                                                         }})
+                                                                                                       ,mapping: function (local_145) {
+                                                                                                          return join({texts: _3a__3a_({infixl: rts.bytesFromAscii("LEFT OUTER JOIN ")
+                                                                                                                                       ,infixr: function (local_146) {
+                                                                                                                                          return _3a__3a_({infixl: local_145.table
+                                                                                                                                                          ,infixr: function (local_147) {
+                                                                                                                                                             return _3a__3a_({infixl: rts.bytesFromAscii(" ON pestoval_session.")
+                                                                                                                                                                             ,infixr: function (local_148) {
+                                                                                                                                                                                return _3a__3a_({infixl: local_145.key
+                                                                                                                                                                                                ,infixr: function (local_149) {
+                                                                                                                                                                                                   return _3a__3a_({infixl: rts.bytesFromAscii(" = ")
+                                                                                                                                                                                                                   ,infixr: function (local_150) {
+                                                                                                                                                                                                                      return _3a__3a_({infixl: local_145.table
+                                                                                                                                                                                                                                      ,infixr: function (local_151) {
+                                                                                                                                                                                                                                         return _3a__3a_({infixl: rts.bytesFromAscii(".id")
+                                                                                                                                                                                                                                                         ,infixr: function (local_152) {
+                                                                                                                                                                                                                                                            return {tag: "empty"
+                                                                                                                                                                                                                                                                   ,data: {}};
+                                                                                                                                                                                                                                                         }});
+                                                                                                                                                                                                                                      }});
+                                                                                                                                                                                                                   }});
+                                                                                                                                                                                                }});
+                                                                                                                                                                             }});
+                                                                                                                                                          }});
+                                                                                                                                       }})
+                                                                                                                      ,seperator: rts.bytesFromAscii("")});
+                                                                                                       }})
+                                                                                          ,infixr: function (local_153) {
+                                                                                             return _2b__2b_2({infixl: function () {
+                                                                                                                 var x =
+                                                                                                                 _3d__3d_({infixl: local_124.where
+                                                                                                                          ,infixr: rts.bytesFromAscii("")});
+                                                                                                                 switch (x.tag)
+                                                                                                                 {
+                                                                                                                   case "false":
+                                                                                                                     var local_154 =
+                                                                                                                     x.data;
+                                                                                                                     return _3a__3a_({infixl: _2b__2b_({a: rts.bytesFromAscii("WHERE ")
+                                                                                                                                                       ,b: local_124.where})
+                                                                                                                                     ,infixr: function (local_155) {
+                                                                                                                                        return {tag: "empty"
+                                                                                                                                               ,data: {}};
+                                                                                                                                     }});
+                                                                                                                   case "true":
+                                                                                                                     var local_156 =
+                                                                                                                     x.data;
+                                                                                                                     return {tag: "empty"
+                                                                                                                            ,data: {}};
+                                                                                                                   default:
+                                                                                                                     throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                  ,"DEF_140efbae773e4fea9f554e346c7b58e8"
+                                                                                                                                                  ,"f573ad31abd803e9dda9e82ec3ef4df2");
+                                                                                                                 }
+                                                                                                              }()
+                                                                                                              ,infixr: function (local_157) {
+                                                                                                                 return _3a__3a_({infixl: rts.bytesFromAscii("ORDER BY pestoval_timeslot.start, pestoval_location.id")
+                                                                                                                                 ,infixr: function (local_158) {
+                                                                                                                                    return {tag: "empty"
+                                                                                                                                           ,data: {}};
+                                                                                                                                 }});
+                                                                                                              }});
+                                                                                          }});
+                                                                      }});
+                                                   }});
+                                }})
+               ,seperator: rts.bytesFromAscii("\n")});
 };
 var query = rts.builtins.IO.database.postgres["query"];
 var newMutArray1 = function (stream7) {
@@ -535,7 +718,7 @@ var newMutArray1 = function (stream7) {
                                                          return appendMutArray({object: __array2
                                                                                ,value: item2});
                                                       }}))
-                              ,infixr: function (local_148) {
+                              ,infixr: function (local_168) {
                                  return __return(__array2);
                               }});
                }});
@@ -547,55 +730,55 @@ var newMutRef = rts.builtins.Mut.Ref["new"];
 var readMutRef = rts.builtins.Mut.Ref["read"];
 var writeMutArray = rts.builtins.Mut.Array["write"];
 var writeMutRef = rts.builtins.Mut.Ref["write"];
-var sort1 = function (local_150) {
-   var x = _2265_({infixl: _2b_({infixl: local_150.start,infixr: 1.0})
-                  ,infixr: local_150.stop});
+var sort1 = function (local_170) {
+   var x = _2265_({infixl: _2b_({infixl: local_170.start,infixr: 1.0})
+                  ,infixr: local_170.stop});
    switch (x.tag)
    {
      case "false":
-       var local_151 = x.data;
-       return _3b_({infixl: readMutArray({index: local_150.start
-                                         ,object: local_150.__array4})
+       var local_171 = x.data;
+       return _3b_({infixl: readMutArray({index: local_170.start
+                                         ,object: local_170.__array4})
                    ,infixr: function (pivot) {
-                      return _3b_({infixl: newMutRef(local_150.start)
+                      return _3b_({infixl: newMutRef(local_170.start)
                                   ,infixr: function (pivotPosRef) {
-                                     return _3b_({infixl: sequence__(map({stream: _2e__2e_({start: _2b_({infixl: local_150.start
+                                     return _3b_({infixl: sequence__(map({stream: _2e__2e_({start: _2b_({infixl: local_170.start
                                                                                                         ,infixr: 1.0})
-                                                                                           ,stop: local_150.stop})
+                                                                                           ,stop: local_170.stop})
                                                                          ,mapping: function (index1) {
                                                                             return _3b_({infixl: readMutArray({index: index1
-                                                                                                              ,object: local_150.__array4})
+                                                                                                              ,object: local_170.__array4})
                                                                                         ,infixr: function (object1) {
                                                                                            var x =
-                                                                                           local_150._3c_1({infixl: object1
+                                                                                           local_170._3c_1({infixl: object1
                                                                                                            ,infixr: pivot});
                                                                                            switch (x.tag)
                                                                                            {
                                                                                              case "false":
-                                                                                               var local_152 =
+                                                                                               var local_172 =
                                                                                                x.data;
                                                                                                return __return({});
                                                                                              case "true":
-                                                                                               var local_153 =
+                                                                                               var local_173 =
                                                                                                x.data;
                                                                                                return _3b_({infixl: readMutRef(pivotPosRef)
                                                                                                            ,infixr: function (pivotPos) {
                                                                                                               return _3b_({infixl: writeMutArray({index: pivotPos
-                                                                                                                                                 ,object: local_150.__array4
+                                                                                                                                                 ,object: local_170.__array4
                                                                                                                                                  ,value: object1})
-                                                                                                                          ,infixr: function (local_154) {
+                                                                                                                          ,infixr: function (local_174) {
                                                                                                                              var newPivotPos =
                                                                                                                              _2b_({infixl: pivotPos
                                                                                                                                   ,infixr: 1.0});
                                                                                                                              return _3b_({infixl: writeMutRef({object: pivotPosRef
                                                                                                                                                               ,value: newPivotPos})
-                                                                                                                                         ,infixr: function (local_155) {
+                                                                                                                                         ,infixr: function (local_175) {
                                                                                                                                             return _3b_({infixl: readMutArray({index: newPivotPos
-                                                                                                                                                                              ,object: local_150.__array4})
-                                                                                                                                                        ,infixr: function (local_156) {
+                                                                                                                                                                              ,object: local_170.__array4})
+                                                                                                                                                        ,infixr: function (local_176) {
                                                                                                                                                            return writeMutArray({index: index1
-                                                                                                                                                                                ,object: local_150.__array4
-                                                                                                                                                                                ,value: local_156});
+                                                                                                                                                                                ,object: local_170.__array4
+                                                                                                                                                                                ,value: local_176});
                                                                                                                                                         }});
                                                                                                                                          }});
                                                                                                                           }});
@@ -607,23 +790,23 @@ var sort1 = function (local_150) {
                                                                                            }
                                                                                         }});
                                                                          }}))
-                                                 ,infixr: function (local_157) {
+                                                 ,infixr: function (local_177) {
                                                     return _3b_({infixl: readMutRef(pivotPosRef)
                                                                 ,infixr: function (index2) {
                                                                    return _3b_({infixl: writeMutArray({index: index2
-                                                                                                      ,object: local_150.__array4
+                                                                                                      ,object: local_170.__array4
                                                                                                       ,value: pivot})
-                                                                               ,infixr: function (local_158) {
-                                                                                  return _3b_({infixl: sort1({start: local_150.start
+                                                                               ,infixr: function (local_178) {
+                                                                                  return _3b_({infixl: sort1({start: local_170.start
                                                                                                              ,stop: index2
-                                                                                                             ,_3c_1: local_150._3c_1
-                                                                                                             ,__array4: local_150.__array4})
-                                                                                              ,infixr: function (local_159) {
+                                                                                                             ,_3c_1: local_170._3c_1
+                                                                                                             ,__array4: local_170.__array4})
+                                                                                              ,infixr: function (local_179) {
                                                                                                  return sort1({start: _2b_({infixl: index2
                                                                                                                            ,infixr: 1.0})
-                                                                                                              ,stop: local_150.stop
-                                                                                                              ,_3c_1: local_150._3c_1
-                                                                                                              ,__array4: local_150.__array4});
+                                                                                                              ,stop: local_170.stop
+                                                                                                              ,_3c_1: local_170._3c_1
+                                                                                                              ,__array4: local_170.__array4});
                                                                                               }});
                                                                                }});
                                                                 }});
@@ -631,7 +814,7 @@ var sort1 = function (local_150) {
                                   }});
                    }});
      case "true":
-       var local_160 = x.data;
+       var local_180 = x.data;
        return __return({});
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -639,62 +822,62 @@ var sort1 = function (local_150) {
                                     ,"767c3133b4f8a61071c98bc4f445f9a6");
    }
 };
-var sort = function (local_147) {
-   return runMutArray(_3b_({infixl: newMutArray1(local_147.stream)
+var sort = function (local_167) {
+   return runMutArray(_3b_({infixl: newMutArray1(local_167.stream)
                            ,infixr: function (__array3) {
                               return _3b_({infixl: length4(__array3)
-                                          ,infixr: function (local_149) {
+                                          ,infixr: function (local_169) {
                                              return _3b_({infixl: sort1({start: 0.0
-                                                                        ,stop: local_149
-                                                                        ,_3c_1: local_147._3c_1
+                                                                        ,stop: local_169
+                                                                        ,_3c_1: local_167._3c_1
                                                                         ,__array4: __array3})
-                                                         ,infixr: function (local_161) {
+                                                         ,infixr: function (local_181) {
                                                             return __return(__array3);
                                                          }});
                                           }});
                            }}));
 };
-var foldLazy1 = function (local_177) {
-   return foldLazy({stream: local_177.stream
-                   ,initial: function (local_178) {
-                      return local_177.done;
+var foldLazy1 = function (local_197) {
+   return foldLazy({stream: local_197.stream
+                   ,initial: function (local_198) {
+                      return local_197.done;
                    }
-                   ,binop: function (local_179) {
+                   ,binop: function (local_199) {
                       return function (state1) {
-                             return local_177.step({state: state1
-                                                   ,rest: local_179.rest
-                                                   ,item: local_179.item});
+                             return local_197.step({state: state1
+                                                   ,rest: local_199.rest
+                                                   ,item: local_199.item});
                           };
-                   }})(local_177.initialState);
+                   }})(local_197.initialState);
 };
-var group = function (local_163) {
-   return foldLazy1({stream: local_163.stream
+var group = function (local_183) {
+   return foldLazy1({stream: local_183.stream
                     ,initialState: {tag: "empty",data: {}}
-                    ,step: function (local_164) {
-                       var x = local_164.state;
+                    ,step: function (local_184) {
+                       var x = local_184.state;
                        switch (x.tag)
                        {
                          case "nonEmpty":
-                           var local_165 = x.data;
-                           var x = local_163.by({infixl: local_165.head
-                                                ,infixr: local_164.item});
+                           var local_185 = x.data;
+                           var x = local_183.by({infixl: local_185.head
+                                                ,infixr: local_184.item});
                            switch (x.tag)
                            {
                              case "false":
-                               var local_166 = x.data;
-                               return _3a__3a_({infixl: toArray(reverse(local_164.state))
-                                               ,infixr: function (local_167) {
-                                                  return local_164.rest({})(_3a__3a_({infixl: local_164.item
-                                                                                     ,infixr: function (local_168) {
+                               var local_186 = x.data;
+                               return _3a__3a_({infixl: toArray(reverse(local_184.state))
+                                               ,infixr: function (local_187) {
+                                                  return local_184.rest({})(_3a__3a_({infixl: local_184.item
+                                                                                     ,infixr: function (local_188) {
                                                                                         return {tag: "empty"
                                                                                                ,data: {}};
                                                                                      }}));
                                                }});
                              case "true":
-                               var local_169 = x.data;
-                               return local_164.rest({})(_3a__3a_({infixl: local_164.item
-                                                                  ,infixr: function (local_170) {
-                                                                     return local_164.state;
+                               var local_189 = x.data;
+                               return local_184.rest({})(_3a__3a_({infixl: local_184.item
+                                                                  ,infixr: function (local_190) {
+                                                                     return local_184.state;
                                                                   }}));
                              default:
                                throw rts.exceptions.LamduBug("Unhandled case"
@@ -702,9 +885,9 @@ var group = function (local_163) {
                                                             ,"80c64c4a3e825d563e72c3ff848be12a");
                            }
                          case "empty":
-                           var local_171 = x.data;
-                           return local_164.rest({})(_3a__3a_({infixl: local_164.item
-                                                              ,infixr: function (local_172) {
+                           var local_191 = x.data;
+                           return local_184.rest({})(_3a__3a_({infixl: local_184.item
+                                                              ,infixr: function (local_192) {
                                                                  return {tag: "empty"
                                                                         ,data: {}};
                                                               }}));
@@ -714,18 +897,18 @@ var group = function (local_163) {
                                                         ,"74a01a012e28a30393aafbb0e69c22f4");
                        }
                     }
-                    ,done: function (local_173) {
-                       var x = local_173;
+                    ,done: function (local_193) {
+                       var x = local_193;
                        switch (x.tag)
                        {
                          case "nonEmpty":
-                           var local_174 = x.data;
-                           return _3a__3a_({infixl: toArray(reverse(local_173))
-                                           ,infixr: function (local_175) {
+                           var local_194 = x.data;
+                           return _3a__3a_({infixl: toArray(reverse(local_193))
+                                           ,infixr: function (local_195) {
                                               return {tag: "empty",data: {}};
                                            }});
                          case "empty":
-                           var local_176 = x.data;
+                           var local_196 = x.data;
                            return {tag: "empty",data: {}};
                          default:
                            throw rts.exceptions.LamduBug("Unhandled case"
@@ -734,41 +917,46 @@ var group = function (local_163) {
                        }
                     }});
 };
-var pestovalQuerySessionTeachers = function (local_142) {
-   return _3b_({infixl: query({database: local_142
-                              ,object: rts.bytesFromAscii("SELECT\n  pestoval_teacher.name, pestoval_session_teachers.teacher_id, pestoval_session_teachers.session_id\nFROM pestoval_session_teachers\nLEFT OUTER JOIN pestoval_teacher ON pestoval_session_teachers.teacher_id = pestoval_teacher.id")})
-               ,infixr: function (x143) {
-                  switch (x143.tag)
+var pestovalQuerySessionTeachers = function (local_162) {
+   return _3b_({infixl: query({database: local_162.database
+                              ,object: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("SELECT\n  pestoval_session_teachers.teacher_id, pestoval_session_teachers.session_id,\n  ")
+                                                             ,b: queryFieldLang(local_162.language2)({table: rts.bytesFromAscii("pestoval_teacher")
+                                                                                                     ,field: rts.bytesFromAscii("name")
+                                                                                                     ,as: {tag: "nothing"
+                                                                                                          ,data: {}}})})
+                                                ,b: rts.bytesFromAscii("\nFROM pestoval_session_teachers\nLEFT OUTER JOIN pestoval_teacher ON pestoval_session_teachers.teacher_id = pestoval_teacher.id")})})
+               ,infixr: function (x163) {
+                  switch (x163.tag)
                   {
                     case "error":
-                      var local_144 = x143.data;
-                      return ignoreError(local_144);
+                      var local_164 = x163.data;
+                      return ignoreError(local_164);
                     case "success":
-                      var local_145 = x143.data;
-                      return __return(toArray(map({stream: group({stream: fromArray(sort({stream: map({stream: fromArray(local_145.__data)
+                      var local_165 = x163.data;
+                      return __return(toArray(map({stream: group({stream: fromArray(sort({stream: map({stream: fromArray(local_165.__data)
                                                                                                       ,mapping: function (row) {
-                                                                                                         return {teacher: {name: item1({index: 0.0
+                                                                                                         return {teacher: {name: item1({index: 2.0
                                                                                                                                        ,object: row})
-                                                                                                                          ,id1: parseInt(item1({index: 1.0
+                                                                                                                          ,id1: parseInt(item1({index: 0.0
                                                                                                                                                ,object: row}))}
-                                                                                                                ,session: parseInt(item1({index: 2.0
+                                                                                                                ,session: parseInt(item1({index: 1.0
                                                                                                                                          ,object: row}))};
                                                                                                       }})
-                                                                                         ,_3c_1: function (local_146) {
-                                                                                            return _3c_({infixl: local_146.infixl.session
-                                                                                                        ,infixr: local_146.infixr.session});
+                                                                                         ,_3c_1: function (local_166) {
+                                                                                            return _3c_({infixl: local_166.infixl.session
+                                                                                                        ,infixr: local_166.infixr.session});
                                                                                          }}))
-                                                                 ,by: function (local_162) {
-                                                                    return _3d__3d_({infixl: local_162.infixl.session
-                                                                                    ,infixr: local_162.infixr.session});
+                                                                 ,by: function (local_182) {
+                                                                    return _3d__3d_({infixl: local_182.infixl.session
+                                                                                    ,infixr: local_182.infixr.session});
                                                                  }})
-                                                  ,mapping: function (local_180) {
-                                                     return {value: toArray(map({stream: fromArray(local_180)
-                                                                                ,mapping: function (local_181) {
-                                                                                   return local_181.teacher;
+                                                  ,mapping: function (local_200) {
+                                                     return {value: toArray(map({stream: fromArray(local_200)
+                                                                                ,mapping: function (local_201) {
+                                                                                   return local_201.teacher;
                                                                                 }}))
                                                             ,key: item1({index: 0.0
-                                                                        ,object: local_180}).session};
+                                                                        ,object: local_200}).session};
                                                   }})));
                     default:
                       throw rts.exceptions.LamduBug("Unhandled case"
@@ -777,25 +965,24 @@ var pestovalQuerySessionTeachers = function (local_142) {
                   }
                }});
 };
-var id2 = function (__x) { return __x;};
 var unwords = function (words) {
    return join({texts: words,seperator: rts.bytesFromAscii(" ")});
 };
 var dayNames = toArray(split({text: rts.bytesFromAscii("Mon Tue Wed Thu Fri Sat Sun")
                              ,seperator: rts.bytesFromAscii(" ")}));
-var index4 = function (local_189) {
+var index4 = function (local_209) {
    var x = first({that: function (index5) {
                     return _3d__3d_({infixl: item1({index: index5
-                                                   ,object: local_189.__array4})
-                                    ,infixr: local_189.item});
+                                                   ,object: local_209.__array4})
+                                    ,infixr: local_209.item});
                  }
-                 ,stream: _2e__2e_({start: 0.0,stop: length1(local_189.__array4)})});
+                 ,stream: _2e__2e_({start: 0.0,stop: length1(local_209.__array4)})});
    switch (x.tag)
    {
      case "just":
        return id2(x.data);
      case "nothing":
-       var local_190 = x.data;
+       var local_210 = x.data;
        throw rts.exceptions.ReachedHole("Reached a hole"
                                        ,"DEF_bb1f3635a22340e9b8036656619efdc1"
                                        ,"d0062c09c4ee2abcd4b0cc313b84fc5d");
@@ -810,15 +997,15 @@ toArray(split({text: rts.bytesFromAscii("Jan Feb Mar Apr May Jun Jul Aug Sep Oct
               ,seperator: rts.bytesFromAscii(" ")}));
 var parseDateTime = function (text1) {
    var parts2 = toArray(split({text: text1,seperator: rts.bytesFromAscii(" ")}));
-   var item4 = function (local_185) { return item1({index: local_185,object: parts2});};
+   var item4 = function (local_205) { return item1({index: local_205,object: parts2});};
    var timeText = toArray(split({text: item4(4.0),seperator: rts.bytesFromAscii(":")}));
-   var timeItem = function (local_186) {
-      return parseInt(item1({index: local_186,object: timeText}));
+   var timeItem = function (local_206) {
+      return parseInt(item1({index: local_206,object: timeText}));
    };
    return {time: {timezone: unwords(_3a__3a_({infixl: item4(5.0)
-                                             ,infixr: function (local_187) {
+                                             ,infixr: function (local_207) {
                                                 return _3a__3a_({infixl: item4(6.0)
-                                                                ,infixr: function (local_188) {
+                                                                ,infixr: function (local_208) {
                                                                    return {tag: "empty"
                                                                           ,data: {}};
                                                                 }});
@@ -833,20 +1020,20 @@ var parseDateTime = function (text1) {
                  ,day: parseInt(item4(2.0))
                  ,year: parseInt(item4(3.0))}};
 };
-var _3e__3d__3c_ = function (local_193) {
-   var x = _3d__3d_({infixl: local_193.__x1,infixr: local_193.y});
+var _3e__3d__3c_ = function (local_213) {
+   var x = _3d__3d_({infixl: local_213.__x1,infixr: local_213.y});
    switch (x.tag)
    {
      case "false":
-       var local_194 = x.data;
-       var x = _3c_({infixl: local_193.__x1,infixr: local_193.y});
+       var local_214 = x.data;
+       var x = _3c_({infixl: local_213.__x1,infixr: local_213.y});
        switch (x.tag)
        {
          case "false":
-           var local_195 = x.data;
+           var local_215 = x.data;
            return {tag: "_3e_1",data: {}};
          case "true":
-           var local_196 = x.data;
+           var local_216 = x.data;
            return {tag: "_3c_1",data: {}};
          default:
            throw rts.exceptions.LamduBug("Unhandled case"
@@ -854,7 +1041,7 @@ var _3e__3d__3c_ = function (local_193) {
                                         ,"b36d82ac26521ea940b13add4c373a2c");
        }
      case "true":
-       var local_197 = x.data;
+       var local_217 = x.data;
        return {tag: "_3d__3d_1",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -863,33 +1050,33 @@ var _3e__3d__3c_ = function (local_193) {
    }
 };
 var _2f_ = rts.builtins.Prelude["/"];
-var floor = function (local_201) {
-   return _2d_({infixl: local_201,infixr: _25_({infixl: local_201,infixr: 1.0})});
+var floor = function (local_221) {
+   return _2d_({infixl: local_221,infixr: _25_({infixl: local_221,infixr: 1.0})});
 };
-var search1 = function (local_199) {
-   var x = _2265_({infixl: local_199.start,infixr: local_199.stop});
+var search1 = function (local_219) {
+   var x = _2265_({infixl: local_219.start,infixr: local_219.stop});
    switch (x.tag)
    {
      case "false":
-       var local_200 = x.data;
-       var pivot1 = floor(_2f_({infixl: _2b_({infixl: local_199.start
-                                             ,infixr: local_199.stop})
+       var local_220 = x.data;
+       var pivot1 = floor(_2f_({infixl: _2b_({infixl: local_219.start
+                                             ,infixr: local_219.stop})
                                ,infixr: 2.0}));
-       var x = local_199.compareTo(pivot1);
+       var x = local_219.compareTo(pivot1);
        switch (x.tag)
        {
          case "_3e_1":
-           var local_202 = x.data;
+           var local_222 = x.data;
            return search1({start: _2b_({infixl: pivot1,infixr: 1.0})
-                          ,stop: local_199.stop
-                          ,compareTo: local_199.compareTo});
+                          ,stop: local_219.stop
+                          ,compareTo: local_219.compareTo});
          case "_3c_1":
-           var local_203 = x.data;
-           return search1({start: local_199.start
+           var local_223 = x.data;
+           return search1({start: local_219.start
                           ,stop: pivot1
-                          ,compareTo: local_199.compareTo});
+                          ,compareTo: local_219.compareTo});
          case "_3d__3d_1":
-           var local_204 = x.data;
+           var local_224 = x.data;
            return {tag: "just",data: pivot1};
          default:
            throw rts.exceptions.LamduBug("Unhandled case"
@@ -897,7 +1084,7 @@ var search1 = function (local_199) {
                                         ,"c6c8b9c428c0b8b42ffc038b0554d06b");
        }
      case "true":
-       var local_205 = x.data;
+       var local_225 = x.data;
        return {tag: "nothing",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -905,26 +1092,26 @@ var search1 = function (local_199) {
                                     ,"c22774ac01ba95da7d4aa96a5694962d");
    }
 };
-var search = function (local_198) {
+var search = function (local_218) {
    return search1({start: 0.0
-                  ,stop: length1(local_198.sorted)
+                  ,stop: length1(local_218.sorted)
                   ,compareTo: function (index6) {
-                     return local_198.compareTo(item1({index: index6
-                                                      ,object: local_198.sorted}));
+                     return local_218.compareTo(item1({index: index6
+                                                      ,object: local_218.sorted}));
                   }});
 };
-var lookup = function (local_191) {
-   var x = search({compareTo: function (local_192) {
-                     return _3e__3d__3c_({y: local_192.key,__x1: local_191.key});
+var lookup = function (local_211) {
+   var x = search({compareTo: function (local_212) {
+                     return _3e__3d__3c_({y: local_212.key,__x1: local_211.key});
                   }
-                  ,sorted: local_191.sorted});
+                  ,sorted: local_211.sorted});
    switch (x.tag)
    {
      case "just":
        var index7 = x.data;
-       return {tag: "just",data: item1({index: index7,object: local_191.sorted}).value};
+       return {tag: "just",data: item1({index: index7,object: local_211.sorted}).value};
      case "nothing":
-       var local_206 = x.data;
+       var local_226 = x.data;
        return {tag: "nothing",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -932,21 +1119,21 @@ var lookup = function (local_191) {
                                     ,"037df5e76b157671e777748996e8ff72");
    }
 };
-var pestovalQuerySessions = function (local_100) {
+var pestovalQuerySessions = function (local_104) {
    var teacherQuery = function () {
-                         var x = local_100.teacher;
+                         var x = local_104.teacher;
                          switch (x.tag)
                          {
                            case "just":
-                             var local_101 = x.data;
+                             var local_105 = x.data;
                              return {where: _3a__3a_({infixl: _2b__2b_({a: rts.bytesFromAscii("pestoval_session_teachers.teacher_id = ")
-                                                                       ,b: showNum(local_101)})
-                                                     ,infixr: function (local_102) {
+                                                                       ,b: showNum(local_105)})
+                                                     ,infixr: function (local_106) {
                                                         return {tag: "empty",data: {}};
                                                      }})
                                     ,from: rts.bytesFromAscii("FROM pestoval_session_teachers\nLEFT OUTER JOIN pestoval_session ON pestoval_session_teachers.session_id = pestoval_session.id")};
                            case "nothing":
-                             var local_103 = x.data;
+                             var local_107 = x.data;
                              return {where: {tag: "empty",data: {}}
                                     ,from: rts.bytesFromAscii("FROM pestoval_session")};
                            default:
@@ -955,135 +1142,60 @@ var pestovalQuerySessions = function (local_100) {
                                                           ,"c83b0d9e623697d989e5a09fb1c59c4f");
                          }
                       }();
-   var where1 = join({texts: _2b__2b_2({infixl: teacherQuery.where
-                                       ,infixr: function (local_104) {
-                                          var x = local_100.filter;
-                                          switch (x.tag)
-                                          {
-                                            case "just":
-                                              var local_105 = x.data;
-                                              return _3a__3a_({infixl: local_105
-                                                              ,infixr: function (local_106) {
-                                                                 return {tag: "empty"
-                                                                        ,data: {}};
-                                                              }});
-                                            case "nothing":
-                                              var local_107 = x.data;
-                                              return {tag: "empty",data: {}};
-                                            default:
-                                              throw rts.exceptions.LamduBug("Unhandled case"
-                                                                           ,"DEF_e5c6245d56b44014a6cc92cf5ff83de4"
-                                                                           ,"b9b460a647ac4021e5d0ace3826c3537");
-                                          }
-                                       }})
-                     ,seperator: rts.bytesFromAscii(" AND ")});
-   return _3b_({infixl: query({database: local_100.database
-                              ,object: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("SELECT\n  pestoval_session.id, pestoval_session.name AS session_name,\n  pestoval_session.description, pestoval_session.prereqs,\n  pestoval_timeslot.start, pestoval_timeslot.stop,\n  pestoval_location.id AS location_id, pestoval_location.name AS location_name,\n  pestoval_level.name AS level_name, pestoval_level.color")
-                                                             ,infixr: function (local_120) {
-                                                                return _3a__3a_({infixl: teacherQuery.from
-                                                                                ,infixr: function (local_121) {
-                                                                                   return _2b__2b_2({infixl: map({stream: _3a__3a_({infixl: {key: rts.bytesFromAscii("when_id")
-                                                                                                                                            ,table: rts.bytesFromAscii("pestoval_timeslot")}
-                                                                                                                                   ,infixr: function (local_122) {
-                                                                                                                                      return _3a__3a_({infixl: {key: rts.bytesFromAscii("location_id")
-                                                                                                                                                               ,table: rts.bytesFromAscii("pestoval_location")}
-                                                                                                                                                      ,infixr: function (local_123) {
-                                                                                                                                                         return _3a__3a_({infixl: {key: rts.bytesFromAscii("level_id")
-                                                                                                                                                                                  ,table: rts.bytesFromAscii("pestoval_level")}
-                                                                                                                                                                         ,infixr: function (local_124) {
-                                                                                                                                                                            return {tag: "empty"
-                                                                                                                                                                                   ,data: {}};
-                                                                                                                                                                         }});
-                                                                                                                                                      }});
-                                                                                                                                   }})
-                                                                                                                 ,mapping: function (local_125) {
-                                                                                                                    return join({texts: _3a__3a_({infixl: rts.bytesFromAscii("LEFT OUTER JOIN ")
-                                                                                                                                                 ,infixr: function (local_126) {
-                                                                                                                                                    return _3a__3a_({infixl: local_125.table
-                                                                                                                                                                    ,infixr: function (local_127) {
-                                                                                                                                                                       return _3a__3a_({infixl: rts.bytesFromAscii(" ON pestoval_session.")
-                                                                                                                                                                                       ,infixr: function (local_128) {
-                                                                                                                                                                                          return _3a__3a_({infixl: local_125.key
-                                                                                                                                                                                                          ,infixr: function (local_129) {
-                                                                                                                                                                                                             return _3a__3a_({infixl: rts.bytesFromAscii(" = ")
-                                                                                                                                                                                                                             ,infixr: function (local_130) {
-                                                                                                                                                                                                                                return _3a__3a_({infixl: local_125.table
-                                                                                                                                                                                                                                                ,infixr: function (local_131) {
-                                                                                                                                                                                                                                                   return _3a__3a_({infixl: rts.bytesFromAscii(".id")
-                                                                                                                                                                                                                                                                   ,infixr: function (local_132) {
-                                                                                                                                                                                                                                                                      return {tag: "empty"
-                                                                                                                                                                                                                                                                             ,data: {}};
-                                                                                                                                                                                                                                                                   }});
-                                                                                                                                                                                                                                                }});
-                                                                                                                                                                                                                             }});
-                                                                                                                                                                                                          }});
-                                                                                                                                                                                       }});
-                                                                                                                                                                    }});
-                                                                                                                                                 }})
-                                                                                                                                ,seperator: rts.bytesFromAscii("")});
-                                                                                                                 }})
-                                                                                                    ,infixr: function (local_133) {
-                                                                                                       return _2b__2b_2({infixl: function () {
-                                                                                                                           var x =
-                                                                                                                           _3d__3d_({infixl: where1
-                                                                                                                                    ,infixr: rts.bytesFromAscii("")});
-                                                                                                                           switch (x.tag)
-                                                                                                                           {
-                                                                                                                             case "false":
-                                                                                                                               var local_134 =
-                                                                                                                               x.data;
-                                                                                                                               return _3a__3a_({infixl: _2b__2b_({a: rts.bytesFromAscii("WHERE ")
-                                                                                                                                                                 ,b: where1})
-                                                                                                                                               ,infixr: function (local_135) {
-                                                                                                                                                  return {tag: "empty"
-                                                                                                                                                         ,data: {}};
-                                                                                                                                               }});
-                                                                                                                             case "true":
-                                                                                                                               var local_136 =
-                                                                                                                               x.data;
-                                                                                                                               return {tag: "empty"
-                                                                                                                                      ,data: {}};
-                                                                                                                             default:
-                                                                                                                               throw rts.exceptions.LamduBug("Unhandled case"
-                                                                                                                                                            ,"DEF_e5c6245d56b44014a6cc92cf5ff83de4"
-                                                                                                                                                            ,"f573ad31abd803e9dda9e82ec3ef4df2");
-                                                                                                                           }
-                                                                                                                        }()
-                                                                                                                        ,infixr: function (local_137) {
-                                                                                                                           return _3a__3a_({infixl: rts.bytesFromAscii("ORDER BY pestoval_timeslot.start, pestoval_location.id")
-                                                                                                                                           ,infixr: function (local_138) {
-                                                                                                                                              return {tag: "empty"
-                                                                                                                                                     ,data: {}};
-                                                                                                                                           }});
-                                                                                                                        }});
-                                                                                                    }});
-                                                                                }});
-                                                             }})
-                                            ,seperator: rts.bytesFromAscii("\n")})})
-               ,infixr: function (x139) {
-                  switch (x139.tag)
+   return _3b_({infixl: query({database: local_104.database
+                              ,object: pestovalQuerySessionsSql({where: join({texts: _2b__2b_2({infixl: teacherQuery.where
+                                                                                               ,infixr: function (local_108) {
+                                                                                                  var x =
+                                                                                                  local_104.filter1;
+                                                                                                  switch (x.tag)
+                                                                                                  {
+                                                                                                    case "just":
+                                                                                                      var local_109 =
+                                                                                                      x.data;
+                                                                                                      return _3a__3a_({infixl: local_109
+                                                                                                                      ,infixr: function (local_110) {
+                                                                                                                         return {tag: "empty"
+                                                                                                                                ,data: {}};
+                                                                                                                      }});
+                                                                                                    case "nothing":
+                                                                                                      var local_111 =
+                                                                                                      x.data;
+                                                                                                      return {tag: "empty"
+                                                                                                             ,data: {}};
+                                                                                                    default:
+                                                                                                      throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                   ,"DEF_e5c6245d56b44014a6cc92cf5ff83de4"
+                                                                                                                                   ,"b9b460a647ac4021e5d0ace3826c3537");
+                                                                                                  }
+                                                                                               }})
+                                                                             ,seperator: rts.bytesFromAscii(" AND ")})
+                                                                ,from: teacherQuery.from
+                                                                ,language2: local_104.language2})})
+               ,infixr: function (x159) {
+                  switch (x159.tag)
                   {
                     case "error":
-                      var local_140 = x139.data;
-                      return ignoreError(local_140);
+                      var local_160 = x159.data;
+                      return ignoreError(local_160);
                     case "success":
-                      var local_141 = x139.data;
-                      return _3b_({infixl: pestovalQuerySessionTeachers(local_100.database)
+                      var local_161 = x159.data;
+                      return _3b_({infixl: pestovalQuerySessionTeachers({database: local_104.database
+                                                                        ,language2: local_104.language2})
                                   ,infixr: function (teachers) {
-                                     var field = function (local_182) {
+                                     var field1 = function (local_202) {
                                         var x = first({that: function (index3) {
                                                          return _3d__3d_({infixl: item1({index: index3
-                                                                                        ,object: local_141.fields})
-                                                                         ,infixr: local_182});
+                                                                                        ,object: local_161.fields})
+                                                                         ,infixr: local_202});
                                                       }
                                                       ,stream: _2e__2e_({start: 0.0
-                                                                        ,stop: length1(local_141.fields)})});
+                                                                        ,stop: length1(local_161.fields)})});
                                         switch (x.tag)
                                         {
                                           case "just":
                                             return id2(x.data);
                                           case "nothing":
-                                            var local_183 = x.data;
+                                            var local_203 = x.data;
                                             throw rts.exceptions.ReachedHole("Reached a hole"
                                                                             ,"DEF_e5c6245d56b44014a6cc92cf5ff83de4"
                                                                             ,"a8dea6e428906f6970698acdd1c10cbd");
@@ -1093,25 +1205,25 @@ var pestovalQuerySessions = function (local_100) {
                                                                          ,"ca9c646dae236b23539d3c03280dc8af");
                                         }
                                      };
-                                     var session1 = field(rts.bytesFromAscii("id"));
-                                     var start1 = field(rts.bytesFromAscii("start"));
-                                     var stop1 = field(rts.bytesFromAscii("stop"));
+                                     var session1 = field1(rts.bytesFromAscii("id"));
+                                     var start1 = field1(rts.bytesFromAscii("start"));
+                                     var stop1 = field1(rts.bytesFromAscii("stop"));
                                      var name1 =
-                                     field(rts.bytesFromAscii("session_name"));
+                                     field1(rts.bytesFromAscii("session_name"));
                                      var level =
-                                     {name: field(rts.bytesFromAscii("level_name"))
-                                     ,color: field(rts.bytesFromAscii("color"))};
+                                     {name: field1(rts.bytesFromAscii("level_name"))
+                                     ,color: field1(rts.bytesFromAscii("color"))};
                                      var place =
-                                     {name: field(rts.bytesFromAscii("location_name"))
-                                     ,id1: field(rts.bytesFromAscii("location_id"))};
+                                     {name: field1(rts.bytesFromAscii("location_name"))
+                                     ,id1: field1(rts.bytesFromAscii("location_id"))};
                                      var description =
-                                     field(rts.bytesFromAscii("description"));
-                                     var prereqs = field(rts.bytesFromAscii("prereqs"));
-                                     return __return(toArray(map({stream: fromArray(local_141.__data)
+                                     field1(rts.bytesFromAscii("description"));
+                                     var prereqs = field1(rts.bytesFromAscii("prereqs"));
+                                     return __return(toArray(map({stream: fromArray(local_161.__data)
                                                                  ,mapping: function (row1) {
                                                                     var item3 =
-                                                                    function (local_184) {
-                                                                       return item1({index: local_184
+                                                                    function (local_204) {
+                                                                       return item1({index: local_204
                                                                                     ,object: row1});
                                                                     };
                                                                     var id3 =
@@ -1132,7 +1244,7 @@ var pestovalQuerySessions = function (local_100) {
                                                                                 case "just":
                                                                                   return id2(x.data);
                                                                                 case "nothing":
-                                                                                  var local_207 =
+                                                                                  var local_227 =
                                                                                   x.data;
                                                                                   return [];
                                                                                 default:
@@ -1153,40 +1265,128 @@ var pestovalQuerySessions = function (local_100) {
                   }
                }});
 };
-var getSession = function (local_89) {
-   return _3b_({infixl: pestovalQuerySessions({database: local_89.database
+var getSession = function (local_93) {
+   var filter = {tag: "just"
+                ,data: _2b__2b_({a: rts.bytesFromAscii("pestoval_session.id = ")
+                                ,b: showNum(local_93.id1)})};
+   return _3b_({infixl: pestovalQuerySessions({database: local_93.database
                                               ,teacher: {tag: "nothing",data: {}}
-                                              ,filter: {tag: "just"
-                                                       ,data: _2b__2b_({a: rts.bytesFromAscii("pestoval_session.id = ")
-                                                                       ,b: showNum(local_89.id1)})}})
-               ,infixr: function (sessions) {
-                  return __return(function () {
-                         var x = _3d__3d_({infixl: length1(sessions),infixr: 0.0});
-                         switch (x.tag)
-                         {
-                           case "false":
-                             var local_208 = x.data;
-                             return {tag: "just"
-                                    ,data: item1({index: 0.0,object: sessions})};
-                           case "true":
-                             var local_209 = x.data;
-                             return {tag: "nothing",data: {}};
-                           default:
-                             throw rts.exceptions.LamduBug("Unhandled case"
-                                                          ,"DEF_c3b63c0f3e6e462a850436879fb81873"
-                                                          ,"e32bce02e3cc0b5a93b3fb45cf8c0056");
-                         }
-                      }());
+                                              ,language2: {tag: "english",data: {}}
+                                              ,filter1: filter})
+               ,infixr: function (local_228) {
+                  return _3b_({infixl: pestovalQuerySessions({database: local_93.database
+                                                             ,teacher: {tag: "nothing"
+                                                                       ,data: {}}
+                                                             ,language2: {tag: "hebrew"
+                                                                         ,data: {}}
+                                                             ,filter1: filter})
+                              ,infixr: function (local_229) {
+                                 return __return(function () {
+                                        var x =
+                                        _26__26_({infixl: _3d__3d_({infixl: length1(local_228)
+                                                                   ,infixr: 1.0})
+                                                 ,infixr: function (local_230) {
+                                                    return _3d__3d_({infixl: length1(local_229)
+                                                                    ,infixr: 1.0});
+                                                 }});
+                                        switch (x.tag)
+                                        {
+                                          case "false":
+                                            var local_231 = x.data;
+                                            return {tag: "nothing",data: {}};
+                                          case "true":
+                                            var local_232 = x.data;
+                                            var english1 = item1({index: 0.0
+                                                                 ,object: local_228});
+                                            var hebrew1 = item1({index: 0.0
+                                                                ,object: local_229});
+                                            return {tag: "just"
+                                                   ,data: {prereqs1: {english: english1.prereqs1
+                                                                     ,hebrew: function () {
+                                                                        var x =
+                                                                        _3d__3d_({infixl: hebrew1.prereqs1
+                                                                                 ,infixr: english1.prereqs1});
+                                                                        switch (x.tag)
+                                                                        {
+                                                                          case "false":
+                                                                            var local_233 =
+                                                                            x.data;
+                                                                            return hebrew1.prereqs1;
+                                                                          case "true":
+                                                                            var local_234 =
+                                                                            x.data;
+                                                                            return rts.bytesFromAscii("");
+                                                                          default:
+                                                                            throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                         ,"DEF_c3b63c0f3e6e462a850436879fb81873"
+                                                                                                         ,"66008b68b7f09f3bc6eb8f888fcedd0f");
+                                                                        }
+                                                                     }()}
+                                                          ,name: {english: english1.name
+                                                                 ,hebrew: function () {
+                                                                    var x =
+                                                                    _3d__3d_({infixl: hebrew1.name
+                                                                             ,infixr: english1.name});
+                                                                    switch (x.tag)
+                                                                    {
+                                                                      case "false":
+                                                                        var local_235 =
+                                                                        x.data;
+                                                                        return hebrew1.name;
+                                                                      case "true":
+                                                                        var local_236 =
+                                                                        x.data;
+                                                                        return rts.bytesFromAscii("");
+                                                                      default:
+                                                                        throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                     ,"DEF_c3b63c0f3e6e462a850436879fb81873"
+                                                                                                     ,"2182d2a13ee677d6f08e74aba25b59cb");
+                                                                    }
+                                                                 }()}
+                                                          ,start: english1.start
+                                                          ,stop: english1.stop
+                                                          ,place1: english1.place1
+                                                          ,description1: {english: english1.description1
+                                                                         ,hebrew: function () {
+                                                                            var x =
+                                                                            _3d__3d_({infixl: hebrew1.description1
+                                                                                     ,infixr: english1.description1});
+                                                                            switch (x.tag)
+                                                                            {
+                                                                              case "false":
+                                                                                var local_237 =
+                                                                                x.data;
+                                                                                return hebrew1.description1;
+                                                                              case "true":
+                                                                                var local_238 =
+                                                                                x.data;
+                                                                                return rts.bytesFromAscii("");
+                                                                              default:
+                                                                                throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                             ,"DEF_c3b63c0f3e6e462a850436879fb81873"
+                                                                                                             ,"e3d09b66fde49642215bacd53e5f9ffc");
+                                                                            }
+                                                                         }()}
+                                                          ,teachers1: english1.teachers1
+                                                          ,id1: english1.id1
+                                                          ,level1: english1.level1}};
+                                          default:
+                                            throw rts.exceptions.LamduBug("Unhandled case"
+                                                                         ,"DEF_c3b63c0f3e6e462a850436879fb81873"
+                                                                         ,"282e1ffc1e2c4271d86489b39185d0e0");
+                                        }
+                                     }());
+                              }});
                }});
 };
-var _7c__7c_ = function (local_219) {
-   var x = local_219.infixl;
+var _7c__7c_ = function (local_248) {
+   var x = local_248.infixl;
    switch (x.tag)
    {
      case "false":
-       return local_219.infixr(x.data);
+       return local_248.infixr(x.data);
      case "true":
-       var local_220 = x.data;
+       var local_249 = x.data;
        return {tag: "true",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -1194,58 +1394,58 @@ var _7c__7c_ = function (local_219) {
                                     ,"cc82dca9551140c9af0084b786718cc5");
    }
 };
-var anyOf = function (local_216) {
-   return foldLazy({stream: local_216.stream
-                   ,initial: function (local_217) {
+var anyOf = function (local_245) {
+   return foldLazy({stream: local_245.stream
+                   ,initial: function (local_246) {
                       return {tag: "false",data: {}};
                    }
-                   ,binop: function (local_218) {
-                      return _7c__7c_({infixl: local_216.satisfy(local_218.item)
-                                      ,infixr: local_218.rest});
+                   ,binop: function (local_247) {
+                      return _7c__7c_({infixl: local_245.satisfy(local_247.item)
+                                      ,infixr: local_247.rest});
                    }});
 };
-var pestovalAuth = function (local_211) {
-   return _3b_({infixl: query({database: local_211.database
+var pestovalAuth = function (local_240) {
+   return _3b_({infixl: query({database: local_240.database
                               ,object: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("SELECT pestoval_teacher.id, pestoval_teacher.is_admin\nFROM pestoval_teacher\nWHERE pestoval_teacher.password = \'")
-                                                             ,b: local_211.password})
+                                                             ,b: local_240.password})
                                                 ,b: rts.bytesFromAscii("\'")})})
-               ,infixr: function (x212) {
-                  switch (x212.tag)
+               ,infixr: function (x241) {
+                  switch (x241.tag)
                   {
                     case "error":
-                      var local_213 = x212.data;
-                      return ignoreError(local_213);
+                      var local_242 = x241.data;
+                      return ignoreError(local_242);
                     case "success":
-                      var local_214 = x212.data;
+                      var local_243 = x241.data;
                       return __return(function () {
-                             var x = anyOf({stream: fromArray(local_214.__data)
-                                           ,satisfy: function (local_215) {
+                             var x = anyOf({stream: fromArray(local_243.__data)
+                                           ,satisfy: function (local_244) {
                                               return _3d__3d_({infixl: item1({index: 1.0
-                                                                             ,object: local_215})
+                                                                             ,object: local_244})
                                                               ,infixr: rts.bytesFromAscii("true")});
                                            }});
                              switch (x.tag)
                              {
                                case "false":
-                                 var local_221 = x.data;
-                                 var x = anyOf({stream: fromArray(local_214.__data)
-                                               ,satisfy: function (local_222) {
+                                 var local_250 = x.data;
+                                 var x = anyOf({stream: fromArray(local_243.__data)
+                                               ,satisfy: function (local_251) {
                                                   var teacher1 =
                                                   parseInt(item1({index: 0.0
-                                                                 ,object: local_222}));
-                                                  return anyOf({stream: fromArray(local_211.teachers1)
-                                                               ,satisfy: function (local_223) {
-                                                                  return _3d__3d_({infixl: local_223.id1
+                                                                 ,object: local_251}));
+                                                  return anyOf({stream: fromArray(local_240.teachers1)
+                                                               ,satisfy: function (local_252) {
+                                                                  return _3d__3d_({infixl: local_252.id1
                                                                                   ,infixr: teacher1});
                                                                }});
                                                }});
                                  switch (x.tag)
                                  {
                                    case "false":
-                                     var local_224 = x.data;
+                                     var local_253 = x.data;
                                      return {tag: "unauthorized",data: {}};
                                    case "true":
-                                     var local_225 = x.data;
+                                     var local_254 = x.data;
                                      return {tag: "teacher",data: {}};
                                    default:
                                      throw rts.exceptions.LamduBug("Unhandled case"
@@ -1253,7 +1453,7 @@ var pestovalAuth = function (local_211) {
                                                                   ,"63099f6a8ec233abc1896a5e6518eaf6");
                                  }
                                case "true":
-                                 var local_226 = x.data;
+                                 var local_255 = x.data;
                                  return {tag: "admin",data: {}};
                                default:
                                  throw rts.exceptions.LamduBug("Unhandled case"
@@ -1272,190 +1472,420 @@ var pestovalUnauthorized = {content: {__data: rts.bytesFromAscii("Not authorized
                                      ,mimeType: rts.bytesFromAscii("text/plain")}
                            ,status: {message: rts.bytesFromAscii("Unauthorized")
                                     ,code: 403.0}};
-var _22f2_ = function (local_232) {
-   return {root: local_232.infixl,subTrees: local_232.infixr};
+var _22f2_ = function (local_260) {
+   return {root: local_260.infixl,subTrees: local_260.infixr};
 };
-var leaf = function (local_231) { return _22f2_({infixl: local_231,infixr: []});};
-var singleton = function (local_233) { return [local_233];};
+var leaf = function (local_259) { return _22f2_({infixl: local_259,infixr: []});};
+var singleton = function (local_261) { return [local_261];};
 var htmlParagraph = function (text2) {
    return _22f2_({infixl: rts.bytesFromAscii("<p>"),infixr: singleton(leaf(text2))});
 };
 var pestovalSessionSummary = function (session3) {
    return concat(map({stream: _3a__3a_({infixl: {name: rts.bytesFromAscii("Teachers")
                                                 ,value: join({texts: map({stream: fromArray(session3.teachers1)
-                                                                         ,mapping: function (local_239) {
-                                                                            return local_239.name;
+                                                                         ,mapping: function (local_267) {
+                                                                            return local_267.name;
                                                                          }})
                                                              ,seperator: rts.bytesFromAscii(" & ")})}
-                                       ,infixr: function (local_240) {
+                                       ,infixr: function (local_268) {
                                           return _3a__3a_({infixl: {name: rts.bytesFromAscii("Where")
                                                                    ,value: session3.place1.name}
-                                                          ,infixr: function (local_241) {
+                                                          ,infixr: function (local_269) {
                                                              return _3a__3a_({infixl: {name: rts.bytesFromAscii("What")
                                                                                       ,value: session3.name}
-                                                                             ,infixr: function (local_242) {
+                                                                             ,infixr: function (local_270) {
                                                                                 return _3a__3a_({infixl: {name: rts.bytesFromAscii("Level")
                                                                                                          ,value: session3.level1.name}
-                                                                                                ,infixr: function (local_243) {
+                                                                                                ,infixr: function (local_271) {
                                                                                                    return {tag: "empty"
                                                                                                           ,data: {}};
                                                                                                 }});
                                                                              }});
                                                           }});
                                        }})
-                     ,mapping: function (local_244) {
+                     ,mapping: function (local_272) {
                         return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<h4>")
-                                                        ,infixr: singleton(leaf(local_244.name))})
-                                        ,infixr: function (local_245) {
-                                           return _3a__3a_({infixl: leaf(local_244.value)
-                                                           ,infixr: function (local_246) {
+                                                        ,infixr: singleton(leaf(local_272.name))})
+                                        ,infixr: function (local_273) {
+                                           return _3a__3a_({infixl: leaf(local_272.value)
+                                                           ,infixr: function (local_274) {
                                                               return {tag: "empty"
                                                                      ,data: {}};
                                                            }});
                                         }});
                      }}));
 };
-var renderHtml = rts.builtins.Optimized["renderHtml"];
+var isPrefixOf = function (local_296) {
+   var lw = length(local_296.whole);
+   var lp = length(local_296.prefix);
+   return _26__26_({infixl: _2265_({infixl: lw,infixr: lp})
+                   ,infixr: function (local_297) {
+                      return _3d__3d_({infixl: slice1({object: local_296.whole
+                                                      ,start: 0.0
+                                                      ,stop: lp})
+                                      ,infixr: local_296.prefix});
+                   }});
+};
+var has = function (local_295) {
+   return isPrefixOf({whole: local_295.text,prefix: local_295.prefix});
+};
+var isSuffixOf = function (local_300) {
+   var lw1 = length(local_300.whole);
+   var ls = length(local_300.suffix);
+   return _26__26_({infixl: _2265_({infixl: lw1,infixr: ls})
+                   ,infixr: function (local_301) {
+                      return _3d__3d_({infixl: slice1({object: local_300.whole
+                                                      ,start: _2d_({infixl: lw1
+                                                                   ,infixr: ls})
+                                                      ,stop: lw1})
+                                      ,infixr: local_300.suffix});
+                   }});
+};
+var has1 = function (local_299) {
+   return isSuffixOf({suffix: local_299.suffix,whole: local_299.text});
+};
+var not = function (local_302) {
+   var x = local_302;
+   switch (x.tag)
+   {
+     case "false":
+       var local_303 = x.data;
+       return {tag: "true",data: {}};
+     case "true":
+       var local_304 = x.data;
+       return {tag: "false",data: {}};
+     default:
+       throw rts.exceptions.LamduBug("Unhandled case"
+                                    ,"DEF_414bf66f7dd84da7881a390b2f34ef76"
+                                    ,"b298b3233fa94db5b07f79925bfdbb19");
+   }
+};
+var renderHtml = function (tree) {
+   var local_292 = tree.root;
+   return join({texts: _3a__3a_({infixl: local_292
+                                ,infixr: function (local_293) {
+                                   return _2b__2b_2({infixl: map({stream: fromArray(tree.subTrees)
+                                                                 ,mapping: renderHtml})
+                                                    ,infixr: function (local_294) {
+                                                       var x =
+                                                       _26__26_({infixl: has({text: local_292
+                                                                             ,prefix: rts.bytesFromAscii("<")})
+                                                                ,infixr: function (local_298) {
+                                                                   return not(has1({text: local_292
+                                                                                   ,suffix: rts.bytesFromAscii("/>")}));
+                                                                }});
+                                                       switch (x.tag)
+                                                       {
+                                                         case "false":
+                                                           var local_305 = x.data;
+                                                           return {tag: "empty",data: {}};
+                                                         case "true":
+                                                           var local_306 = x.data;
+                                                           return _3a__3a_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("</")
+                                                                                                          ,infixr: function (local_307) {
+                                                                                                             return _3a__3a_({infixl: toBytes(toArray(take({stream: drop({stream: fromBytes(local_292)
+                                                                                                                                                                         ,count: 1.0})
+                                                                                                                                                           ,__while: function (local_308) {
+                                                                                                                                                              return _26__26_({infixl: _2260_({infixl: local_308
+                                                                                                                                                                                              ,infixr: 32.0})
+                                                                                                                                                                              ,infixr: function (local_309) {
+                                                                                                                                                                                 return _2260_({infixl: local_308
+                                                                                                                                                                                               ,infixr: 62.0});
+                                                                                                                                                                              }});
+                                                                                                                                                           }})))
+                                                                                                                             ,infixr: function (local_310) {
+                                                                                                                                return _3a__3a_({infixl: rts.bytesFromAscii(">")
+                                                                                                                                                ,infixr: function (local_311) {
+                                                                                                                                                   return {tag: "empty"
+                                                                                                                                                          ,data: {}};
+                                                                                                                                                }});
+                                                                                                                             }});
+                                                                                                          }})
+                                                                                         ,seperator: rts.bytesFromAscii("")})
+                                                                           ,infixr: function (local_312) {
+                                                                              return {tag: "empty"
+                                                                                     ,data: {}};
+                                                                           }});
+                                                         default:
+                                                           throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                        ,"DEF_530c1a87609548afa689653c0d0ccc0f"
+                                                                                        ,"7dac157ffb2d07db68f45bd01877de20");
+                                                       }
+                                                    }});
+                                }})
+               ,seperator: rts.bytesFromAscii("")});
+};
 var httpOk200 = {message: rts.bytesFromAscii("OK"),code: 200.0};
-var pestovalPage = function (local_257) {
+var pestovalPage = function (local_287) {
    return {content: {__data: _2b__2b_({a: rts.bytesFromAscii("<!DOCTYPE html>\n")
                                       ,b: renderHtml(_22f2_({infixl: rts.bytesFromAscii("<html>")
                                                             ,infixr: [_22f2_({infixl: rts.bytesFromAscii("<head>")
                                                                              ,infixr: [leaf(rts.bytesFromAscii("<meta charset=\"utf-8\" />"))
                                                                                       ,_22f2_({infixl: rts.bytesFromAscii("<title>")
-                                                                                              ,infixr: singleton(leaf(local_257.title))})
+                                                                                              ,infixr: singleton(leaf(local_287.title))})
                                                                                       ,_22f2_({infixl: rts.bytesFromAscii("<body>")
-                                                                                              ,infixr: local_257.body})]})]}))})
+                                                                                              ,infixr: local_287.body})]})]}))})
                     ,mimeType: rts.bytesFromAscii("text/html")}
           ,status: httpOk200};
 };
-var pestovalEditForm = function (local_230) {
-   return pestovalPage({title: rts.bytesFromAscii("Edit Session")
-                       ,body: [_22f2_({infixl: rts.bytesFromAscii("<h2>")
-                                      ,infixr: singleton(leaf(rts.bytesFromAscii("Edit Session")))})
-                              ,_22f2_({infixl: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("<form method=\"POST\" action=\"")
-                                                                     ,b: local_230.path})
-                                                        ,b: rts.bytesFromAscii("\">")})
-                                      ,infixr: toArray(_2b__2b_2({infixl: function () {
-                                                                    var x =
-                                                                    local_230.authorization1;
-                                                                    switch (x.tag)
-                                                                    {
-                                                                      case "admin":
-                                                                        var local_236 =
-                                                                        x.data;
-                                                                        return _3a__3a_({infixl: htmlParagraph(rts.bytesFromAscii("TODO"))
-                                                                                        ,infixr: function (local_237) {
-                                                                                           return {tag: "empty"
-                                                                                                  ,data: {}};
-                                                                                        }});
-                                                                      case "teacher":
-                                                                        var local_238 =
-                                                                        x.data;
-                                                                        return pestovalSessionSummary(local_230.session);
-                                                                      default:
-                                                                        throw rts.exceptions.LamduBug("Unhandled case"
-                                                                                                     ,"DEF_6e7bdd9e6c574058baa08fe619b870cd"
-                                                                                                     ,"51101d04f9fe7ce01c9a8a10e2124c7f");
-                                                                    }
-                                                                 }()
-                                                                 ,infixr: function (local_247) {
-                                                                    return _2b__2b_2({infixl: concat(map({stream: _3a__3a_({infixl: {name: rts.bytesFromAscii("Description")
-                                                                                                                                    ,value: local_230.session.description1
-                                                                                                                                    ,key: rts.bytesFromAscii("description")}
-                                                                                                                           ,infixr: function (local_248) {
-                                                                                                                              return _3a__3a_({infixl: {name: rts.bytesFromAscii("Pre-reqs")
-                                                                                                                                                       ,value: local_230.session.prereqs1
-                                                                                                                                                       ,key: rts.bytesFromAscii("prereqs")}
-                                                                                                                                              ,infixr: function (local_249) {
-                                                                                                                                                 return {tag: "empty"
-                                                                                                                                                        ,data: {}};
-                                                                                                                                              }});
-                                                                                                                           }})
-                                                                                                         ,mapping: function (local_250) {
-                                                                                                            var local_251 =
-                                                                                                            local_250.name;
-                                                                                                            return _3a__3a_({infixl: _22f2_({infixl: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("<label for=\"")
-                                                                                                                                                                           ,b: local_250.key})
-                                                                                                                                                              ,b: rts.bytesFromAscii("\">")})
-                                                                                                                                            ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<h3>")
-                                                                                                                                                                      ,infixr: singleton(leaf(_2b__2b_({a: local_251
-                                                                                                                                                                                                       ,b: rts.bytesFromAscii(":")})))}))})
-                                                                                                                            ,infixr: function (local_252) {
-                                                                                                                               return _3a__3a_({infixl: _22f2_({infixl: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("<textarea rows=10 cols=80 id=\"")
-                                                                                                                                                                                                                        ,b: local_250.key})
-                                                                                                                                                                                                           ,b: rts.bytesFromAscii("\" name=\"")})
-                                                                                                                                                                                              ,b: local_250.key})
-                                                                                                                                                                                 ,b: rts.bytesFromAscii("\">")})
-                                                                                                                                                               ,infixr: singleton(leaf(local_250.value))})
-                                                                                                                                               ,infixr: function (local_253) {
-                                                                                                                                                  return {tag: "empty"
-                                                                                                                                                         ,data: {}};
-                                                                                                                                               }});
-                                                                                                                            }});
-                                                                                                         }}))
-                                                                                     ,infixr: function (local_254) {
-                                                                                        return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<p>")
-                                                                                                                        ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<button type=\"submit\">")
-                                                                                                                                                  ,infixr: singleton(leaf(rts.bytesFromAscii("Update")))}))})
-                                                                                                        ,infixr: function (local_255) {
-                                                                                                           return {tag: "empty"
-                                                                                                                  ,data: {}};
-                                                                                                        }});
-                                                                                     }});
-                                                                 }}))})]});
+var replace = function (local_317) {
+   return join({texts: split({text: local_317.text,seperator: local_317.from})
+               ,seperator: local_317.to});
 };
-var pestovalUpdate = function (local_263) {
-   var x = local_263.request1.body;
+var parseHex = function (text4) {
+   var digitVal = function (local_323) {
+      var x = _2264_({infixl: local_323,infixr: 57.0});
+      switch (x.tag)
+      {
+        case "false":
+          var local_324 = x.data;
+          var x = _2264_({infixl: local_323,infixr: 70.0});
+          switch (x.tag)
+          {
+            case "false":
+              var local_325 = x.data;
+              var x = _26__26_({infixl: _2264_({infixl: 97.0,infixr: local_323})
+                               ,infixr: function (local_326) {
+                                  return _2264_({infixl: local_323,infixr: 102.0});
+                               }});
+              switch (x.tag)
+              {
+                case "false":
+                  var local_327 = x.data;
+                  throw rts.exceptions.ReachedHole("Reached a hole"
+                                                  ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                                  ,"6361c631c359bf491a698736b910c593");
+                case "true":
+                  var local_328 = x.data;
+                  return _2d_({infixl: local_323,infixr: 87.0});
+                default:
+                  throw rts.exceptions.LamduBug("Unhandled case"
+                                               ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                               ,"5a1355193393bda93a2c8e331b53d26c");
+              }
+            case "true":
+              var local_329 = x.data;
+              var x = _2264_({infixl: 65.0,infixr: local_323});
+              switch (x.tag)
+              {
+                case "false":
+                  var local_330 = x.data;
+                  throw rts.exceptions.ReachedHole("Reached a hole"
+                                                  ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                                  ,"d856f42600765d7302f46b291563ca8f");
+                case "true":
+                  var local_331 = x.data;
+                  return _2d_({infixl: local_323,infixr: 55.0});
+                default:
+                  throw rts.exceptions.LamduBug("Unhandled case"
+                                               ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                               ,"55268330b464548c2a0a1fadd767c020");
+              }
+            default:
+              throw rts.exceptions.LamduBug("Unhandled case"
+                                           ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                           ,"38523be8c44a3cbcb9944c83067688a3");
+          }
+        case "true":
+          var local_332 = x.data;
+          var x = _2264_({infixl: 48.0,infixr: local_323});
+          switch (x.tag)
+          {
+            case "false":
+              var local_333 = x.data;
+              throw rts.exceptions.ReachedHole("Reached a hole"
+                                              ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                              ,"c930879571c8b455c7030f716fce3db8");
+            case "true":
+              var local_334 = x.data;
+              return _2d_({infixl: local_323,infixr: 48.0});
+            default:
+              throw rts.exceptions.LamduBug("Unhandled case"
+                                           ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                           ,"1b5c2c85846fb25efd189742c382cd3f");
+          }
+        default:
+          throw rts.exceptions.LamduBug("Unhandled case"
+                                       ,"DEF_4f118917db8f441092ec9e2d00784d9e"
+                                       ,"e97ad8b1282bfa2bad0ce76b4c4be651");
+      }
+   };
+   return fold({stream: fromBytes(text4)
+               ,initial: 0.0
+               ,binop: function (local_335) {
+                  return _2b_({infixl: _2a_({infixl: local_335.acc,infixr: 16.0})
+                              ,infixr: digitVal(local_335.item)});
+               }});
+};
+var decodeUrl = function (text3) {
+   return concat1(function () {
+          var x = split({text: replace({text: text3
+                                       ,from: rts.bytesFromAscii("+")
+                                       ,to: rts.bytesFromAscii(" ")})
+                        ,seperator: rts.bytesFromAscii("%")});
+          switch (x.tag)
+          {
+            case "nonEmpty":
+              var local_318 = x.data;
+              return _3a__3a_({infixl: local_318.head
+                              ,infixr: function (local_319) {
+                                 return map({stream: local_318.tail({})
+                                            ,mapping: function (local_320) {
+                                               var x = _2265_({infixl: length(local_320)
+                                                              ,infixr: 2.0});
+                                               switch (x.tag)
+                                               {
+                                                 case "false":
+                                                   var local_321 = x.data;
+                                                   throw rts.exceptions.ReachedHole("Reached a hole"
+                                                                                   ,"DEF_70b3c006524d443aaa9ff90bed5a839f"
+                                                                                   ,"dc688712fae3cce5d326448fdfdec2a5");
+                                                 case "true":
+                                                   var local_322 = x.data;
+                                                   return _2b__2b_({a: toBytes(singleton(parseHex(slice1({object: local_320
+                                                                                                         ,start: 0.0
+                                                                                                         ,stop: 2.0}))))
+                                                                   ,b: slice1({object: local_320
+                                                                              ,start: 2.0
+                                                                              ,stop: length(local_320)})});
+                                                 default:
+                                                   throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                ,"DEF_70b3c006524d443aaa9ff90bed5a839f"
+                                                                                ,"3d161b85ea84c55ce4d08379f720f0c6");
+                                               }
+                                            }});
+                              }});
+            case "empty":
+              var local_336 = x.data;
+              return {tag: "empty",data: {}};
+            default:
+              throw rts.exceptions.LamduBug("Unhandled case"
+                                           ,"DEF_70b3c006524d443aaa9ff90bed5a839f"
+                                           ,"a27f7e5bb742b4c492509cfb987f05dd");
+          }
+       }());
+};
+var parsePostBody = function (body2) {
+   return map({stream: split({text: body2,seperator: rts.bytesFromAscii("&")})
+              ,mapping: function (field2) {
+                 var parts3 = toArray(split({text: field2
+                                            ,seperator: rts.bytesFromAscii("=")}));
+                 var x = _3d__3d_({infixl: length1(parts3),infixr: 2.0});
+                 switch (x.tag)
+                 {
+                   case "false":
+                     var local_315 = x.data;
+                     return ignoreError(function () {
+                            throw rts.exceptions.ReachedHole("Reached a hole"
+                                                            ,"DEF_d69dc68a4259450eacc868e09b96f1f4"
+                                                            ,"c4215356d194f30cdd17797a99d63ff1");
+                         }());
+                   case "true":
+                     var local_316 = x.data;
+                     return {value: decodeUrl(item1({index: 1.0,object: parts3}))
+                            ,key: item1({index: 0.0,object: parts3})};
+                   default:
+                     throw rts.exceptions.LamduBug("Unhandled case"
+                                                  ,"DEF_d69dc68a4259450eacc868e09b96f1f4"
+                                                  ,"611148533b9174ce687e759e68987e1b");
+                 }
+              }});
+};
+var postgresEncodeText = function (text5) {
+   return _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("E\'")
+                                ,b: concat1(map({stream: fromBytes(text5)
+                                                ,mapping: function (local_338) {
+                                                   var x = _3d__3d_({infixl: local_338
+                                                                    ,infixr: 10.0});
+                                                   switch (x.tag)
+                                                   {
+                                                     case "false":
+                                                       var local_339 = x.data;
+                                                       var x = _3d__3d_({infixl: local_338
+                                                                        ,infixr: 13.0});
+                                                       switch (x.tag)
+                                                       {
+                                                         case "false":
+                                                           var local_340 = x.data;
+                                                           var x =
+                                                           _3d__3d_({infixl: local_338
+                                                                    ,infixr: 39.0});
+                                                           switch (x.tag)
+                                                           {
+                                                             case "false":
+                                                               var local_341 = x.data;
+                                                               var x =
+                                                               _3d__3d_({infixl: local_338
+                                                                        ,infixr: 92.0});
+                                                               switch (x.tag)
+                                                               {
+                                                                 case "false":
+                                                                   var local_342 = x.data;
+                                                                   return toBytes(singleton(local_338));
+                                                                 case "true":
+                                                                   var local_343 = x.data;
+                                                                   return rts.bytesFromAscii("\\\\");
+                                                                 default:
+                                                                   throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                ,"DEF_667b666b27af4a00b75bfdb974a7ce12"
+                                                                                                ,"db1c255f9dc88b1c4474ccb94732b223");
+                                                               }
+                                                             case "true":
+                                                               var local_344 = x.data;
+                                                               return rts.bytesFromAscii("\\\'");
+                                                             default:
+                                                               throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                            ,"DEF_667b666b27af4a00b75bfdb974a7ce12"
+                                                                                            ,"c5163200e2f7d7f5292c38e34f78058d");
+                                                           }
+                                                         case "true":
+                                                           var local_345 = x.data;
+                                                           return rts.bytesFromAscii("\\r");
+                                                         default:
+                                                           throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                        ,"DEF_667b666b27af4a00b75bfdb974a7ce12"
+                                                                                        ,"af75122f296de089cbe121bebb73e3af");
+                                                       }
+                                                     case "true":
+                                                       var local_346 = x.data;
+                                                       return rts.bytesFromAscii("\\n");
+                                                     default:
+                                                       throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                    ,"DEF_667b666b27af4a00b75bfdb974a7ce12"
+                                                                                    ,"6e996a4b5e8af95a3b4a4fcb8897103c");
+                                                   }
+                                                }}))})
+                   ,b: rts.bytesFromAscii("\'")});
+};
+var pestovalUpdate = function (local_314) {
+   var x = local_314.request1.body;
    switch (x.tag)
    {
      case "just":
        var body1 = x.data;
-       return _3b_({infixl: query({database: local_263.database
+       return _3b_({infixl: query({database: local_314.database
                                   ,object: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("UPDATE pestoval_session\nSET ")
-                                                                              ,b: join({texts: map({stream: split({text: body1
-                                                                                                                  ,seperator: rts.bytesFromAscii("&")})
-                                                                                                   ,mapping: function (local_264) {
-                                                                                                      var x =
-                                                                                                      split({text: local_264
-                                                                                                            ,seperator: rts.bytesFromAscii("=")});
-                                                                                                      switch (x.tag)
-                                                                                                      {
-                                                                                                        case "nonEmpty":
-                                                                                                          var local_265 =
-                                                                                                          x.data;
-                                                                                                          return _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: local_265.head
-                                                                                                                                                    ,b: rts.bytesFromAscii(" = \'")})
-                                                                                                                                       ,b: join({texts: local_265.tail({})
-                                                                                                                                                ,seperator: rts.bytesFromAscii("=")})})
-                                                                                                                          ,b: rts.bytesFromAscii("\'")});
-                                                                                                        case "empty":
-                                                                                                          var local_266 =
-                                                                                                          x.data;
-                                                                                                          throw rts.exceptions.ReachedHole("Reached a hole"
-                                                                                                                                          ,"DEF_7fbd3bd4533a428eb08b679d36605be0"
-                                                                                                                                          ,"08592d281e1f4293115587c6af3edb43");
-                                                                                                        default:
-                                                                                                          throw rts.exceptions.LamduBug("Unhandled case"
-                                                                                                                                       ,"DEF_7fbd3bd4533a428eb08b679d36605be0"
-                                                                                                                                       ,"f4893006fbdbfe2f2bb534acbf6dc518");
-                                                                                                      }
+                                                                              ,b: join({texts: map({stream: parsePostBody(body1)
+                                                                                                   ,mapping: function (local_337) {
+                                                                                                      return _2b__2b_({a: _2b__2b_({a: local_337.key
+                                                                                                                                   ,b: rts.bytesFromAscii(" = ")})
+                                                                                                                      ,b: postgresEncodeText(local_337.value)});
                                                                                                    }})
                                                                                        ,seperator: rts.bytesFromAscii(", ")})})
                                                                  ,b: rts.bytesFromAscii("\nWHERE pestoval_session.id = ")})
-                                                    ,b: showNum(local_263.session)})})
-                   ,infixr: function (x267) {
-                      switch (x267.tag)
+                                                    ,b: showNum(local_314.session)})})
+                   ,infixr: function (x347) {
+                      switch (x347.tag)
                       {
                         case "error":
-                          var local_268 = x267.data;
-                          return ignoreError(local_268);
+                          var local_348 = x347.data;
+                          return ignoreError(local_348);
                         case "success":
-                          var local_269 = x267.data;
+                          var local_349 = x347.data;
                           return __return({content: {__data: rts.bytesFromAscii("Update successful, refresh")
                                                     ,mimeType: rts.bytesFromAscii("text/plain")}
                                           ,status: {message: _2b__2b_({a: rts.bytesFromAscii("See Other\r\nLocation: ")
-                                                                      ,b: local_263.request1.path})
+                                                                      ,b: local_314.request1.path})
                                                    ,code: 303.0}});
                         default:
                           throw rts.exceptions.LamduBug("Unhandled case"
@@ -1464,7 +1894,7 @@ var pestovalUpdate = function (local_263) {
                       }
                    }});
      case "nothing":
-       var local_270 = x.data;
+       var local_350 = x.data;
        return __return({content: {__data: rts.bytesFromAscii("POST with no body")
                                  ,mimeType: rts.bytesFromAscii("text/plain")}
                        ,status: {message: rts.bytesFromAscii("Forbidden"),code: 403.0}});
@@ -1474,43 +1904,127 @@ var pestovalUpdate = function (local_263) {
                                     ,"7155adc9c6327a297327ec4e1f1a8007");
    }
 };
-var pestovalEditPage = function (local_88) {
-   var parts1 = toArray(split({text: local_88.request1.path
+var pestovalEditPage = function (local_92) {
+   var parts1 = toArray(split({text: local_92.request1.path
                               ,seperator: rts.bytesFromAscii("/")}));
    var id = parseInt(item1({index: 3.0,object: parts1}));
    var password1 = item1({index: 4.0,object: parts1});
-   return _3b_({infixl: getSession({database: local_88.database,id1: id})
-               ,infixr: function (local_210) {
-                  var x = local_210;
+   return _3b_({infixl: getSession({database: local_92.database,id1: id})
+               ,infixr: function (local_239) {
+                  var x = local_239;
                   switch (x.tag)
                   {
                     case "just":
                       var session2 = x.data;
-                      return _3b_({infixl: pestovalAuth({database: local_88.database
+                      return _3b_({infixl: pestovalAuth({database: local_92.database
                                                         ,password: password1
                                                         ,teachers1: session2.teachers1})
-                                  ,infixr: function (x227) {
-                                     switch (x227.tag)
+                                  ,infixr: function (x256) {
+                                     switch (x256.tag)
                                      {
                                        case "unauthorized":
-                                         var local_228 = x227.data;
+                                         var local_257 = x256.data;
                                          return __return(pestovalUnauthorized);
                                        default:
-                                         var authorization = x227;
+                                         var authorization = x256;
                                          var x =
-                                         _3d__3d_({infixl: local_88.request1.method
+                                         _3d__3d_({infixl: local_92.request1.method
                                                   ,infixr: rts.bytesFromAscii("POST")});
                                          switch (x.tag)
                                          {
                                            case "false":
-                                             var local_229 = x.data;
-                                             return __return(pestovalEditForm({path: local_88.request1.path
-                                                                              ,authorization1: authorization
-                                                                              ,session: session2}));
+                                             var local_258 = x.data;
+                                             return __return(pestovalPage({title: rts.bytesFromAscii("Edit Session")
+                                                                          ,body: [_22f2_({infixl: rts.bytesFromAscii("<h2>")
+                                                                                         ,infixr: singleton(leaf(rts.bytesFromAscii("Edit Session")))})
+                                                                                 ,_22f2_({infixl: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("<form method=\"POST\" action=\"")
+                                                                                                                        ,b: local_92.request1.path})
+                                                                                                           ,b: rts.bytesFromAscii("\">")})
+                                                                                         ,infixr: toArray(_2b__2b_2({infixl: function () {
+                                                                                                                       var x =
+                                                                                                                       authorization;
+                                                                                                                       switch (x.tag)
+                                                                                                                       {
+                                                                                                                         case "admin":
+                                                                                                                           var local_264 =
+                                                                                                                           x.data;
+                                                                                                                           return _3a__3a_({infixl: htmlParagraph(rts.bytesFromAscii("TODO"))
+                                                                                                                                           ,infixr: function (local_265) {
+                                                                                                                                              return {tag: "empty"
+                                                                                                                                                     ,data: {}};
+                                                                                                                                           }});
+                                                                                                                         case "teacher":
+                                                                                                                           var local_266 =
+                                                                                                                           x.data;
+                                                                                                                           return pestovalSessionSummary({name: session2.name.english
+                                                                                                                                                         ,place1: session2.place1
+                                                                                                                                                         ,teachers1: session2.teachers1
+                                                                                                                                                         ,level1: session2.level1});
+                                                                                                                         default:
+                                                                                                                           throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                        ,"DEF_3c898249b1784b72beed36db3fa87518"
+                                                                                                                                                        ,"51101d04f9fe7ce01c9a8a10e2124c7f");
+                                                                                                                       }
+                                                                                                                    }()
+                                                                                                                    ,infixr: function (local_275) {
+                                                                                                                       return _2b__2b_2({infixl: concat(map({stream: _3a__3a_({infixl: {name: rts.bytesFromAscii("Description")
+                                                                                                                                                                                       ,value: session2.description1.english
+                                                                                                                                                                                       ,key: rts.bytesFromAscii("description")}
+                                                                                                                                                                              ,infixr: function (local_276) {
+                                                                                                                                                                                 return _3a__3a_({infixl: {name: rts.bytesFromAscii("Pre-reqs")
+                                                                                                                                                                                                          ,value: session2.prereqs1.english
+                                                                                                                                                                                                          ,key: rts.bytesFromAscii("prereqs")}
+                                                                                                                                                                                                 ,infixr: function (local_277) {
+                                                                                                                                                                                                    return _3a__3a_({infixl: {name: rts.bytesFromAscii("Description (Hebrew)")
+                                                                                                                                                                                                                             ,value: session2.description1.hebrew
+                                                                                                                                                                                                                             ,key: rts.bytesFromAscii("description_hebrew")}
+                                                                                                                                                                                                                    ,infixr: function (local_278) {
+                                                                                                                                                                                                                       return _3a__3a_({infixl: {name: rts.bytesFromAscii("Pre-reqs (Hebrew)")
+                                                                                                                                                                                                                                                ,value: session2.prereqs1.hebrew
+                                                                                                                                                                                                                                                ,key: rts.bytesFromAscii("prereqs_hebrew")}
+                                                                                                                                                                                                                                       ,infixr: function (local_279) {
+                                                                                                                                                                                                                                          return {tag: "empty"
+                                                                                                                                                                                                                                                 ,data: {}};
+                                                                                                                                                                                                                                       }});
+                                                                                                                                                                                                                    }});
+                                                                                                                                                                                                 }});
+                                                                                                                                                                              }})
+                                                                                                                                                            ,mapping: function (local_280) {
+                                                                                                                                                               var local_281 =
+                                                                                                                                                               local_280.name;
+                                                                                                                                                               return _3a__3a_({infixl: _22f2_({infixl: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("<label for=\"")
+                                                                                                                                                                                                                              ,b: local_280.key})
+                                                                                                                                                                                                                 ,b: rts.bytesFromAscii("\">")})
+                                                                                                                                                                                               ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<h3>")
+                                                                                                                                                                                                                         ,infixr: singleton(leaf(_2b__2b_({a: local_281
+                                                                                                                                                                                                                                                          ,b: rts.bytesFromAscii(":")})))}))})
+                                                                                                                                                                               ,infixr: function (local_282) {
+                                                                                                                                                                                  return _3a__3a_({infixl: _22f2_({infixl: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("<textarea rows=10 cols=80 id=\"")
+                                                                                                                                                                                                                                                                           ,b: local_280.key})
+                                                                                                                                                                                                                                                              ,b: rts.bytesFromAscii("\" name=\"")})
+                                                                                                                                                                                                                                                 ,b: local_280.key})
+                                                                                                                                                                                                                                    ,b: rts.bytesFromAscii("\">")})
+                                                                                                                                                                                                                  ,infixr: singleton(leaf(local_280.value))})
+                                                                                                                                                                                                  ,infixr: function (local_283) {
+                                                                                                                                                                                                     return {tag: "empty"
+                                                                                                                                                                                                            ,data: {}};
+                                                                                                                                                                                                  }});
+                                                                                                                                                                               }});
+                                                                                                                                                            }}))
+                                                                                                                                        ,infixr: function (local_284) {
+                                                                                                                                           return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<p>")
+                                                                                                                                                                           ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<button type=\"submit\">")
+                                                                                                                                                                                                     ,infixr: singleton(leaf(rts.bytesFromAscii("Update")))}))})
+                                                                                                                                                           ,infixr: function (local_285) {
+                                                                                                                                                              return {tag: "empty"
+                                                                                                                                                                     ,data: {}};
+                                                                                                                                                           }});
+                                                                                                                                        }});
+                                                                                                                    }}))})]}));
                                            case "true":
-                                             var local_262 = x.data;
-                                             return pestovalUpdate({request1: local_88.request1
-                                                                   ,database: local_88.database
+                                             var local_313 = x.data;
+                                             return pestovalUpdate({request1: local_92.request1
+                                                                   ,database: local_92.database
                                                                    ,session: session2.id1});
                                            default:
                                              throw rts.exceptions.LamduBug("Unhandled case"
@@ -1520,8 +2034,8 @@ var pestovalEditPage = function (local_88) {
                                      }
                                   }});
                     case "nothing":
-                      var local_271 = x.data;
-                      return __return(httpNotFound404(local_88.request1.path));
+                      var local_351 = x.data;
+                      return __return(httpNotFound404(local_92.request1.path));
                     default:
                       throw rts.exceptions.LamduBug("Unhandled case"
                                                    ,"DEF_3c898249b1784b72beed36db3fa87518"
@@ -1531,31 +2045,31 @@ var pestovalEditPage = function (local_88) {
 };
 var overlaysCss = _22f2_({infixl: rts.bytesFromAscii("<style type=\"text/css\">")
                          ,infixr: singleton(leaf(rts.bytesFromAscii("/* Thanks https://eichefam.net/2011/12/21/popup-windows-without-javascript/ */\n.overlay {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background: rgba(0,0,0,0.5);\n  transition: opacity 200ms;\n  visibility: hidden;\n  opacity: 0;\n}\n.overlay:target {\n  visibility: visible;\n  opacity: 1;\n}\n.cancel {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  cursor: default;\n}\n.popup {\n  margin: 50px auto;\n  padding: 20px;\n  background: #fff;\n  border: 1px solid #666;\n  width: 70%;\n  box-shadow: 0 0 50px rgba(0,0,0,0.5);\n  position: relative;\n}")))});
-var filter1 = function (local_284) {
-   var x = local_284.stream;
+var filter2 = function (local_364) {
+   var x = local_364.stream;
    switch (x.tag)
    {
      case "nonEmpty":
-       var local_285 = x.data;
-       var rest1 = function (local_286) {
-          return filter1({stream: local_285.tail({}),keep: local_284.keep});
+       var local_365 = x.data;
+       var rest1 = function (local_366) {
+          return filter2({stream: local_365.tail({}),keep: local_364.keep});
        };
-       var x = local_284.keep(local_285.head);
+       var x = local_364.keep(local_365.head);
        switch (x.tag)
        {
          case "false":
-           var local_287 = x.data;
+           var local_367 = x.data;
            return rest1({});
          case "true":
-           var local_288 = x.data;
-           return {tag: "nonEmpty",data: {head: local_285.head,tail: rest1}};
+           var local_368 = x.data;
+           return {tag: "nonEmpty",data: {head: local_365.head,tail: rest1}};
          default:
            throw rts.exceptions.LamduBug("Unhandled case"
                                         ,"DEF_d7dafdd0c4c14e81beb071e1181c6356"
                                         ,"fbe0954bea2f4c248cb91ac61e7821ba");
        }
      case "empty":
-       var local_289 = x.data;
+       var local_369 = x.data;
        return {tag: "empty",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -1563,21 +2077,88 @@ var filter1 = function (local_284) {
                                     ,"2cb5f2574b8b4e3d8e5510fee403db44");
    }
 };
-var replicate = function (local_306) {
-   var x = _2264_({infixl: local_306.count,infixr: 0.0});
+var dayNamesHebrew = toArray(split({text: rts.bytes([215
+                                                    ,169
+                                                    ,215
+                                                    ,160
+                                                    ,215
+                                                    ,153
+                                                    ,32
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,156
+                                                    ,215
+                                                    ,153
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,153
+                                                    ,32
+                                                    ,215
+                                                    ,168
+                                                    ,215
+                                                    ,145
+                                                    ,215
+                                                    ,153
+                                                    ,215
+                                                    ,162
+                                                    ,215
+                                                    ,153
+                                                    ,32
+                                                    ,215
+                                                    ,151
+                                                    ,215
+                                                    ,158
+                                                    ,215
+                                                    ,153
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,153
+                                                    ,32
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,153
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,153
+                                                    ,32
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,145
+                                                    ,215
+                                                    ,170
+                                                    ,32
+                                                    ,215
+                                                    ,168
+                                                    ,215
+                                                    ,144
+                                                    ,215
+                                                    ,169
+                                                    ,215
+                                                    ,149
+                                                    ,215
+                                                    ,159])
+                                   ,seperator: rts.bytesFromAscii(" ")}));
+var replicate = function (local_392) {
+   var x = _2264_({infixl: local_392.count,infixr: 0.0});
    switch (x.tag)
    {
      case "false":
-       var local_307 = x.data;
+       var local_393 = x.data;
        return {tag: "nonEmpty"
-              ,data: {head: local_306.item
-                     ,tail: function (local_308) {
-                        return replicate({count: _2d_({infixl: local_306.count
+              ,data: {head: local_392.item
+                     ,tail: function (local_394) {
+                        return replicate({count: _2d_({infixl: local_392.count
                                                       ,infixr: 1.0})
-                                         ,item: local_306.item});
+                                         ,item: local_392.item});
                      }}};
      case "true":
-       var local_309 = x.data;
+       var local_395 = x.data;
        return {tag: "empty",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -1585,52 +2166,67 @@ var replicate = function (local_306) {
                                     ,"3b53ee6d875f49f4acdb9a2e8b33fb2d");
    }
 };
-var rightJustify = function (local_304) {
-   var count1 = _2d_({infixl: local_304.length5,infixr: length(local_304.text)});
+var rightJustify = function (local_390) {
+   var count1 = _2d_({infixl: local_390.length5,infixr: length(local_390.text)});
    var x = _2264_({infixl: count1,infixr: 0.0});
    switch (x.tag)
    {
      case "false":
-       var local_305 = x.data;
+       var local_391 = x.data;
        return _2b__2b_({a: toBytes(toArray(replicate({count: count1
-                                                     ,item: local_304.character})))
-                       ,b: local_304.text});
+                                                     ,item: local_390.character})))
+                       ,b: local_390.text});
      case "true":
-       var local_310 = x.data;
-       return local_304.text;
+       var local_396 = x.data;
+       return local_390.text;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_c96ce62be72e4d1e85d07af16867169d"
                                     ,"ea6106b4e471dead7c7d3638866db4a1");
    }
 };
-var showTime = function (local_300) {
-   return join({texts: map({stream: _3a__3a_({infixl: local_300.hour
-                                             ,infixr: function (local_301) {
-                                                return _3a__3a_({infixl: local_300.minute
-                                                                ,infixr: function (local_302) {
+var showTime = function (local_386) {
+   return join({texts: map({stream: _3a__3a_({infixl: local_386.hour
+                                             ,infixr: function (local_387) {
+                                                return _3a__3a_({infixl: local_386.minute
+                                                                ,infixr: function (local_388) {
                                                                    return {tag: "empty"
                                                                           ,data: {}};
                                                                 }});
                                              }})
-                           ,mapping: function (local_303) {
+                           ,mapping: function (local_389) {
                               return rightJustify({length5: 2.0
-                                                  ,text: showNum(local_303)
+                                                  ,text: showNum(local_389)
                                                   ,character: 48.0});
                            }})
                ,seperator: rts.bytesFromAscii(":")});
 };
-var formatTimeSlot = function (local_298) {
-   return join({texts: _3a__3a_({infixl: item1({index: _2d_({infixl: local_298.start.date.weekDay
+var formatTimeSlot = function (local_382) {
+   return join({texts: _3a__3a_({infixl: item1({index: _2d_({infixl: local_382.timeSlot.start.date.weekDay
                                                             ,infixr: 1.0})
-                                               ,object: dayNames})
-                                ,infixr: function (local_299) {
-                                   return _3a__3a_({infixl: showTime(local_298.start.time)
-                                                   ,infixr: function (local_311) {
+                                               ,object: function () {
+                                                  var x = local_382.language2;
+                                                  switch (x.tag)
+                                                  {
+                                                    case "english":
+                                                      var local_383 = x.data;
+                                                      return dayNames;
+                                                    case "hebrew":
+                                                      var local_384 = x.data;
+                                                      return dayNamesHebrew;
+                                                    default:
+                                                      throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                   ,"DEF_4fed722dd3634c0db388c78e255c1429"
+                                                                                   ,"5582218e01f5831eae7835c315a758c0");
+                                                  }
+                                               }()})
+                                ,infixr: function (local_385) {
+                                   return _3a__3a_({infixl: showTime(local_382.timeSlot.start.time)
+                                                   ,infixr: function (local_397) {
                                                       return _3a__3a_({infixl: rts.bytesFromAscii("-")
-                                                                      ,infixr: function (local_312) {
-                                                                         return _3a__3a_({infixl: showTime(local_298.stop.time)
-                                                                                         ,infixr: function (local_313) {
+                                                                      ,infixr: function (local_398) {
+                                                                         return _3a__3a_({infixl: showTime(local_382.timeSlot.stop.time)
+                                                                                         ,infixr: function (local_399) {
                                                                                             return {tag: "empty"
                                                                                                    ,data: {}};
                                                                                          }});
@@ -1639,98 +2235,143 @@ var formatTimeSlot = function (local_298) {
                                 }})
                ,seperator: rts.bytesFromAscii(" ")});
 };
-var pestovalSessionInfo = function (local_333) {
-   var line = function (local_334) {
+var pestovalSessionInfo = function (local_419) {
+   var line = function (local_420) {
       return _22f2_({infixl: rts.bytesFromAscii("<p>")
                     ,infixr: [_22f2_({infixl: rts.bytesFromAscii("<b>")
-                                     ,infixr: singleton(leaf(local_334.key))})
-                             ,leaf(local_334.value)]});
+                                     ,infixr: singleton(leaf(local_420.key))})
+                             ,leaf(local_420.value)]});
    };
-   var teacher3 = function (local_337) {
-      return _22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<a href=\"/eng/teacher/")
-                                              ,infixr: function (local_338) {
-                                                 return _3a__3a_({infixl: showNum(local_337.id1)
-                                                                 ,infixr: function (local_339) {
-                                                                    return _3a__3a_({infixl: rts.bytesFromAscii("/\">")
-                                                                                    ,infixr: function (local_340) {
-                                                                                       return {tag: "empty"
-                                                                                              ,data: {}};
+   var teacher3 = function (local_423) {
+      return _22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<a href=\"/")
+                                              ,infixr: function (local_424) {
+                                                 return _3a__3a_({infixl: function () {
+                                                                    var x =
+                                                                    local_419.language2;
+                                                                    switch (x.tag)
+                                                                    {
+                                                                      case "english":
+                                                                        var local_425 =
+                                                                        x.data;
+                                                                        return rts.bytesFromAscii("eng");
+                                                                      case "hebrew":
+                                                                        var local_426 =
+                                                                        x.data;
+                                                                        return rts.bytesFromAscii("heb");
+                                                                      default:
+                                                                        throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                     ,"DEF_cc47114d3d1544e4b59dee95bf065482"
+                                                                                                     ,"25c06dfd8f7a82ef041d5e079e02e218");
+                                                                    }
+                                                                 }()
+                                                                 ,infixr: function (local_427) {
+                                                                    return _3a__3a_({infixl: rts.bytesFromAscii("/teacher/")
+                                                                                    ,infixr: function (local_428) {
+                                                                                       return _3a__3a_({infixl: showNum(local_423.id1)
+                                                                                                       ,infixr: function (local_429) {
+                                                                                                          return _3a__3a_({infixl: rts.bytesFromAscii("/\">")
+                                                                                                                          ,infixr: function (local_430) {
+                                                                                                                             return {tag: "empty"
+                                                                                                                                    ,data: {}};
+                                                                                                                          }});
+                                                                                                       }});
                                                                                     }});
                                                                  }});
                                               }}))
-                    ,infixr: singleton(leaf(local_337.name))});
+                    ,infixr: singleton(leaf(local_423.name))});
    };
    return toArray(_3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<h2>")
                                            ,infixr: function () {
                                               var x =
-                                              fromArray(local_333.session.teachers1);
+                                              fromArray(local_419.session.teachers1);
                                               switch (x.tag)
                                               {
                                                 case "nonEmpty":
-                                                  var local_341 = x.data;
-                                                  return toArray(_3a__3a_({infixl: teacher3(local_341.head)
-                                                                          ,infixr: function (local_342) {
-                                                                             return _2b__2b_2({infixl: concat(map({stream: local_341.tail({})
-                                                                                                                  ,mapping: function (local_343) {
-                                                                                                                     return _3a__3a_({infixl: leaf(rts.bytesFromAscii(" & "))
-                                                                                                                                     ,infixr: function (local_344) {
-                                                                                                                                        return _3a__3a_({infixl: teacher3(local_343)
-                                                                                                                                                        ,infixr: function (local_345) {
+                                                  var local_431 = x.data;
+                                                  return toArray(_3a__3a_({infixl: teacher3(local_431.head)
+                                                                          ,infixr: function (local_432) {
+                                                                             return _2b__2b_2({infixl: concat(map({stream: local_431.tail({})
+                                                                                                                  ,mapping: function (local_433) {
+                                                                                                                     return _3a__3a_({infixl: leaf(function () {
+                                                                                                                                        var x =
+                                                                                                                                        local_419.language2;
+                                                                                                                                        switch (x.tag)
+                                                                                                                                        {
+                                                                                                                                          case "english":
+                                                                                                                                            var local_434 =
+                                                                                                                                            x.data;
+                                                                                                                                            return rts.bytesFromAscii(" & ");
+                                                                                                                                          case "hebrew":
+                                                                                                                                            var local_435 =
+                                                                                                                                            x.data;
+                                                                                                                                            return rts.bytes([32
+                                                                                                                                                             ,215
+                                                                                                                                                             ,149]);
+                                                                                                                                          default:
+                                                                                                                                            throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                         ,"DEF_cc47114d3d1544e4b59dee95bf065482"
+                                                                                                                                                                         ,"9750a7059a5af134d0eb3dcae276f1a7");
+                                                                                                                                        }
+                                                                                                                                     }())
+                                                                                                                                     ,infixr: function (local_436) {
+                                                                                                                                        return _3a__3a_({infixl: teacher3(local_433)
+                                                                                                                                                        ,infixr: function (local_437) {
                                                                                                                                                            return {tag: "empty"
                                                                                                                                                                   ,data: {}};
                                                                                                                                                         }});
                                                                                                                                      }});
                                                                                                                   }}))
-                                                                                              ,infixr: function (local_346) {
+                                                                                              ,infixr: function (local_438) {
                                                                                                  return _3a__3a_({infixl: leaf(_2b__2b_({a: rts.bytesFromAscii(": ")
-                                                                                                                                        ,b: local_333.session.name}))
-                                                                                                                 ,infixr: function (local_347) {
+                                                                                                                                        ,b: local_419.session.name}))
+                                                                                                                 ,infixr: function (local_439) {
                                                                                                                     return {tag: "empty"
                                                                                                                            ,data: {}};
                                                                                                                  }});
                                                                                               }});
                                                                           }}));
                                                 case "empty":
-                                                  var local_348 = x.data;
-                                                  return singleton(leaf(local_333.session.name));
+                                                  var local_440 = x.data;
+                                                  return singleton(leaf(local_419.session.name));
                                                 default:
                                                   throw rts.exceptions.LamduBug("Unhandled case"
                                                                                ,"DEF_cc47114d3d1544e4b59dee95bf065482"
                                                                                ,"ed7be6bad9f71095a62be6746bf728a3");
                                               }
                                            }()})
-                           ,infixr: function (local_349) {
+                           ,infixr: function (local_441) {
                               return _2b__2b_2({infixl: function () {
-                                                  var x = local_333.password;
+                                                  var x = local_419.password;
                                                   switch (x.tag)
                                                   {
                                                     case "just":
-                                                      var local_350 = x.data;
+                                                      var local_442 = x.data;
                                                       return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<p>")
-                                                                                      ,infixr: singleton(_22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<a href=\"/edit/")
-                                                                                                                                          ,infixr: function (local_351) {
-                                                                                                                                             return _3a__3a_({infixl: showNum(local_333.session.id1)
-                                                                                                                                                             ,infixr: function (local_352) {
-                                                                                                                                                                return _3a__3a_({infixl: rts.bytesFromAscii("/")
-                                                                                                                                                                                ,infixr: function (local_353) {
-                                                                                                                                                                                   return _3a__3a_({infixl: local_350
-                                                                                                                                                                                                   ,infixr: function (local_354) {
-                                                                                                                                                                                                      return _3a__3a_({infixl: rts.bytesFromAscii("/\">")
-                                                                                                                                                                                                                      ,infixr: function (local_355) {
-                                                                                                                                                                                                                         return {tag: "empty"
-                                                                                                                                                                                                                                ,data: {}};
-                                                                                                                                                                                                                      }});
-                                                                                                                                                                                                   }});
-                                                                                                                                                                                }});
-                                                                                                                                                             }});
-                                                                                                                                          }}))
+                                                                                      ,infixr: singleton(_22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<a href=\"/eng/edit/")
+                                                                                                                                               ,infixr: function (local_443) {
+                                                                                                                                                  return _3a__3a_({infixl: showNum(local_419.session.id1)
+                                                                                                                                                                  ,infixr: function (local_444) {
+                                                                                                                                                                     return _3a__3a_({infixl: rts.bytesFromAscii("/")
+                                                                                                                                                                                     ,infixr: function (local_445) {
+                                                                                                                                                                                        return _3a__3a_({infixl: local_442
+                                                                                                                                                                                                        ,infixr: function (local_446) {
+                                                                                                                                                                                                           return _3a__3a_({infixl: rts.bytesFromAscii("/\">")
+                                                                                                                                                                                                                           ,infixr: function (local_447) {
+                                                                                                                                                                                                                              return {tag: "empty"
+                                                                                                                                                                                                                                     ,data: {}};
+                                                                                                                                                                                                                           }});
+                                                                                                                                                                                                        }});
+                                                                                                                                                                                     }});
+                                                                                                                                                                  }});
+                                                                                                                                               }})
+                                                                                                                              ,seperator: rts.bytesFromAscii("")})
                                                                                                                 ,infixr: singleton(leaf(rts.bytesFromAscii("Edit details")))}))})
-                                                                      ,infixr: function (local_356) {
+                                                                      ,infixr: function (local_448) {
                                                                          return {tag: "empty"
                                                                                 ,data: {}};
                                                                       }});
                                                     case "nothing":
-                                                      var local_357 = x.data;
+                                                      var local_449 = x.data;
                                                       return {tag: "empty",data: {}};
                                                     default:
                                                       throw rts.exceptions.LamduBug("Unhandled case"
@@ -1738,26 +2379,148 @@ var pestovalSessionInfo = function (local_333) {
                                                                                    ,"fad3e2035a95ac24b0214f741995983a");
                                                   }
                                                }()
-                                               ,infixr: function (local_358) {
+                                               ,infixr: function (local_450) {
                                                   return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<b>")
-                                                                                  ,infixr: singleton(leaf(formatTimeSlot(local_333.session)))})
-                                                                  ,infixr: function (local_359) {
-                                                                     return _3a__3a_({infixl: line({value: local_333.session.place1.name
-                                                                                                   ,key: rts.bytesFromAscii("Where: ")})
-                                                                                     ,infixr: function (local_360) {
-                                                                                        return _3a__3a_({infixl: line({value: local_333.session.level1.name
-                                                                                                                      ,key: rts.bytesFromAscii("Who: ")})
-                                                                                                        ,infixr: function (local_361) {
+                                                                                  ,infixr: singleton(leaf(formatTimeSlot({timeSlot: local_419.session
+                                                                                                                         ,language2: local_419.language2})))})
+                                                                  ,infixr: function (local_451) {
+                                                                     return _3a__3a_({infixl: line({value: local_419.session.place1.name
+                                                                                                   ,key: function () {
+                                                                                                      var x =
+                                                                                                      local_419.language2;
+                                                                                                      switch (x.tag)
+                                                                                                      {
+                                                                                                        case "english":
+                                                                                                          var local_452 =
+                                                                                                          x.data;
+                                                                                                          return rts.bytesFromAscii("Where: ");
+                                                                                                        case "hebrew":
+                                                                                                          var local_453 =
+                                                                                                          x.data;
+                                                                                                          return rts.bytes([215
+                                                                                                                           ,144
+                                                                                                                           ,215
+                                                                                                                           ,153
+                                                                                                                           ,215
+                                                                                                                           ,164
+                                                                                                                           ,215
+                                                                                                                           ,148
+                                                                                                                           ,58
+                                                                                                                           ,32]);
+                                                                                                        default:
+                                                                                                          throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                       ,"DEF_cc47114d3d1544e4b59dee95bf065482"
+                                                                                                                                       ,"179cde6923eb73cf24940af0561913a7");
+                                                                                                      }
+                                                                                                   }()})
+                                                                                     ,infixr: function (local_454) {
+                                                                                        return _3a__3a_({infixl: line({value: local_419.session.level1.name
+                                                                                                                      ,key: function () {
+                                                                                                                         var x =
+                                                                                                                         local_419.language2;
+                                                                                                                         switch (x.tag)
+                                                                                                                         {
+                                                                                                                           case "english":
+                                                                                                                             var local_455 =
+                                                                                                                             x.data;
+                                                                                                                             return rts.bytesFromAscii("Who: ");
+                                                                                                                           case "hebrew":
+                                                                                                                             var local_456 =
+                                                                                                                             x.data;
+                                                                                                                             return rts.bytes([215
+                                                                                                                                              ,158
+                                                                                                                                              ,215
+                                                                                                                                              ,153
+                                                                                                                                              ,58
+                                                                                                                                              ,32]);
+                                                                                                                           default:
+                                                                                                                             throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                          ,"DEF_cc47114d3d1544e4b59dee95bf065482"
+                                                                                                                                                          ,"a86a0d0f193b3a5704ba058160976419");
+                                                                                                                         }
+                                                                                                                      }()})
+                                                                                                        ,infixr: function (local_457) {
                                                                                                            return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<h3>")
-                                                                                                                                           ,infixr: singleton(leaf(rts.bytesFromAscii("Description:")))})
-                                                                                                                           ,infixr: function (local_362) {
-                                                                                                                              return _3a__3a_({infixl: htmlParagraph(local_333.session.description1)
-                                                                                                                                              ,infixr: function (local_363) {
+                                                                                                                                           ,infixr: singleton(leaf(function () {
+                                                                                                                                              var x =
+                                                                                                                                              local_419.language2;
+                                                                                                                                              switch (x.tag)
+                                                                                                                                              {
+                                                                                                                                                case "english":
+                                                                                                                                                  var local_458 =
+                                                                                                                                                  x.data;
+                                                                                                                                                  return rts.bytesFromAscii("Description:");
+                                                                                                                                                case "hebrew":
+                                                                                                                                                  var local_459 =
+                                                                                                                                                  x.data;
+                                                                                                                                                  return rts.bytes([215
+                                                                                                                                                                   ,170
+                                                                                                                                                                   ,215
+                                                                                                                                                                   ,153
+                                                                                                                                                                   ,215
+                                                                                                                                                                   ,144
+                                                                                                                                                                   ,215
+                                                                                                                                                                   ,149
+                                                                                                                                                                   ,215
+                                                                                                                                                                   ,168
+                                                                                                                                                                   ,58]);
+                                                                                                                                                default:
+                                                                                                                                                  throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                               ,"DEF_cc47114d3d1544e4b59dee95bf065482"
+                                                                                                                                                                               ,"9be0f6a7af77ef5ae10c6cc37838cf70");
+                                                                                                                                              }
+                                                                                                                                           }()))})
+                                                                                                                           ,infixr: function (local_460) {
+                                                                                                                              var escapeLines =
+                                                                                                                              function (text6) {
+                                                                                                                                 return replace({text: text6
+                                                                                                                                                ,from: rts.bytesFromAscii("\n")
+                                                                                                                                                ,to: rts.bytesFromAscii("<br/>\n")});
+                                                                                                                              };
+                                                                                                                              return _3a__3a_({infixl: htmlParagraph(escapeLines(local_419.session.description1))
+                                                                                                                                              ,infixr: function (local_461) {
                                                                                                                                                  return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<h3>")
-                                                                                                                                                                                 ,infixr: singleton(leaf(rts.bytesFromAscii("Prereqs:")))})
-                                                                                                                                                                 ,infixr: function (local_364) {
-                                                                                                                                                                    return _3a__3a_({infixl: htmlParagraph(local_333.session.prereqs1)
-                                                                                                                                                                                    ,infixr: function (local_365) {
+                                                                                                                                                                                 ,infixr: singleton(leaf(function () {
+                                                                                                                                                                                    var x =
+                                                                                                                                                                                    local_419.language2;
+                                                                                                                                                                                    switch (x.tag)
+                                                                                                                                                                                    {
+                                                                                                                                                                                      case "english":
+                                                                                                                                                                                        var local_462 =
+                                                                                                                                                                                        x.data;
+                                                                                                                                                                                        return rts.bytesFromAscii("Prereqs:");
+                                                                                                                                                                                      case "hebrew":
+                                                                                                                                                                                        var local_463 =
+                                                                                                                                                                                        x.data;
+                                                                                                                                                                                        return rts.bytes([215
+                                                                                                                                                                                                         ,147
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,168
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,153
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,169
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,149
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,170
+                                                                                                                                                                                                         ,45
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,167
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,147
+                                                                                                                                                                                                         ,215
+                                                                                                                                                                                                         ,157
+                                                                                                                                                                                                         ,58]);
+                                                                                                                                                                                      default:
+                                                                                                                                                                                        throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                                                                     ,"DEF_cc47114d3d1544e4b59dee95bf065482"
+                                                                                                                                                                                                                     ,"2b42a6de4a3edaa1b093b42c3a22ec18");
+                                                                                                                                                                                    }
+                                                                                                                                                                                 }()))})
+                                                                                                                                                                 ,infixr: function (local_464) {
+                                                                                                                                                                    return _3a__3a_({infixl: htmlParagraph(escapeLines(local_419.session.prereqs1))
+                                                                                                                                                                                    ,infixr: function (local_465) {
                                                                                                                                                                                        return {tag: "empty"
                                                                                                                                                                                               ,data: {}};
                                                                                                                                                                                     }});
@@ -1770,130 +2533,157 @@ var pestovalSessionInfo = function (local_333) {
                                                }});
                            }}));
 };
-var htmlPopup = function (local_366) {
-   return _22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<div id=\"")
-                                           ,infixr: function (local_367) {
-                                              return _3a__3a_({infixl: local_366.id1
-                                                              ,infixr: function (local_368) {
-                                                                 return _3a__3a_({infixl: rts.bytesFromAscii("\" class=\"overlay\">")
-                                                                                 ,infixr: function (local_369) {
-                                                                                    return {tag: "empty"
-                                                                                           ,data: {}};
-                                                                                 }});
-                                                              }});
-                                           }}))
+var htmlPopup = function (local_466) {
+   return _22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<div id=\"")
+                                                ,infixr: function (local_467) {
+                                                   return _3a__3a_({infixl: local_466.id1
+                                                                   ,infixr: function (local_468) {
+                                                                      return _3a__3a_({infixl: rts.bytesFromAscii("\" class=\"overlay\">")
+                                                                                      ,infixr: function (local_469) {
+                                                                                         return {tag: "empty"
+                                                                                                ,data: {}};
+                                                                                      }});
+                                                                   }});
+                                                }})
+                               ,seperator: rts.bytesFromAscii("")})
                  ,infixr: [leaf(rts.bytesFromAscii("<a class=\"cancel\" href=\"javascript:history.back()\">"))
-                          ,_22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<div class=\"popup\" style=\"background-color:")
-                                                            ,infixr: function (local_371) {
-                                                               return _3a__3a_({infixl: local_366.color
-                                                                               ,infixr: function (local_372) {
-                                                                                  return _3a__3a_({infixl: rts.bytesFromAscii("\">")
-                                                                                                  ,infixr: function (local_373) {
-                                                                                                     return {tag: "empty"
-                                                                                                            ,data: {}};
-                                                                                                  }});
-                                                                               }});
-                                                            }}))
-                                  ,infixr: local_366.content})]});
+                          ,_22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<div class=\"popup\" style=\"background-color:")
+                                                                 ,infixr: function (local_471) {
+                                                                    return _3a__3a_({infixl: local_466.color
+                                                                                    ,infixr: function (local_472) {
+                                                                                       return _3a__3a_({infixl: rts.bytesFromAscii("\">")
+                                                                                                       ,infixr: function (local_473) {
+                                                                                                          return {tag: "empty"
+                                                                                                                 ,data: {}};
+                                                                                                       }});
+                                                                                    }});
+                                                                 }})
+                                                ,seperator: rts.bytesFromAscii("")})
+                                  ,infixr: local_466.content})]});
 };
-var pestovalSessionCell = function (local_318) {
+var pestovalSessionCell = function (local_404) {
    var popup = _2b__2b_({a: rts.bytesFromAscii("popup-")
-                        ,b: showNum(local_318.session.id1)});
-   var local_319 = htmlParagraph(local_318.session.place1.name);
-   return _22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<td style=\"background-color:")
-                                           ,infixr: function (local_320) {
-                                              var color1 = local_318.session.level1.color;
-                                              return _3a__3a_({infixl: function () {
-                                                                 var x =
-                                                                 _3d__3d_({infixl: color1
-                                                                          ,infixr: rts.bytesFromAscii("null")});
-                                                                 switch (x.tag)
-                                                                 {
-                                                                   case "false":
-                                                                     var local_321 =
-                                                                     x.data;
-                                                                     return color1;
-                                                                   case "true":
-                                                                     var local_322 =
-                                                                     x.data;
-                                                                     return rts.bytesFromAscii("#eee");
-                                                                   default:
-                                                                     throw rts.exceptions.LamduBug("Unhandled case"
-                                                                                                  ,"DEF_9020eea8542142a09c1a8813ef9990af"
-                                                                                                  ,"8af192079f77d68114daa54992f28614");
-                                                                 }
-                                                              }()
-                                                              ,infixr: function (local_323) {
-                                                                 return _3a__3a_({infixl: rts.bytesFromAscii(";")
-                                                                                 ,infixr: function (local_324) {
-                                                                                    return _3a__3a_({infixl: local_318.style
-                                                                                                    ,infixr: function (local_325) {
-                                                                                                       return _3a__3a_({infixl: rts.bytesFromAscii("\" ")
-                                                                                                                       ,infixr: function (local_326) {
-                                                                                                                          return _3a__3a_({infixl: local_318.attributes
-                                                                                                                                          ,infixr: function (local_327) {
-                                                                                                                                             return _3a__3a_({infixl: rts.bytesFromAscii(">")
-                                                                                                                                                             ,infixr: function (local_328) {
-                                                                                                                                                                return {tag: "empty"
-                                                                                                                                                                       ,data: {}};
-                                                                                                                                                             }});
-                                                                                                                                          }});
-                                                                                                                       }});
-                                                                                                    }});
-                                                                                 }});
-                                                              }});
-                                           }}))
-                 ,infixr: [_22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<a href=\"#")
-                                                            ,infixr: function (local_329) {
-                                                               return _3a__3a_({infixl: popup
-                                                                               ,infixr: function (local_330) {
-                                                                                  return _3a__3a_({infixl: rts.bytesFromAscii("\" style=\"text-decoration: none; color: black;\">")
-                                                                                                  ,infixr: function (local_331) {
-                                                                                                     return {tag: "empty"
-                                                                                                            ,data: {}};
-                                                                                                  }});
-                                                                               }});
-                                                            }}))
-                                  ,infixr: local_318.content})
-                          ,htmlPopup({content: pestovalSessionInfo({password: local_318.password
-                                                                   ,session: local_318.session})
+                        ,b: showNum(local_404.session.id1)});
+   var local_405 = htmlParagraph(local_404.session.place1.name);
+   return _22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<td style=\"background-color:")
+                                                ,infixr: function (local_406) {
+                                                   var color1 =
+                                                   local_404.session.level1.color;
+                                                   return _3a__3a_({infixl: function () {
+                                                                      var x =
+                                                                      _3d__3d_({infixl: color1
+                                                                               ,infixr: rts.bytesFromAscii("null")});
+                                                                      switch (x.tag)
+                                                                      {
+                                                                        case "false":
+                                                                          var local_407 =
+                                                                          x.data;
+                                                                          return color1;
+                                                                        case "true":
+                                                                          var local_408 =
+                                                                          x.data;
+                                                                          return rts.bytesFromAscii("#eee");
+                                                                        default:
+                                                                          throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                       ,"DEF_9020eea8542142a09c1a8813ef9990af"
+                                                                                                       ,"8af192079f77d68114daa54992f28614");
+                                                                      }
+                                                                   }()
+                                                                   ,infixr: function (local_409) {
+                                                                      return _3a__3a_({infixl: rts.bytesFromAscii(";")
+                                                                                      ,infixr: function (local_410) {
+                                                                                         return _3a__3a_({infixl: local_404.style
+                                                                                                         ,infixr: function (local_411) {
+                                                                                                            return _3a__3a_({infixl: rts.bytesFromAscii("\" ")
+                                                                                                                            ,infixr: function (local_412) {
+                                                                                                                               return _3a__3a_({infixl: local_404.attributes
+                                                                                                                                               ,infixr: function (local_413) {
+                                                                                                                                                  return _3a__3a_({infixl: rts.bytesFromAscii(">")
+                                                                                                                                                                  ,infixr: function (local_414) {
+                                                                                                                                                                     return {tag: "empty"
+                                                                                                                                                                            ,data: {}};
+                                                                                                                                                                  }});
+                                                                                                                                               }});
+                                                                                                                            }});
+                                                                                                         }});
+                                                                                      }});
+                                                                   }});
+                                                }})
+                               ,seperator: rts.bytesFromAscii("")})
+                 ,infixr: [_22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<a href=\"#")
+                                                                 ,infixr: function (local_415) {
+                                                                    return _3a__3a_({infixl: popup
+                                                                                    ,infixr: function (local_416) {
+                                                                                       return _3a__3a_({infixl: rts.bytesFromAscii("\" style=\"text-decoration: none; color: black;\">")
+                                                                                                       ,infixr: function (local_417) {
+                                                                                                          return {tag: "empty"
+                                                                                                                 ,data: {}};
+                                                                                                       }});
+                                                                                    }});
+                                                                 }})
+                                                ,seperator: rts.bytesFromAscii("")})
+                                  ,infixr: local_404.content})
+                          ,htmlPopup({content: pestovalSessionInfo({password: local_404.password
+                                                                   ,language2: local_404.language2
+                                                                   ,session: local_404.session})
                                      ,id1: popup
-                                     ,color: local_318.session.level1.color})]});
+                                     ,color: local_404.session.level1.color})]});
 };
-var htmlTable = function (local_376) {
-   return _22f2_({infixl: rts.bytesFromAscii("<table width=\"100%\">")
+var htmlTable = function (local_476) {
+   return _22f2_({infixl: _2b__2b_({a: rts.bytesFromAscii("<table width=\"100%\"")
+                                   ,b: function () {
+                                      var x = local_476.language2;
+                                      switch (x.tag)
+                                      {
+                                        case "english":
+                                          var local_477 = x.data;
+                                          return rts.bytesFromAscii(">");
+                                        case "hebrew":
+                                          var local_478 = x.data;
+                                          return rts.bytesFromAscii(" dir=\"rtl\">");
+                                        default:
+                                          throw rts.exceptions.LamduBug("Unhandled case"
+                                                                       ,"DEF_c270fb6c0aee498e865b7bf936941c16"
+                                                                       ,"3593d20a3691e4acedfdfbe5a1b33cdf");
+                                      }
+                                   }()})
                  ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<tbody>")
-                                           ,infixr: local_376}))});
+                                           ,infixr: local_476.body}))});
 };
-var pestovalTeacherPage = function (local_273) {
-   var teacher2 = parseInt(item1({index: 0.0,object: local_273.path}));
-   return _3b_({infixl: query({database: local_273.database
-                              ,object: _2b__2b_({a: rts.bytesFromAscii("SELECT pestoval_teacher.name, pestoval_teacher.password\nFROM pestoval_teacher\nWHERE pestoval_teacher.id =")
+var pestovalTeacherPage = function (local_353) {
+   var teacher2 = parseInt(item1({index: 0.0,object: local_353.path}));
+   return _3b_({infixl: query({database: local_353.database
+                              ,object: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("SELECT ")
+                                                                          ,b: queryFieldLang(local_353.language2)({table: rts.bytesFromAscii("pestoval_teacher")
+                                                                                                                  ,field: rts.bytesFromAscii("name")
+                                                                                                                  ,as: {tag: "nothing"
+                                                                                                                       ,data: {}}})})
+                                                             ,b: rts.bytesFromAscii(", pestoval_teacher.password\nFROM pestoval_teacher\nWHERE pestoval_teacher.id =")})
                                                 ,b: showNum(teacher2)})})
-               ,infixr: function (x274) {
-                  switch (x274.tag)
+               ,infixr: function (x354) {
+                  switch (x354.tag)
                   {
                     case "error":
-                      var local_275 = x274.data;
-                      return ignoreError(local_275);
+                      var local_355 = x354.data;
+                      return ignoreError(local_355);
                     case "success":
-                      var local_276 = x274.data;
+                      var local_356 = x354.data;
                       var password2 = function (value1) {
                                          var x =
-                                         _26__26_({infixl: _3e_({infixl: length1(local_273.path)
+                                         _26__26_({infixl: _3e_({infixl: length1(local_353.path)
                                                                 ,infixr: 1.0})
-                                                  ,infixr: function (local_277) {
+                                                  ,infixr: function (local_357) {
                                                      return _3d__3d_({infixl: item1({index: 1.0
-                                                                                    ,object: local_273.path})
+                                                                                    ,object: local_353.path})
                                                                      ,infixr: value1});
                                                   }});
                                          switch (x.tag)
                                          {
                                            case "false":
-                                             var local_278 = x.data;
+                                             var local_358 = x.data;
                                              return {tag: "nothing",data: {}};
                                            case "true":
-                                             var local_279 = x.data;
+                                             var local_359 = x.data;
                                              return {tag: "just",data: value1};
                                            default:
                                              throw rts.exceptions.LamduBug("Unhandled case"
@@ -1902,89 +2692,139 @@ var pestovalTeacherPage = function (local_273) {
                                          }
                                       }(item1({index: 1.0
                                               ,object: item1({index: 0.0
-                                                             ,object: local_276.__data})}));
+                                                             ,object: local_356.__data})}));
                       var title1 = item1({index: 0.0
                                          ,object: item1({index: 0.0
-                                                        ,object: local_276.__data})});
-                      return _3b_({infixl: pestovalQuerySessions({database: local_273.database
+                                                        ,object: local_356.__data})});
+                      return _3b_({infixl: pestovalQuerySessions({database: local_353.database
                                                                  ,teacher: {tag: "just"
                                                                            ,data: teacher2}
-                                                                 ,filter: {tag: "nothing"
-                                                                          ,data: {}}})
-                                  ,infixr: function (sessions1) {
+                                                                 ,language2: local_353.language2
+                                                                 ,filter1: {tag: "nothing"
+                                                                           ,data: {}}})
+                                  ,infixr: function (sessions) {
                                      return __return(pestovalPage({title: title1
                                                                   ,body: [overlaysCss
-                                                                         ,_22f2_({infixl: rts.bytesFromAscii("<h2>")
-                                                                                 ,infixr: singleton(leaf(title1))})
-                                                                         ,htmlTable(toArray(map({stream: fromArray(sessions1)
-                                                                                                ,mapping: function (session4) {
-                                                                                                   var info =
-                                                                                                   join({texts: _3a__3a_({infixl: session4.name
-                                                                                                                         ,infixr: function (local_282) {
-                                                                                                                            var x =
-                                                                                                                            filter1({stream: fromArray(session4.teachers1)
-                                                                                                                                    ,keep: function (local_283) {
-                                                                                                                                       return _2260_({infixl: local_283.id1
-                                                                                                                                                     ,infixr: teacher2});
-                                                                                                                                    }});
-                                                                                                                            switch (x.tag)
-                                                                                                                            {
-                                                                                                                              case "nonEmpty":
-                                                                                                                                var local_290 =
-                                                                                                                                x.data;
-                                                                                                                                return _3a__3a_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("(With ")
-                                                                                                                                                                               ,infixr: function (local_291) {
-                                                                                                                                                                                  return _3a__3a_({infixl: local_290.head.name
-                                                                                                                                                                                                  ,infixr: function (local_292) {
-                                                                                                                                                                                                     return _3a__3a_({infixl: join({texts: map({stream: local_290.tail({})
-                                                                                                                                                                                                                                               ,mapping: function (local_293) {
-                                                                                                                                                                                                                                                  return _2b__2b_({a: rts.bytesFromAscii(" & ")
-                                                                                                                                                                                                                                                                  ,b: local_293.name});
-                                                                                                                                                                                                                                               }})
-                                                                                                                                                                                                                                   ,seperator: rts.bytesFromAscii("")})
-                                                                                                                                                                                                                     ,infixr: function (local_294) {
-                                                                                                                                                                                                                        return _3a__3a_({infixl: rts.bytesFromAscii(")")
-                                                                                                                                                                                                                                        ,infixr: function (local_295) {
-                                                                                                                                                                                                                                           return {tag: "empty"
-                                                                                                                                                                                                                                                  ,data: {}};
-                                                                                                                                                                                                                                        }});
-                                                                                                                                                                                                                     }});
-                                                                                                                                                                                                  }});
-                                                                                                                                                                               }})
-                                                                                                                                                              ,seperator: rts.bytesFromAscii("")})
-                                                                                                                                                ,infixr: function (local_296) {
-                                                                                                                                                   return {tag: "empty"
-                                                                                                                                                          ,data: {}};
-                                                                                                                                                }});
-                                                                                                                              case "empty":
-                                                                                                                                var local_297 =
-                                                                                                                                x.data;
-                                                                                                                                return {tag: "empty"
-                                                                                                                                       ,data: {}};
-                                                                                                                              default:
-                                                                                                                                throw rts.exceptions.LamduBug("Unhandled case"
-                                                                                                                                                             ,"DEF_50938aa1a135407c826989b9e1339047"
-                                                                                                                                                             ,"0407d054d66f60bcf424f79da4b936ac");
-                                                                                                                            }
-                                                                                                                         }})
-                                                                                                        ,seperator: rts.bytesFromAscii(" ")});
-                                                                                                   return _22f2_({infixl: rts.bytesFromAscii("<tr>")
-                                                                                                                 ,infixr: singleton(pestovalSessionCell({password: password2
-                                                                                                                                                        ,content: [_22f2_({infixl: rts.bytesFromAscii("<p style=\"font-weight=bold\">")
-                                                                                                                                                                          ,infixr: singleton(leaf(join({texts: _3a__3a_({infixl: formatTimeSlot(session4)
-                                                                                                                                                                                                                        ,infixr: function (local_314) {
-                                                                                                                                                                                                                           return _3a__3a_({infixl: session4.place1.name
-                                                                                                                                                                                                                                           ,infixr: function (local_315) {
-                                                                                                                                                                                                                                              return {tag: "empty"
-                                                                                                                                                                                                                                                     ,data: {}};
-                                                                                                                                                                                                                                           }});
-                                                                                                                                                                                                                        }})
-                                                                                                                                                                                                       ,seperator: rts.bytesFromAscii(" / ")})))})
-                                                                                                                                                                  ,htmlParagraph(info)]
-                                                                                                                                                        ,style: rts.bytesFromAscii("")
-                                                                                                                                                        ,attributes: rts.bytesFromAscii("")
-                                                                                                                                                        ,session: session4}))});
-                                                                                                }})))]}));
+                                                                         ,htmlTable({body: toArray(_3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<tr>")
+                                                                                                                            ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<td>")
+                                                                                                                                                      ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<h2>")
+                                                                                                                                                                                ,infixr: singleton(leaf(title1))}))}))})
+                                                                                                            ,infixr: function (local_361) {
+                                                                                                               return map({stream: fromArray(sessions)
+                                                                                                                          ,mapping: function (session4) {
+                                                                                                                             var info =
+                                                                                                                             join({texts: _3a__3a_({infixl: session4.name
+                                                                                                                                                   ,infixr: function (local_362) {
+                                                                                                                                                      var x =
+                                                                                                                                                      filter2({stream: fromArray(session4.teachers1)
+                                                                                                                                                              ,keep: function (local_363) {
+                                                                                                                                                                 return _2260_({infixl: local_363.id1
+                                                                                                                                                                               ,infixr: teacher2});
+                                                                                                                                                              }});
+                                                                                                                                                      switch (x.tag)
+                                                                                                                                                      {
+                                                                                                                                                        case "nonEmpty":
+                                                                                                                                                          var local_370 =
+                                                                                                                                                          x.data;
+                                                                                                                                                          return _3a__3a_({infixl: concat1(_3a__3a_({infixl: function () {
+                                                                                                                                                                                                       var x =
+                                                                                                                                                                                                       local_353.language2;
+                                                                                                                                                                                                       switch (x.tag)
+                                                                                                                                                                                                       {
+                                                                                                                                                                                                         case "english":
+                                                                                                                                                                                                           var local_371 =
+                                                                                                                                                                                                           x.data;
+                                                                                                                                                                                                           return rts.bytesFromAscii("(With ");
+                                                                                                                                                                                                         case "hebrew":
+                                                                                                                                                                                                           var local_372 =
+                                                                                                                                                                                                           x.data;
+                                                                                                                                                                                                           return rts.bytes([40
+                                                                                                                                                                                                                            ,215
+                                                                                                                                                                                                                            ,162
+                                                                                                                                                                                                                            ,215
+                                                                                                                                                                                                                            ,157
+                                                                                                                                                                                                                            ,32]);
+                                                                                                                                                                                                         default:
+                                                                                                                                                                                                           throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                                                                                        ,"DEF_50938aa1a135407c826989b9e1339047"
+                                                                                                                                                                                                                                        ,"a16f24536631cbaf81384fa985a3da71");
+                                                                                                                                                                                                       }
+                                                                                                                                                                                                    }()
+                                                                                                                                                                                                    ,infixr: function (local_373) {
+                                                                                                                                                                                                       return _3a__3a_({infixl: local_370.head.name
+                                                                                                                                                                                                                       ,infixr: function (local_374) {
+                                                                                                                                                                                                                          return _3a__3a_({infixl: join({texts: map({stream: local_370.tail({})
+                                                                                                                                                                                                                                                                    ,mapping: function (local_375) {
+                                                                                                                                                                                                                                                                       return _2b__2b_({a: function () {
+                                                                                                                                                                                                                                                                                          var x =
+                                                                                                                                                                                                                                                                                          local_353.language2;
+                                                                                                                                                                                                                                                                                          switch (x.tag)
+                                                                                                                                                                                                                                                                                          {
+                                                                                                                                                                                                                                                                                            case "english":
+                                                                                                                                                                                                                                                                                              var local_376 =
+                                                                                                                                                                                                                                                                                              x.data;
+                                                                                                                                                                                                                                                                                              return rts.bytesFromAscii(" & ");
+                                                                                                                                                                                                                                                                                            case "hebrew":
+                                                                                                                                                                                                                                                                                              var local_377 =
+                                                                                                                                                                                                                                                                                              x.data;
+                                                                                                                                                                                                                                                                                              return rts.bytes([32
+                                                                                                                                                                                                                                                                                                               ,215
+                                                                                                                                                                                                                                                                                                               ,149]);
+                                                                                                                                                                                                                                                                                            default:
+                                                                                                                                                                                                                                                                                              throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                                                                                                                                                                           ,"DEF_50938aa1a135407c826989b9e1339047"
+                                                                                                                                                                                                                                                                                                                           ,"b71998601b16ac26e10ab6485ff6b405");
+                                                                                                                                                                                                                                                                                          }
+                                                                                                                                                                                                                                                                                       }()
+                                                                                                                                                                                                                                                                                       ,b: local_375.name});
+                                                                                                                                                                                                                                                                    }})
+                                                                                                                                                                                                                                                        ,seperator: rts.bytesFromAscii("")})
+                                                                                                                                                                                                                                          ,infixr: function (local_378) {
+                                                                                                                                                                                                                                             return _3a__3a_({infixl: rts.bytesFromAscii(")")
+                                                                                                                                                                                                                                                             ,infixr: function (local_379) {
+                                                                                                                                                                                                                                                                return {tag: "empty"
+                                                                                                                                                                                                                                                                       ,data: {}};
+                                                                                                                                                                                                                                                             }});
+                                                                                                                                                                                                                                          }});
+                                                                                                                                                                                                                       }});
+                                                                                                                                                                                                    }}))
+                                                                                                                                                                          ,infixr: function (local_380) {
+                                                                                                                                                                             return {tag: "empty"
+                                                                                                                                                                                    ,data: {}};
+                                                                                                                                                                          }});
+                                                                                                                                                        case "empty":
+                                                                                                                                                          var local_381 =
+                                                                                                                                                          x.data;
+                                                                                                                                                          return {tag: "empty"
+                                                                                                                                                                 ,data: {}};
+                                                                                                                                                        default:
+                                                                                                                                                          throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                                       ,"DEF_50938aa1a135407c826989b9e1339047"
+                                                                                                                                                                                       ,"0407d054d66f60bcf424f79da4b936ac");
+                                                                                                                                                      }
+                                                                                                                                                   }})
+                                                                                                                                  ,seperator: rts.bytesFromAscii(" ")});
+                                                                                                                             return _22f2_({infixl: rts.bytesFromAscii("<tr>")
+                                                                                                                                           ,infixr: singleton(pestovalSessionCell({password: password2
+                                                                                                                                                                                  ,content: [_22f2_({infixl: rts.bytesFromAscii("<p style=\"font-weight=bold\">")
+                                                                                                                                                                                                    ,infixr: singleton(leaf(join({texts: _3a__3a_({infixl: formatTimeSlot({timeSlot: session4
+                                                                                                                                                                                                                                                                          ,language2: local_353.language2})
+                                                                                                                                                                                                                                                  ,infixr: function (local_400) {
+                                                                                                                                                                                                                                                     return _3a__3a_({infixl: session4.place1.name
+                                                                                                                                                                                                                                                                     ,infixr: function (local_401) {
+                                                                                                                                                                                                                                                                        return {tag: "empty"
+                                                                                                                                                                                                                                                                               ,data: {}};
+                                                                                                                                                                                                                                                                     }});
+                                                                                                                                                                                                                                                  }})
+                                                                                                                                                                                                                                 ,seperator: rts.bytesFromAscii(" / ")})))})
+                                                                                                                                                                                            ,htmlParagraph(info)]
+                                                                                                                                                                                  ,style: rts.bytesFromAscii("")
+                                                                                                                                                                                  ,attributes: rts.bytesFromAscii("")
+                                                                                                                                                                                  ,language2: local_353.language2
+                                                                                                                                                                                  ,session: session4}))});
+                                                                                                                          }});
+                                                                                                            }}))
+                                                                                    ,language2: local_353.language2})]}));
                                   }});
                     default:
                       throw rts.exceptions.LamduBug("Unhandled case"
@@ -1993,34 +2833,34 @@ var pestovalTeacherPage = function (local_273) {
                   }
                }});
 };
-var maximum2 = function (local_395) {
-   var x = _2265_({infixl: local_395.__x1,infixr: local_395.y});
+var maximum2 = function (local_501) {
+   var x = _2265_({infixl: local_501.__x1,infixr: local_501.y});
    switch (x.tag)
    {
      case "false":
-       var local_396 = x.data;
-       return local_395.y;
+       var local_502 = x.data;
+       return local_501.y;
      case "true":
-       var local_397 = x.data;
-       return local_395.__x1;
+       var local_503 = x.data;
+       return local_501.__x1;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_19e923b820b04266a9811a6b34fe7b37"
                                     ,"a5d0a997c71340b2b9d148187aeb6d00");
    }
 };
-var nonEmptyFold = function (local_398) {
-   var x = local_398.stream;
+var nonEmptyFold = function (local_504) {
+   var x = local_504.stream;
    switch (x.tag)
    {
      case "nonEmpty":
-       var local_399 = x.data;
+       var local_505 = x.data;
        return {tag: "just"
-              ,data: fold({stream: local_399.tail({})
-                          ,initial: local_399.head
-                          ,binop: local_398.binop})};
+              ,data: fold({stream: local_505.tail({})
+                          ,initial: local_505.head
+                          ,binop: local_504.binop})};
      case "empty":
-       var local_400 = x.data;
+       var local_506 = x.data;
        return {tag: "nothing",data: {}};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -2030,81 +2870,68 @@ var nonEmptyFold = function (local_398) {
 };
 var maximum1 = function (stream8) {
    return nonEmptyFold({stream: stream8
-                       ,binop: function (local_394) {
-                          return maximum2({y: local_394.item,__x1: local_394.acc});
+                       ,binop: function (local_500) {
+                          return maximum2({y: local_500.item,__x1: local_500.acc});
                        }});
 };
-var maybe = function (local_401) {
-   var x = local_401.object;
-   switch (x.tag)
-   {
-     case "just":
-       return id2(x.data);
-     case "nothing":
-       var local_402 = x.data;
-       return local_401.or;
-     default:
-       throw rts.exceptions.LamduBug("Unhandled case"
-                                    ,"DEF_6c78a9bb4dc7418b9c6fcbcdd77f4088"
-                                    ,"df8546f58bdc08635e9f6ff7be4f4953");
-   }
-};
-var gcd = function (local_405) {
-   var x = _3d__3d_({infixl: local_405.__x1,infixr: 0.0});
+var gcd = function (local_509) {
+   var x = _3d__3d_({infixl: local_509.__x1,infixr: 0.0});
    switch (x.tag)
    {
      case "false":
-       var local_406 = x.data;
-       return gcd({y: local_405.__x1
-                  ,__x1: _25_({infixl: local_405.y,infixr: local_405.__x1})});
+       var local_510 = x.data;
+       return gcd({y: local_509.__x1
+                  ,__x1: _25_({infixl: local_509.y,infixr: local_509.__x1})});
      case "true":
-       var local_407 = x.data;
-       return local_405.y;
+       var local_511 = x.data;
+       return local_509.y;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_493da5cfecea49b89fd9a10c42df9e12"
                                     ,"426c0882a83d8df5efe64ca0e57098af");
    }
 };
-var lcm = function (local_404) {
-   return _2f_({infixl: _2a_({infixl: local_404.__x1,infixr: local_404.y})
-               ,infixr: gcd({y: local_404.y,__x1: local_404.__x1})});
+var lcm = function (local_508) {
+   return _2f_({infixl: _2a_({infixl: local_508.__x1,infixr: local_508.y})
+               ,infixr: gcd({y: local_508.y,__x1: local_508.__x1})});
 };
-var timeSlotRow = function (local_410) {
+var timeSlotRow = function (local_514) {
    return _22f2_({infixl: rts.bytesFromAscii("<tr>")
-                 ,infixr: singleton(_22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<td colspan=")
-                                                                     ,infixr: function (local_411) {
-                                                                        return _3a__3a_({infixl: showNum(local_410.numColumns1)
-                                                                                        ,infixr: function (local_412) {
-                                                                                           return _3a__3a_({infixl: rts.bytesFromAscii(" style=\"font-size:150%; border-top:3pt solid black;\">")
-                                                                                                           ,infixr: function (local_413) {
-                                                                                                              return {tag: "empty"
-                                                                                                                     ,data: {}};
-                                                                                                           }});
-                                                                                        }});
-                                                                     }}))
-                                           ,infixr: singleton(leaf(formatTimeSlot(local_410.timeSlot)))}))});
+                 ,infixr: singleton(_22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<td colspan=")
+                                                                          ,infixr: function (local_515) {
+                                                                             return _3a__3a_({infixl: showNum(local_514.numColumns1)
+                                                                                             ,infixr: function (local_516) {
+                                                                                                return _3a__3a_({infixl: rts.bytesFromAscii(" style=\"font-size:150%; border-top:3pt solid black;\">")
+                                                                                                                ,infixr: function (local_517) {
+                                                                                                                   return {tag: "empty"
+                                                                                                                          ,data: {}};
+                                                                                                                }});
+                                                                                             }});
+                                                                          }})
+                                                         ,seperator: rts.bytesFromAscii("")})
+                                           ,infixr: singleton(leaf(formatTimeSlot({timeSlot: local_514.timeSlot
+                                                                                  ,language2: local_514.language2})))}))});
 };
 var formatTeachers = function (teachers2) {
    return htmlParagraph(_2b__2b_({a: join({texts: map({stream: fromArray(teachers2)
-                                                      ,mapping: function (local_416) {
-                                                         return local_416.name;
+                                                      ,mapping: function (local_520) {
+                                                         return local_520.name;
                                                       }})
                                           ,seperator: rts.bytesFromAscii(" & ")})
                                  ,b: rts.bytesFromAscii(":")}));
 };
-var pestovalLevelsPage = function (local_379) {
-   var minimum = parseInt(item1({index: 0.0,object: local_379.path}));
+var pestovalLevelsPage = function (local_481) {
+   var minimum = parseInt(item1({index: 0.0,object: local_481.path}));
    var maximum = function () {
-                    var x = _3e_({infixl: length1(local_379.path),infixr: 1.0});
+                    var x = _3e_({infixl: length1(local_481.path),infixr: 1.0});
                     switch (x.tag)
                     {
                       case "false":
-                        var local_380 = x.data;
+                        var local_482 = x.data;
                         return minimum;
                       case "true":
-                        var local_381 = x.data;
-                        return parseInt(item1({index: 1.0,object: local_379.path}));
+                        var local_483 = x.data;
+                        return parseInt(item1({index: 1.0,object: local_481.path}));
                       default:
                         throw rts.exceptions.LamduBug("Unhandled case"
                                                      ,"DEF_a358e35c87a74404b2c606eb39bddad1"
@@ -2116,15 +2943,37 @@ var pestovalLevelsPage = function (local_379) {
                         switch (x.tag)
                         {
                           case "false":
-                            var local_382 = x.data;
-                            return _3a__3a_({infixl: rts.bytesFromAscii("Levels")
-                                            ,infixr: function (local_383) {
+                            var local_484 = x.data;
+                            return _3a__3a_({infixl: function () {
+                                               var x = local_481.language2;
+                                               switch (x.tag)
+                                               {
+                                                 case "english":
+                                                   var local_485 = x.data;
+                                                   return rts.bytesFromAscii("Levels");
+                                                 case "hebrew":
+                                                   var local_486 = x.data;
+                                                   return rts.bytes([215
+                                                                    ,168
+                                                                    ,215
+                                                                    ,158
+                                                                    ,215
+                                                                    ,149
+                                                                    ,215
+                                                                    ,170]);
+                                                 default:
+                                                   throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                ,"DEF_a358e35c87a74404b2c606eb39bddad1"
+                                                                                ,"08963304800bfcf7f4d88ceecad9ee10");
+                                               }
+                                            }()
+                                            ,infixr: function (local_487) {
                                                return _3a__3a_({infixl: showNum(minimum)
-                                                               ,infixr: function (local_384) {
+                                                               ,infixr: function (local_488) {
                                                                   return _3a__3a_({infixl: rts.bytesFromAscii("-")
-                                                                                  ,infixr: function (local_385) {
+                                                                                  ,infixr: function (local_489) {
                                                                                      return _3a__3a_({infixl: showNum(maximum)
-                                                                                                     ,infixr: function (local_386) {
+                                                                                                     ,infixr: function (local_490) {
                                                                                                         return {tag: "empty"
                                                                                                                ,data: {}};
                                                                                                      }});
@@ -2132,11 +2981,31 @@ var pestovalLevelsPage = function (local_379) {
                                                                }});
                                             }});
                           case "true":
-                            var local_387 = x.data;
-                            return _3a__3a_({infixl: rts.bytesFromAscii("Level")
-                                            ,infixr: function (local_388) {
+                            var local_491 = x.data;
+                            return _3a__3a_({infixl: function () {
+                                               var x = local_481.language2;
+                                               switch (x.tag)
+                                               {
+                                                 case "english":
+                                                   var local_492 = x.data;
+                                                   return rts.bytesFromAscii("Level");
+                                                 case "hebrew":
+                                                   var local_493 = x.data;
+                                                   return rts.bytes([215
+                                                                    ,168
+                                                                    ,215
+                                                                    ,158
+                                                                    ,215
+                                                                    ,148]);
+                                                 default:
+                                                   throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                ,"DEF_a358e35c87a74404b2c606eb39bddad1"
+                                                                                ,"1d45559be5d78c9d31f75b33fb547a08");
+                                               }
+                                            }()
+                                            ,infixr: function (local_494) {
                                                return _3a__3a_({infixl: showNum(minimum)
-                                                               ,infixr: function (local_389) {
+                                                               ,infixr: function (local_495) {
                                                                   return {tag: "empty"
                                                                          ,data: {}};
                                                                }});
@@ -2148,26 +3017,27 @@ var pestovalLevelsPage = function (local_379) {
                         }
                      }()
                      ,seperator: rts.bytesFromAscii(" ")});
-   return _3b_({infixl: pestovalQuerySessions({database: local_379.database
+   return _3b_({infixl: pestovalQuerySessions({database: local_481.database
                                               ,teacher: {tag: "nothing",data: {}}
-                                              ,filter: {tag: "just"
-                                                       ,data: join({texts: _3a__3a_({infixl: showNum(minimum)
-                                                                                    ,infixr: function (local_390) {
-                                                                                       return _3a__3a_({infixl: rts.bytesFromAscii(" <= pestoval_level.as_number AND pestoval_level.as_number <= ")
-                                                                                                       ,infixr: function (local_391) {
-                                                                                                          return _3a__3a_({infixl: showNum(maximum)
-                                                                                                                          ,infixr: function (local_392) {
-                                                                                                                             return {tag: "empty"
-                                                                                                                                    ,data: {}};
-                                                                                                                          }});
-                                                                                                       }});
-                                                                                    }})
-                                                                   ,seperator: rts.bytesFromAscii("")})}})
-               ,infixr: function (sessions2) {
-                  var groups = toArray(group({stream: fromArray(sessions2)
-                                             ,by: function (local_393) {
-                                                return _3d__3d_({infixl: local_393.infixl.start
-                                                                ,infixr: local_393.infixr.start});
+                                              ,language2: local_481.language2
+                                              ,filter1: {tag: "just"
+                                                        ,data: join({texts: _3a__3a_({infixl: showNum(minimum)
+                                                                                     ,infixr: function (local_496) {
+                                                                                        return _3a__3a_({infixl: rts.bytesFromAscii(" <= pestoval_level.as_number AND pestoval_level.as_number <= ")
+                                                                                                        ,infixr: function (local_497) {
+                                                                                                           return _3a__3a_({infixl: showNum(maximum)
+                                                                                                                           ,infixr: function (local_498) {
+                                                                                                                              return {tag: "empty"
+                                                                                                                                     ,data: {}};
+                                                                                                                           }});
+                                                                                                        }});
+                                                                                     }})
+                                                                    ,seperator: rts.bytesFromAscii("")})}})
+               ,infixr: function (sessions1) {
+                  var groups = toArray(group({stream: fromArray(sessions1)
+                                             ,by: function (local_499) {
+                                                return _3d__3d_({infixl: local_499.infixl.start
+                                                                ,infixr: local_499.infixr.start});
                                              }}));
                   var maxRow = maybe({object: maximum1(map({stream: fromArray(groups)
                                                            ,mapping: length1}))
@@ -2176,173 +3046,182 @@ var pestovalLevelsPage = function (local_379) {
                                                           ,stop: _2b_({infixl: maxRow
                                                                       ,infixr: 1.0})})
                                         ,initial: 1.0
-                                        ,binop: function (local_403) {
-                                           return lcm({y: local_403.item
-                                                      ,__x1: local_403.acc});
+                                        ,binop: function (local_507) {
+                                           return lcm({y: local_507.item
+                                                      ,__x1: local_507.acc});
                                         }});
                   return __return(pestovalPage({title: title2
                                                ,body: [overlaysCss
                                                       ,_22f2_({infixl: rts.bytesFromAscii("<h2>")
                                                               ,infixr: singleton(leaf(title2))})
-                                                      ,htmlTable(toArray(concat(map({stream: fromArray(groups)
-                                                                                    ,mapping: function (group1) {
-                                                                                       return _3a__3a_({infixl: timeSlotRow({numColumns1: numColumns
-                                                                                                                            ,timeSlot: item1({index: 0.0
-                                                                                                                                             ,object: group1})})
-                                                                                                       ,infixr: function (local_414) {
-                                                                                                          var attributes1 =
-                                                                                                          function (local_415) {
-                                                                                                             return _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("colspan=")
-                                                                                                                                                                    ,b: showNum(_2f_({infixl: numColumns
-                                                                                                                                                                                     ,infixr: local_415}))})
-                                                                                                                                                       ,b: rts.bytesFromAscii(" width=\"")})
-                                                                                                                                          ,b: showNum(_2f__2f_({infixl: 100.0
-                                                                                                                                                               ,infixr: local_415}))})
-                                                                                                                             ,b: rts.bytesFromAscii("%\"")});
-                                                                                                          }(length1(group1));
-                                                                                                          return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<tr>")
-                                                                                                                                          ,infixr: toArray(map({stream: fromArray(group1)
-                                                                                                                                                               ,mapping: function (session5) {
-                                                                                                                                                                  return pestovalSessionCell({password: {tag: "nothing"
-                                                                                                                                                                                                        ,data: {}}
-                                                                                                                                                                                             ,content: [formatTeachers(session5.teachers1)
-                                                                                                                                                                                                       ,htmlParagraph(session5.name)
-                                                                                                                                                                                                       ,htmlParagraph(session5.place1.name)]
-                                                                                                                                                                                             ,style: rts.bytesFromAscii("border-left: 1pt solid black")
-                                                                                                                                                                                             ,attributes: attributes1
-                                                                                                                                                                                             ,session: session5});
-                                                                                                                                                               }}))})
-                                                                                                                          ,infixr: function (local_420) {
-                                                                                                                             return {tag: "empty"
-                                                                                                                                    ,data: {}};
-                                                                                                                          }});
-                                                                                                       }});
-                                                                                    }}))))]}));
+                                                      ,htmlTable({body: toArray(concat(map({stream: fromArray(groups)
+                                                                                           ,mapping: function (group1) {
+                                                                                              return _3a__3a_({infixl: timeSlotRow({numColumns1: numColumns
+                                                                                                                                   ,timeSlot: item1({index: 0.0
+                                                                                                                                                    ,object: group1})
+                                                                                                                                   ,language2: local_481.language2})
+                                                                                                              ,infixr: function (local_518) {
+                                                                                                                 var attributes1 =
+                                                                                                                 function (local_519) {
+                                                                                                                    return _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: _2b__2b_({a: rts.bytesFromAscii("colspan=")
+                                                                                                                                                                           ,b: showNum(_2f_({infixl: numColumns
+                                                                                                                                                                                            ,infixr: local_519}))})
+                                                                                                                                                              ,b: rts.bytesFromAscii(" width=\"")})
+                                                                                                                                                 ,b: showNum(_2f__2f_({infixl: 100.0
+                                                                                                                                                                      ,infixr: local_519}))})
+                                                                                                                                    ,b: rts.bytesFromAscii("%\"")});
+                                                                                                                 }(length1(group1));
+                                                                                                                 return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<tr>")
+                                                                                                                                                 ,infixr: toArray(map({stream: fromArray(group1)
+                                                                                                                                                                      ,mapping: function (session5) {
+                                                                                                                                                                         return pestovalSessionCell({password: {tag: "nothing"
+                                                                                                                                                                                                               ,data: {}}
+                                                                                                                                                                                                    ,content: [formatTeachers(session5.teachers1)
+                                                                                                                                                                                                              ,htmlParagraph(session5.name)
+                                                                                                                                                                                                              ,htmlParagraph(session5.place1.name)]
+                                                                                                                                                                                                    ,style: rts.bytesFromAscii("border-left: 1pt solid black")
+                                                                                                                                                                                                    ,attributes: attributes1
+                                                                                                                                                                                                    ,language2: local_481.language2
+                                                                                                                                                                                                    ,session: session5});
+                                                                                                                                                                      }}))})
+                                                                                                                                 ,infixr: function (local_524) {
+                                                                                                                                    return {tag: "empty"
+                                                                                                                                           ,data: {}};
+                                                                                                                                 }});
+                                                                                                              }});
+                                                                                           }})))
+                                                                 ,language2: local_481.language2})]}));
                }});
 };
-var dedup = function (local_425) {
-   return toArray(map({stream: group({stream: local_425,by: _3d__3d_})
-                      ,mapping: function (local_426) {
-                         return item1({index: 0.0,object: local_426});
+var dedup = function (local_530) {
+   return toArray(map({stream: group({stream: local_530,by: _3d__3d_})
+                      ,mapping: function (local_531) {
+                         return item1({index: 0.0,object: local_531});
                       }}));
 };
 var placesRow = function (places1) {
-   var __tag = concat1(_3a__3a_({infixl: rts.bytesFromAscii("<th width=\"")
-                                ,infixr: function (local_428) {
-                                   return _3a__3a_({infixl: showNum(_2f_({infixl: 100.0
-                                                                         ,infixr: length1(places1)}))
-                                                   ,infixr: function (local_429) {
-                                                      return _3a__3a_({infixl: rts.bytesFromAscii("%\">")
-                                                                      ,infixr: function (local_430) {
-                                                                         return {tag: "empty"
-                                                                                ,data: {}};
-                                                                      }});
-                                                   }});
-                                }}));
+   var __tag = join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<th width=\"")
+                                     ,infixr: function (local_533) {
+                                        return _3a__3a_({infixl: showNum(_2f_({infixl: 100.0
+                                                                              ,infixr: length1(places1)}))
+                                                        ,infixr: function (local_534) {
+                                                           return _3a__3a_({infixl: rts.bytesFromAscii("%\">")
+                                                                           ,infixr: function (local_535) {
+                                                                              return {tag: "empty"
+                                                                                     ,data: {}};
+                                                                           }});
+                                                        }});
+                                     }})
+                    ,seperator: rts.bytesFromAscii("")});
    return _22f2_({infixl: rts.bytesFromAscii("<tr style=\"background-color:#eee\">")
                  ,infixr: toArray(map({stream: fromArray(places1)
-                                      ,mapping: function (local_431) {
+                                      ,mapping: function (local_536) {
                                          return _22f2_({infixl: __tag
-                                                       ,infixr: singleton(_22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<a href=\"/places/")
-                                                                                                           ,infixr: function (local_432) {
-                                                                                                              return _3a__3a_({infixl: local_431.id1
-                                                                                                                              ,infixr: function (local_433) {
-                                                                                                                                 return _3a__3a_({infixl: rts.bytesFromAscii("/\"> ")
-                                                                                                                                                 ,infixr: function (local_434) {
-                                                                                                                                                    return {tag: "empty"
-                                                                                                                                                           ,data: {}};
-                                                                                                                                                 }});
-                                                                                                                              }});
-                                                                                                           }}))
-                                                                                 ,infixr: singleton(leaf(local_431.name))}))});
+                                                       ,infixr: singleton(_22f2_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("<a href=\"/places/")
+                                                                                                                ,infixr: function (local_537) {
+                                                                                                                   return _3a__3a_({infixl: local_536.id1
+                                                                                                                                   ,infixr: function (local_538) {
+                                                                                                                                      return _3a__3a_({infixl: rts.bytesFromAscii("/\"> ")
+                                                                                                                                                      ,infixr: function (local_539) {
+                                                                                                                                                         return {tag: "empty"
+                                                                                                                                                                ,data: {}};
+                                                                                                                                                      }});
+                                                                                                                                   }});
+                                                                                                                }})
+                                                                                               ,seperator: rts.bytesFromAscii("")})
+                                                                                 ,infixr: singleton(leaf(local_536.name))}))});
                                       }}))});
 };
-var toArray1 = function (local_440) {
-   return runMutArray(_3b_({infixl: newMutArray1(replicate({count: local_440.size
+var toArray1 = function (local_545) {
+   return runMutArray(_3b_({infixl: newMutArray1(replicate({count: local_545.size
                                                            ,item: {tag: "nothing"
                                                                   ,data: {}}}))
                            ,infixr: function (__array5) {
-                              return _3b_({infixl: sequence__(map({stream: local_440.stream
-                                                                  ,mapping: function (local_441) {
-                                                                     return writeMutArray({index: local_440.index(local_441)
+                              return _3b_({infixl: sequence__(map({stream: local_545.stream
+                                                                  ,mapping: function (local_546) {
+                                                                     return writeMutArray({index: local_545.index(local_546)
                                                                                           ,object: __array5
                                                                                           ,value: {tag: "just"
-                                                                                                  ,data: local_441}});
+                                                                                                  ,data: local_546}});
                                                                   }}))
-                                          ,infixr: function (local_442) {
+                                          ,infixr: function (local_547) {
                                              return __return(__array5);
                                           }});
                            }}));
 };
-var pestovalSessionsTable = function (database2) {
-   return _3b_({infixl: pestovalQuerySessions({database: database2
+var pestovalSessionsTable = function (local_527) {
+   return _3b_({infixl: pestovalQuerySessions({database: local_527.database
                                               ,teacher: {tag: "nothing",data: {}}
-                                              ,filter: {tag: "nothing",data: {}}})
-               ,infixr: function (sessions3) {
+                                              ,language2: local_527.language2
+                                              ,filter1: {tag: "nothing",data: {}}})
+               ,infixr: function (sessions2) {
                   var places =
-                  dedup(fromArray(sort({stream: map({stream: fromArray(sessions3)
-                                                    ,mapping: function (local_423) {
-                                                       return local_423.place1;
+                  dedup(fromArray(sort({stream: map({stream: fromArray(sessions2)
+                                                    ,mapping: function (local_528) {
+                                                       return local_528.place1;
                                                     }})
-                                       ,_3c_1: function (local_424) {
-                                          return _3c_({infixl: local_424.infixl.id1
-                                                      ,infixr: local_424.infixr.id1});
+                                       ,_3c_1: function (local_529) {
+                                          return _3c_({infixl: local_529.infixl.id1
+                                                      ,infixr: local_529.infixr.id1});
                                        }})));
                   var numColumns2 = length1(places);
                   return __return(pestovalPage({title: rts.bytesFromAscii("All Sessions")
                                                ,body: [overlaysCss
-                                                      ,htmlTable(toArray(_3a__3a_({infixl: placesRow(places)
-                                                                                  ,infixr: function (local_435) {
-                                                                                     return concat(map({stream: group({stream: fromArray(sessions3)
-                                                                                                                      ,by: function (local_436) {
-                                                                                                                         return _3d__3d_({infixl: local_436.infixl.start
-                                                                                                                                         ,infixr: local_436.infixr.start});
-                                                                                                                      }})
-                                                                                                       ,mapping: function (local_437) {
-                                                                                                          return _3a__3a_({infixl: timeSlotRow({numColumns1: numColumns2
-                                                                                                                                               ,timeSlot: item1({index: 0.0
-                                                                                                                                                                ,object: local_437})})
-                                                                                                                          ,infixr: function (local_438) {
-                                                                                                                             return map({stream: fromArray(toArray1({stream: fromArray(local_437)
-                                                                                                                                                                    ,index: function (local_439) {
-                                                                                                                                                                       return index4({__array4: places
-                                                                                                                                                                                     ,item: local_439.place1});
-                                                                                                                                                                    }
-                                                                                                                                                                    ,size: numColumns2}))
-                                                                                                                                        ,mapping: function (local_443) {
-                                                                                                                                           var x =
-                                                                                                                                           local_443;
-                                                                                                                                           switch (x.tag)
-                                                                                                                                           {
-                                                                                                                                             case "just":
-                                                                                                                                               var session6 =
-                                                                                                                                               x.data;
-                                                                                                                                               return pestovalSessionCell({password: {tag: "nothing"
-                                                                                                                                                                                     ,data: {}}
-                                                                                                                                                                          ,content: [formatTeachers(session6.teachers1)
-                                                                                                                                                                                    ,htmlParagraph(session6.name)]
-                                                                                                                                                                          ,style: rts.bytesFromAscii("")
-                                                                                                                                                                          ,attributes: rts.bytesFromAscii("")
-                                                                                                                                                                          ,session: session6});
-                                                                                                                                             case "nothing":
-                                                                                                                                               var local_446 =
-                                                                                                                                               x.data;
-                                                                                                                                               return leaf(rts.bytesFromAscii("<td style=\"background-color:#f8f8f8\">"));
-                                                                                                                                             default:
-                                                                                                                                               throw rts.exceptions.LamduBug("Unhandled case"
-                                                                                                                                                                            ,"DEF_753a440ceaa64a519d4334364c39d50b"
-                                                                                                                                                                            ,"e22df53d1ea1be33327cca9a5f4067a5");
-                                                                                                                                           }
-                                                                                                                                        }});
-                                                                                                                          }});
-                                                                                                       }}));
-                                                                                  }})))]}));
+                                                      ,htmlTable({body: toArray(_3a__3a_({infixl: placesRow(places)
+                                                                                         ,infixr: function (local_540) {
+                                                                                            return concat(map({stream: group({stream: fromArray(sessions2)
+                                                                                                                             ,by: function (local_541) {
+                                                                                                                                return _3d__3d_({infixl: local_541.infixl.start
+                                                                                                                                                ,infixr: local_541.infixr.start});
+                                                                                                                             }})
+                                                                                                              ,mapping: function (local_542) {
+                                                                                                                 return _3a__3a_({infixl: timeSlotRow({numColumns1: numColumns2
+                                                                                                                                                      ,timeSlot: item1({index: 0.0
+                                                                                                                                                                       ,object: local_542})
+                                                                                                                                                      ,language2: local_527.language2})
+                                                                                                                                 ,infixr: function (local_543) {
+                                                                                                                                    return map({stream: fromArray(toArray1({stream: fromArray(local_542)
+                                                                                                                                                                           ,index: function (local_544) {
+                                                                                                                                                                              return index4({__array4: places
+                                                                                                                                                                                            ,item: local_544.place1});
+                                                                                                                                                                           }
+                                                                                                                                                                           ,size: numColumns2}))
+                                                                                                                                               ,mapping: function (local_548) {
+                                                                                                                                                  var x =
+                                                                                                                                                  local_548;
+                                                                                                                                                  switch (x.tag)
+                                                                                                                                                  {
+                                                                                                                                                    case "just":
+                                                                                                                                                      var session6 =
+                                                                                                                                                      x.data;
+                                                                                                                                                      return pestovalSessionCell({password: {tag: "nothing"
+                                                                                                                                                                                            ,data: {}}
+                                                                                                                                                                                 ,content: [formatTeachers(session6.teachers1)
+                                                                                                                                                                                           ,htmlParagraph(session6.name)]
+                                                                                                                                                                                 ,style: rts.bytesFromAscii("")
+                                                                                                                                                                                 ,attributes: rts.bytesFromAscii("")
+                                                                                                                                                                                 ,language2: local_527.language2
+                                                                                                                                                                                 ,session: session6});
+                                                                                                                                                    case "nothing":
+                                                                                                                                                      var local_551 =
+                                                                                                                                                      x.data;
+                                                                                                                                                      return leaf(rts.bytesFromAscii("<td style=\"background-color:#f8f8f8\">"));
+                                                                                                                                                    default:
+                                                                                                                                                      throw rts.exceptions.LamduBug("Unhandled case"
+                                                                                                                                                                                   ,"DEF_753a440ceaa64a519d4334364c39d50b"
+                                                                                                                                                                                   ,"e22df53d1ea1be33327cca9a5f4067a5");
+                                                                                                                                                  }
+                                                                                                                                               }});
+                                                                                                                                 }});
+                                                                                                              }}));
+                                                                                         }}))
+                                                                 ,language2: local_527.language2})]}));
                }});
 };
 var readFile = rts.builtins.IO.file["readFile"];
 var pestovalIndex = _3b_({infixl: readFile(rts.bytesFromAscii("index.html"))
-                         ,infixr: function (local_449) {
-                            return __return({content: {__data: local_449
+                         ,infixr: function (local_554) {
+                            return __return({content: {__data: local_554
                                                       ,mimeType: rts.bytesFromAscii("text/html")}
                                             ,status: httpOk200});
                          }});
@@ -2358,34 +3237,65 @@ var pestovalHandler = function (local_67) {
    {
      case "false":
        var local_69 = x.data;
+       var language1 = function () {
+                          var x = _3d__3d_({infixl: language
+                                           ,infixr: rts.bytesFromAscii("eng")});
+                          switch (x.tag)
+                          {
+                            case "false":
+                              var local_70 = x.data;
+                              var x = _3d__3d_({infixl: language
+                                               ,infixr: rts.bytesFromAscii("heb")});
+                              switch (x.tag)
+                              {
+                                case "false":
+                                  var local_71 = x.data;
+                                  return ignoreError({});
+                                case "true":
+                                  var local_72 = x.data;
+                                  return {tag: "hebrew",data: {}};
+                                default:
+                                  throw rts.exceptions.LamduBug("Unhandled case"
+                                                               ,"DEF_e08e75bbdef9486a9b6cb96aacef3212"
+                                                               ,"a7d7d7d9e5191fb58b9d7aeb67e660b8");
+                              }
+                            case "true":
+                              var local_73 = x.data;
+                              return {tag: "english",data: {}};
+                            default:
+                              throw rts.exceptions.LamduBug("Unhandled case"
+                                                           ,"DEF_e08e75bbdef9486a9b6cb96aacef3212"
+                                                           ,"2f4ca9fc959d57d5d377ae058d32a0cd");
+                          }
+                       }();
        var page = item1({index: 2.0,object: parts});
        var path1 = toArray(drop({stream: fromArray(parts),count: 3.0}));
        var x = _26__26_({infixl: _3d__3d_({infixl: length1(parts),infixr: 3.0})
-                        ,infixr: function (local_76) {
+                        ,infixr: function (local_80) {
                            return _3d__3d_({infixl: page,infixr: rts.bytesFromAscii("")});
                         }});
        switch (x.tag)
        {
          case "false":
-           var local_77 = x.data;
+           var local_81 = x.data;
            var x = _3d__3d_({infixl: page,infixr: rts.bytesFromAscii("levels")});
            switch (x.tag)
            {
              case "false":
-               var local_78 = x.data;
+               var local_82 = x.data;
                var x = _3d__3d_({infixl: page,infixr: rts.bytesFromAscii("teacher")});
                switch (x.tag)
                {
                  case "false":
-                   var local_79 = x.data;
+                   var local_83 = x.data;
                    var x = _3d__3d_({infixl: page,infixr: rts.bytesFromAscii("edit")});
                    switch (x.tag)
                    {
                      case "false":
-                       var local_80 = x.data;
+                       var local_84 = x.data;
                        return __return(httpNotFound404(local_67.request1.path));
                      case "true":
-                       var local_87 = x.data;
+                       var local_91 = x.data;
                        return pestovalEditPage({request1: local_67.request1
                                                ,database: local_67.database});
                      default:
@@ -2394,31 +3304,36 @@ var pestovalHandler = function (local_67) {
                                                     ,"3904128e0f229aab0f559b8c4efd7e8c");
                    }
                  case "true":
-                   var local_272 = x.data;
-                   return pestovalTeacherPage({path: path1,database: local_67.database});
+                   var local_352 = x.data;
+                   return pestovalTeacherPage({path: path1
+                                              ,database: local_67.database
+                                              ,language2: language1});
                  default:
                    throw rts.exceptions.LamduBug("Unhandled case"
                                                 ,"DEF_e08e75bbdef9486a9b6cb96aacef3212"
                                                 ,"1efb5179a530efb5cf0ea0f292813e32");
                }
              case "true":
-               var local_378 = x.data;
-               return pestovalLevelsPage({path: path1,database: local_67.database});
+               var local_480 = x.data;
+               return pestovalLevelsPage({path: path1
+                                         ,database: local_67.database
+                                         ,language2: language1});
              default:
                throw rts.exceptions.LamduBug("Unhandled case"
                                             ,"DEF_e08e75bbdef9486a9b6cb96aacef3212"
                                             ,"3725e3e3e238c36942a62af16a116f25");
            }
          case "true":
-           var local_422 = x.data;
-           return pestovalSessionsTable(local_67.database);
+           var local_526 = x.data;
+           return pestovalSessionsTable({database: local_67.database
+                                        ,language2: language1});
          default:
            throw rts.exceptions.LamduBug("Unhandled case"
                                         ,"DEF_e08e75bbdef9486a9b6cb96aacef3212"
                                         ,"0e90da8443f9aff3c55edb7f8fef28fc");
        }
      case "true":
-       var local_448 = x.data;
+       var local_553 = x.data;
        return pestovalIndex;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -2435,10 +3350,10 @@ var popLastMutArray = function (__array6) {
                   switch (x.tag)
                   {
                     case "false":
-                      var local_462 = x.data;
+                      var local_567 = x.data;
                       return __return({tag: "nothing",data: {}});
                     case "true":
-                      var local_463 = x.data;
+                      var local_568 = x.data;
                       return _3b_({infixl: readMutArray({index: _2d_({infixl: length6
                                                                      ,infixr: 1.0})
                                                         ,object: __array6})
@@ -2446,7 +3361,7 @@ var popLastMutArray = function (__array6) {
                                      return _3b_({infixl: truncateMutArray({object: __array6
                                                                            ,stop: _2d_({infixl: length6
                                                                                        ,infixr: 1.0})})
-                                                 ,infixr: function (local_464) {
+                                                 ,infixr: function (local_569) {
                                                     return __return({tag: "just"
                                                                     ,data: result});
                                                  }});
@@ -2460,105 +3375,93 @@ var popLastMutArray = function (__array6) {
 };
 var sequence = function (stream9) {
    return foldLazy({stream: stream9
-                   ,initial: function (local_472) {
+                   ,initial: function (local_577) {
                       return __return({tag: "empty",data: {}});
                    }
-                   ,binop: function (local_473) {
-                      return _3b_({infixl: local_473.item
-                                  ,infixr: function (local_474) {
-                                     return _3b_({infixl: local_473.rest({})
-                                                 ,infixr: function (local_475) {
+                   ,binop: function (local_578) {
+                      return _3b_({infixl: local_578.item
+                                  ,infixr: function (local_579) {
+                                     return _3b_({infixl: local_578.rest({})
+                                                 ,infixr: function (local_580) {
                                                     return __return({tag: "nonEmpty"
-                                                                    ,data: {head: local_474
-                                                                           ,tail: function (local_476) {
-                                                                              return local_475;
+                                                                    ,data: {head: local_579
+                                                                           ,tail: function (local_581) {
+                                                                              return local_580;
                                                                            }}});
                                                  }});
                                   }});
                    }});
 };
-var find1 = function (local_488) {
-   return first({that: function (local_489) {
-                   return _3d__3d_({infixl: byteAt({index: local_489
-                                                   ,object: local_488.__bytes})
-                                   ,infixr: local_488.byte});
+var find1 = function (local_593) {
+   return first({that: function (local_594) {
+                   return _3d__3d_({infixl: byteAt({index: local_594
+                                                   ,object: local_593.__bytes})
+                                   ,infixr: local_593.byte});
                 }
-                ,stream: _2e__2e_({start: local_488.start
-                                  ,stop: length(local_488.__bytes)})});
+                ,stream: _2e__2e_({start: local_593.start
+                                  ,stop: length(local_593.__bytes)})});
 };
-var isSuffixOf = function (local_496) {
-   var lw = length(local_496.whole);
-   var ls = length(local_496.suffix);
-   return _26__26_({infixl: _2265_({infixl: lw,infixr: ls})
-                   ,infixr: function (local_497) {
-                      return _3d__3d_({infixl: slice1({object: local_496.whole
-                                                      ,start: _2d_({infixl: lw
-                                                                   ,infixr: ls})
-                                                      ,stop: lw})
-                                      ,infixr: local_496.suffix});
-                   }});
-};
-var unsuffixed = function (local_495) {
-   var x = isSuffixOf({suffix: local_495.suffix,whole: local_495.whole});
+var unsuffixed = function (local_600) {
+   var x = isSuffixOf({suffix: local_600.suffix,whole: local_600.whole});
    switch (x.tag)
    {
      case "false":
-       var local_498 = x.data;
+       var local_601 = x.data;
        return {tag: "nothing",data: {}};
      case "true":
-       var local_499 = x.data;
+       var local_602 = x.data;
        return {tag: "just"
-              ,data: slice1({object: local_495.whole
+              ,data: slice1({object: local_600.whole
                             ,start: 0.0
-                            ,stop: _2d_({infixl: length(local_495.whole)
-                                        ,infixr: length(local_495.suffix)})})};
+                            ,stop: _2d_({infixl: length(local_600.whole)
+                                        ,infixr: length(local_600.suffix)})})};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_6c2d206c45c348b3b8e2bbfdae7bde35"
                                     ,"7d90a0e076a149c4443b780b21470ef3");
    }
 };
-var removeSuffix = function (local_494) {
-   var x = unsuffixed({suffix: local_494.suffix,whole: local_494.whole});
+var removeSuffix = function (local_599) {
+   var x = unsuffixed({suffix: local_599.suffix,whole: local_599.whole});
    switch (x.tag)
    {
      case "just":
        return id2(x.data);
      case "nothing":
-       var local_500 = x.data;
-       return local_494.whole;
+       var local_603 = x.data;
+       return local_599.whole;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_8c9d00ae73ab41ca903aa34ee4c6601a"
                                     ,"97a63e2f16bd481c6e64fd0c8a6d92fa");
    }
 };
-var packetsEndWith = function (local_504) {
-   var x = _3d__3d_({infixl: local_504.stop,infixr: 0.0});
+var packetsEndWith = function (local_607) {
+   var x = _3d__3d_({infixl: local_607.stop,infixr: 0.0});
    switch (x.tag)
    {
      case "false":
-       var local_505 = x.data;
-       return _3b_({infixl: readMutArray({index: _2d_({infixl: local_504.stop
+       var local_608 = x.data;
+       return _3b_({infixl: readMutArray({index: _2d_({infixl: local_607.stop
                                                       ,infixr: 1.0})
-                                         ,object: local_504.packets1})
+                                         ,object: local_607.packets1})
                    ,infixr: function (packet1) {
-                      var x = isSuffixOf({suffix: local_504.suffix,whole: packet1});
+                      var x = isSuffixOf({suffix: local_607.suffix,whole: packet1});
                       switch (x.tag)
                       {
                         case "false":
-                          var local_506 = x.data;
-                          var x = unsuffixed({suffix: packet1,whole: local_504.suffix});
+                          var local_609 = x.data;
+                          var x = unsuffixed({suffix: packet1,whole: local_607.suffix});
                           switch (x.tag)
                           {
                             case "just":
                               var remain1 = x.data;
                               return packetsEndWith({suffix: remain1
-                                                    ,stop: _2d_({infixl: local_504.stop
+                                                    ,stop: _2d_({infixl: local_607.stop
                                                                 ,infixr: 1.0})
-                                                    ,packets1: local_504.packets1});
+                                                    ,packets1: local_607.packets1});
                             case "nothing":
-                              var local_507 = x.data;
+                              var local_610 = x.data;
                               return __return({tag: "false",data: {}});
                             default:
                               throw rts.exceptions.LamduBug("Unhandled case"
@@ -2566,7 +3469,7 @@ var packetsEndWith = function (local_504) {
                                                            ,"0d0804c08ad23d9eed424fc83122d6dc");
                           }
                         case "true":
-                          var local_508 = x.data;
+                          var local_611 = x.data;
                           return __return({tag: "true",data: {}});
                         default:
                           throw rts.exceptions.LamduBug("Unhandled case"
@@ -2575,7 +3478,7 @@ var packetsEndWith = function (local_504) {
                       }
                    }});
      case "true":
-       var local_509 = x.data;
+       var local_612 = x.data;
        return __return({tag: "false",data: {}});
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -2583,30 +3486,30 @@ var packetsEndWith = function (local_504) {
                                     ,"ae670587961cb7d305eef1133a3bbc18");
    }
 };
-var parseHttpHeaderPacket = function (local_487) {
-   var x = find1({start: local_487.start,__bytes: local_487.newPacket,byte: 10.0});
+var parseHttpHeaderPacket = function (local_592) {
+   var x = find1({start: local_592.start,__bytes: local_592.newPacket,byte: 10.0});
    switch (x.tag)
    {
      case "just":
        var lfPos = x.data;
        var after = _2b_({infixl: lfPos,infixr: 1.0});
-       return _3b_({infixl: length4(local_487.packets1)
+       return _3b_({infixl: length4(local_592.packets1)
                    ,infixr: function (packetIdx) {
-                      var done1 = function (local_490) {
+                      var done1 = function (local_595) {
                          return _3b_({infixl: sequence(map({stream: _2e__2e_({start: 0.0
                                                                              ,stop: packetIdx})
                                                            ,mapping: function (i) {
                                                               return readMutArray({index: i
-                                                                                  ,object: local_487.packets1});
+                                                                                  ,object: local_592.packets1});
                                                            }}))
-                                     ,infixr: function (local_491) {
+                                     ,infixr: function (local_596) {
                                         var headerBytes =
-                                        concat2(_2b__2b_2({infixl: local_491
-                                                          ,infixr: function (local_492) {
-                                                             return _3a__3a_({infixl: slice1({object: local_487.newPacket
+                                        concat2(_2b__2b_2({infixl: local_596
+                                                          ,infixr: function (local_597) {
+                                                             return _3a__3a_({infixl: slice1({object: local_592.newPacket
                                                                                              ,start: 0.0
                                                                                              ,stop: lfPos})
-                                                                             ,infixr: function (local_493) {
+                                                                             ,infixr: function (local_598) {
                                                                                 return {tag: "empty"
                                                                                        ,data: {}};
                                                                              }});
@@ -2618,58 +3521,58 @@ var parseHttpHeaderPacket = function (local_487) {
                                                        return removeSuffix({suffix: rts.bytes([13])
                                                                            ,whole: line1});
                                                     }}));
-                                        return _3b_({infixl: truncateMutArray({object: local_487.packets1
+                                        return _3b_({infixl: truncateMutArray({object: local_592.packets1
                                                                               ,stop: 0.0})
-                                                    ,infixr: function (local_501) {
-                                                       return _3b_({infixl: appendMutArray({object: local_487.packets1
-                                                                                           ,value: slice1({object: local_487.newPacket
+                                                    ,infixr: function (local_604) {
+                                                       return _3b_({infixl: appendMutArray({object: local_592.packets1
+                                                                                           ,value: slice1({object: local_592.newPacket
                                                                                                           ,start: after
-                                                                                                          ,stop: length(local_487.newPacket)})})
-                                                                   ,infixr: function (local_502) {
+                                                                                                          ,stop: length(local_592.newPacket)})})
+                                                                   ,infixr: function (local_605) {
                                                                       return __return({tag: "just"
                                                                                       ,data: headerLines});
                                                                    }});
                                                     }});
                                      }});
                       };
-                      var prevEndsWith = function (local_503) {
-                         return packetsEndWith({suffix: local_503
+                      var prevEndsWith = function (local_606) {
+                         return packetsEndWith({suffix: local_606
                                                ,stop: packetIdx
-                                               ,packets1: local_487.packets1});
+                                               ,packets1: local_592.packets1});
                       };
-                      var next1 = function (local_510) {
+                      var next1 = function (local_613) {
                          return parseHttpHeaderPacket({start: after
-                                                      ,newPacket: local_487.newPacket
-                                                      ,packets1: local_487.packets1});
+                                                      ,newPacket: local_592.newPacket
+                                                      ,packets1: local_592.packets1});
                       };
                       var x = _3d__3d_({infixl: lfPos,infixr: 0.0});
                       switch (x.tag)
                       {
                         case "false":
-                          var local_511 = x.data;
+                          var local_614 = x.data;
                           var prevByte = byteAt({index: _2d_({infixl: lfPos,infixr: 1.0})
-                                                ,object: local_487.newPacket});
+                                                ,object: local_592.newPacket});
                           var x = _3d__3d_({infixl: prevByte,infixr: 10.0});
                           switch (x.tag)
                           {
                             case "false":
-                              var local_512 = x.data;
+                              var local_615 = x.data;
                               var x = _3d__3d_({infixl: prevByte,infixr: 13.0});
                               switch (x.tag)
                               {
                                 case "false":
                                   return next1(x.data);
                                 case "true":
-                                  var local_513 = x.data;
+                                  var local_616 = x.data;
                                   var x = _3d__3d_({infixl: lfPos,infixr: 1.0});
                                   switch (x.tag)
                                   {
                                     case "false":
-                                      var local_514 = x.data;
+                                      var local_617 = x.data;
                                       var x =
                                       _3d__3d_({infixl: byteAt({index: _2d_({infixl: lfPos
                                                                             ,infixr: 2.0})
-                                                               ,object: local_487.newPacket})
+                                                               ,object: local_592.newPacket})
                                                ,infixr: 10.0});
                                       switch (x.tag)
                                       {
@@ -2683,10 +3586,10 @@ var parseHttpHeaderPacket = function (local_487) {
                                                                        ,"2a6eda3fea34bfc4f50863f20c1e9ac2");
                                       }
                                     case "true":
-                                      var local_515 = x.data;
+                                      var local_618 = x.data;
                                       return _3b_({infixl: prevEndsWith(rts.bytes([10]))
-                                                  ,infixr: function (local_516) {
-                                                     var x = local_516;
+                                                  ,infixr: function (local_619) {
+                                                     var x = local_619;
                                                      switch (x.tag)
                                                      {
                                                        case "false":
@@ -2717,18 +3620,18 @@ var parseHttpHeaderPacket = function (local_487) {
                                                            ,"2acaafd2775505f6a280aa18fe3c0e44");
                           }
                         case "true":
-                          var local_517 = x.data;
+                          var local_620 = x.data;
                           return _3b_({infixl: prevEndsWith(rts.bytes([10]))
-                                      ,infixr: function (local_518) {
-                                         var x = local_518;
+                                      ,infixr: function (local_621) {
+                                         var x = local_621;
                                          switch (x.tag)
                                          {
                                            case "false":
-                                             var local_519 = x.data;
+                                             var local_622 = x.data;
                                              return _3b_({infixl: prevEndsWith(rts.bytes([10
                                                                                          ,13]))
-                                                         ,infixr: function (local_520) {
-                                                            var x = local_520;
+                                                         ,infixr: function (local_623) {
+                                                            var x = local_623;
                                                             switch (x.tag)
                                                             {
                                                               case "false":
@@ -2756,10 +3659,10 @@ var parseHttpHeaderPacket = function (local_487) {
                       }
                    }});
      case "nothing":
-       var local_521 = x.data;
-       return _3b_({infixl: appendMutArray({object: local_487.packets1
-                                           ,value: local_487.newPacket})
-                   ,infixr: function (local_522) {
+       var local_624 = x.data;
+       return _3b_({infixl: appendMutArray({object: local_592.packets1
+                                           ,value: local_592.newPacket})
+                   ,infixr: function (local_625) {
                       return __return({tag: "nothing",data: {}});
                    }});
      default:
@@ -2768,44 +3671,44 @@ var parseHttpHeaderPacket = function (local_487) {
                                     ,"a641e1eefdb6d290e8f5e30eb99ae939");
    }
 };
-var requestHeaderIndex = function (x525) {
-   switch (x525.tag)
+var requestHeaderIndex = function (x628) {
+   switch (x628.tag)
    {
      case "referer":
-       var local_526 = x525.data;
+       var local_629 = x628.data;
        return 9.0;
      case "range":
-       var local_527 = x525.data;
+       var local_630 = x628.data;
        return 4.0;
      case "contentLength":
-       var local_528 = x525.data;
+       var local_631 = x628.data;
        return 0.0;
      case "connection":
-       var local_529 = x525.data;
+       var local_632 = x628.data;
        return 3.0;
      case "host":
-       var local_530 = x525.data;
+       var local_633 = x628.data;
        return 5.0;
      case "userAgent":
-       var local_531 = x525.data;
+       var local_634 = x628.data;
        return 10.0;
      case "ifModifiedSince":
-       var local_532 = x525.data;
+       var local_635 = x628.data;
        return 6.0;
      case "ifRange":
-       var local_533 = x525.data;
+       var local_636 = x628.data;
        return 8.0;
      case "count":
-       var local_534 = x525.data;
+       var local_637 = x628.data;
        return 11.0;
      case "transferEncoding":
-       var local_535 = x525.data;
+       var local_638 = x628.data;
        return 1.0;
      case "expect":
-       var local_536 = x525.data;
+       var local_639 = x628.data;
        return 2.0;
      case "ifUnmodifiedSince":
-       var local_537 = x525.data;
+       var local_640 = x628.data;
        return 7.0;
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -2813,18 +3716,18 @@ var requestHeaderIndex = function (x525) {
                                     ,"2d1d3f6c02b34a16b1ecc9cff08b339e");
    }
 };
-var toLower8 = function (local_540) {
-   var x = _7c__7c_({infixl: _26__26_({infixl: _2264_({infixl: 65.0,infixr: local_540})
-                                      ,infixr: function (local_541) {
-                                         return _2264_({infixl: local_540,infixr: 90.0});
+var toLower8 = function (local_643) {
+   var x = _7c__7c_({infixl: _26__26_({infixl: _2264_({infixl: 65.0,infixr: local_643})
+                                      ,infixr: function (local_644) {
+                                         return _2264_({infixl: local_643,infixr: 90.0});
                                       }})
-                    ,infixr: function (local_542) {
-                       return _26__26_({infixl: _2264_({infixl: 192.0,infixr: local_540})
-                                       ,infixr: function (local_543) {
-                                          return _26__26_({infixl: _2264_({infixl: local_540
+                    ,infixr: function (local_645) {
+                       return _26__26_({infixl: _2264_({infixl: 192.0,infixr: local_643})
+                                       ,infixr: function (local_646) {
+                                          return _26__26_({infixl: _2264_({infixl: local_643
                                                                           ,infixr: 222.0})
-                                                          ,infixr: function (local_544) {
-                                                             return _2260_({infixl: local_540
+                                                          ,infixr: function (local_647) {
+                                                             return _2260_({infixl: local_643
                                                                            ,infixr: 215.0});
                                                           }});
                                        }});
@@ -2832,33 +3735,33 @@ var toLower8 = function (local_540) {
    switch (x.tag)
    {
      case "false":
-       var local_545 = x.data;
-       return local_540;
+       var local_648 = x.data;
+       return local_643;
      case "true":
-       var local_546 = x.data;
-       return _2b_({infixl: local_540,infixr: 32.0});
+       var local_649 = x.data;
+       return _2b_({infixl: local_643,infixr: 32.0});
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_d53402309e2246e0acda443ccc6735f8"
                                     ,"26914d49ae6cd50363dc7b55bd37d4d5");
    }
 };
-var numHeadItems = function (local_550) {
-   return foldLazy({stream: local_550.stream
-                   ,initial: function (local_551) {
+var numHeadItems = function (local_653) {
+   return foldLazy({stream: local_653.stream
+                   ,initial: function (local_654) {
                       return id2;
                    }
-                   ,binop: function (local_552) {
-                      return function (local_553) {
-                             var x = local_550.that(local_552.item);
+                   ,binop: function (local_655) {
+                      return function (local_656) {
+                             var x = local_653.that(local_655.item);
                              switch (x.tag)
                              {
                                case "false":
-                                 var local_554 = x.data;
-                                 return local_553;
+                                 var local_657 = x.data;
+                                 return local_656;
                                case "true":
-                                 var local_555 = x.data;
-                                 return local_552.rest({})(_2b_({infixl: local_553
+                                 var local_658 = x.data;
+                                 return local_655.rest({})(_2b_({infixl: local_656
                                                                 ,infixr: 1.0}));
                                default:
                                  throw rts.exceptions.LamduBug("Unhandled case"
@@ -2869,41 +3772,41 @@ var numHeadItems = function (local_550) {
                    }})(0.0);
 };
 var parseHeader = function (line2) {
-   var withLower = function (local_539) {
-      return {headerNameOrig: local_539
-             ,headerNameLower: toBytes(toArray(map({stream: fromBytes(local_539)
+   var withLower = function (local_642) {
+      return {headerNameOrig: local_642
+             ,headerNameLower: toBytes(toArray(map({stream: fromBytes(local_642)
                                                    ,mapping: toLower8})))};
    };
    var x = find1({start: 0.0,__bytes: line2,byte: 58.0});
    switch (x.tag)
    {
      case "just":
-       var local_547 = x.data;
-       var x = Object.assign({__data: function (local_548) {
+       var local_650 = x.data;
+       var x = Object.assign({__data: function (local_651) {
                                return slice1({object: line2
-                                             ,start: _2b_({infixl: _2b_({infixl: local_547
+                                             ,start: _2b_({infixl: _2b_({infixl: local_650
                                                                         ,infixr: 1.0})
                                                           ,infixr: numHeadItems({that: function (c) {
                                                                                    return _7c__7c_({infixl: _3d__3d_({infixl: c
                                                                                                                      ,infixr: 32.0})
-                                                                                                   ,infixr: function (local_549) {
+                                                                                                   ,infixr: function (local_652) {
                                                                                                       return _3d__3d_({infixl: c
                                                                                                                       ,infixr: 9.0});
                                                                                                    }});
                                                                                 }
                                                                                 ,stream: fromBytes(slice1({object: line2
-                                                                                                          ,start: _2b_({infixl: local_547
+                                                                                                          ,start: _2b_({infixl: local_650
                                                                                                                        ,infixr: 1.0})
-                                                                                                          ,stop: local_548}))})})
-                                             ,stop: local_548});
+                                                                                                          ,stop: local_651}))})})
+                                             ,stop: local_651});
                             }(length(line2))}
                             ,withLower(slice1({object: line2
                                               ,start: 0.0
-                                              ,stop: local_547})));
+                                              ,stop: local_650})));
        delete x.cacheId;
        return x;
      case "nothing":
-       var local_556 = x.data;
+       var local_659 = x.data;
        var x = Object.assign({__data: rts.bytesFromAscii("")},withLower(line2));
        delete x.cacheId;
        return x;
@@ -2913,72 +3816,72 @@ var parseHeader = function (line2) {
                                     ,"2fd2696b8bb145a1f8ea35cf6754cfb8");
    }
 };
-var requestHeaderIndexFromText = function (local_558) {
-   var local_559 = length(local_558);
-   var test = function (local_560) {
-      var x = _3d__3d_({infixl: local_558,infixr: local_560.text});
+var requestHeaderIndexFromText = function (local_661) {
+   var local_662 = length(local_661);
+   var test = function (local_663) {
+      var x = _3d__3d_({infixl: local_661,infixr: local_663.text});
       switch (x.tag)
       {
         case "false":
-          var local_561 = x.data;
+          var local_664 = x.data;
           return {tag: "nothing",data: {}};
         case "true":
-          var local_562 = x.data;
-          return {tag: "just",data: requestHeaderIndex(local_560.value)};
+          var local_665 = x.data;
+          return {tag: "just",data: requestHeaderIndex(local_663.value)};
         default:
           throw rts.exceptions.LamduBug("Unhandled case"
                                        ,"DEF_54b6e50a63674fa9a0022a7c3b3fad5d"
                                        ,"dc1fada55c8b610b4ec39d131179bc92");
       }
    };
-   var x = _3d__3d_({infixl: local_559,infixr: 4.0});
+   var x = _3d__3d_({infixl: local_662,infixr: 4.0});
    switch (x.tag)
    {
      case "false":
-       var local_563 = x.data;
-       var x = _3d__3d_({infixl: local_559,infixr: 5.0});
+       var local_666 = x.data;
+       var x = _3d__3d_({infixl: local_662,infixr: 5.0});
        switch (x.tag)
        {
          case "false":
-           var local_564 = x.data;
-           var x = _3d__3d_({infixl: local_559,infixr: 6.0});
+           var local_667 = x.data;
+           var x = _3d__3d_({infixl: local_662,infixr: 6.0});
            switch (x.tag)
            {
              case "false":
-               var local_565 = x.data;
-               var x = _3d__3d_({infixl: local_559,infixr: 7.0});
+               var local_668 = x.data;
+               var x = _3d__3d_({infixl: local_662,infixr: 7.0});
                switch (x.tag)
                {
                  case "false":
-                   var local_566 = x.data;
-                   var x = _3d__3d_({infixl: local_559,infixr: 8.0});
+                   var local_669 = x.data;
+                   var x = _3d__3d_({infixl: local_662,infixr: 8.0});
                    switch (x.tag)
                    {
                      case "false":
-                       var local_567 = x.data;
-                       var x = _3d__3d_({infixl: local_559,infixr: 10.0});
+                       var local_670 = x.data;
+                       var x = _3d__3d_({infixl: local_662,infixr: 10.0});
                        switch (x.tag)
                        {
                          case "false":
-                           var local_568 = x.data;
-                           var x = _3d__3d_({infixl: local_559,infixr: 14.0});
+                           var local_671 = x.data;
+                           var x = _3d__3d_({infixl: local_662,infixr: 14.0});
                            switch (x.tag)
                            {
                              case "false":
-                               var local_569 = x.data;
-                               var x = _3d__3d_({infixl: local_559,infixr: 17.0});
+                               var local_672 = x.data;
+                               var x = _3d__3d_({infixl: local_662,infixr: 17.0});
                                switch (x.tag)
                                {
                                  case "false":
-                                   var local_570 = x.data;
-                                   var x = _3d__3d_({infixl: local_559,infixr: 19.0});
+                                   var local_673 = x.data;
+                                   var x = _3d__3d_({infixl: local_662,infixr: 19.0});
                                    switch (x.tag)
                                    {
                                      case "false":
-                                       var local_571 = x.data;
+                                       var local_674 = x.data;
                                        return {tag: "nothing",data: {}};
                                      case "true":
-                                       var local_572 = x.data;
+                                       var local_675 = x.data;
                                        return test({text: rts.bytesFromAscii("if-unmodified-since")
                                                    ,value: {tag: "ifUnmodifiedSince"
                                                            ,data: {}}});
@@ -2988,22 +3891,22 @@ var requestHeaderIndexFromText = function (local_558) {
                                                                     ,"f8cf9e99c6ebab86468dac6f079e1d43");
                                    }
                                  case "true":
-                                   var local_573 = x.data;
-                                   var x = _3d__3d_({infixl: local_558
+                                   var local_676 = x.data;
+                                   var x = _3d__3d_({infixl: local_661
                                                     ,infixr: rts.bytesFromAscii("transfer-encoding")});
                                    switch (x.tag)
                                    {
                                      case "false":
-                                       var local_574 = x.data;
-                                       var x = _3d__3d_({infixl: local_558
+                                       var local_677 = x.data;
+                                       var x = _3d__3d_({infixl: local_661
                                                         ,infixr: rts.bytesFromAscii("if-modified-since")});
                                        switch (x.tag)
                                        {
                                          case "false":
-                                           var local_575 = x.data;
+                                           var local_678 = x.data;
                                            return {tag: "nothing",data: {}};
                                          case "true":
-                                           var local_576 = x.data;
+                                           var local_679 = x.data;
                                            return {tag: "just"
                                                   ,data: requestHeaderIndex({tag: "ifModifiedSince"
                                                                             ,data: {}})};
@@ -3013,7 +3916,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                                                         ,"5c9b7e120cfcbfe66378a56aa55e1554");
                                        }
                                      case "true":
-                                       var local_577 = x.data;
+                                       var local_680 = x.data;
                                        return {tag: "just"
                                               ,data: requestHeaderIndex({tag: "transferEncoding"
                                                                         ,data: {}})};
@@ -3028,7 +3931,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                                                 ,"f7b8f18ab48287152b84f01302b0a1e9");
                                }
                              case "true":
-                               var local_578 = x.data;
+                               var local_681 = x.data;
                                return test({text: rts.bytesFromAscii("content-length")
                                            ,value: {tag: "contentLength",data: {}}});
                              default:
@@ -3037,22 +3940,22 @@ var requestHeaderIndexFromText = function (local_558) {
                                                             ,"316352807090bd4b8e1627c428b18ad0");
                            }
                          case "true":
-                           var local_579 = x.data;
-                           var x = _3d__3d_({infixl: local_558
+                           var local_682 = x.data;
+                           var x = _3d__3d_({infixl: local_661
                                             ,infixr: rts.bytesFromAscii("user-agent")});
                            switch (x.tag)
                            {
                              case "false":
-                               var local_580 = x.data;
-                               var x = _3d__3d_({infixl: local_558
+                               var local_683 = x.data;
+                               var x = _3d__3d_({infixl: local_661
                                                 ,infixr: rts.bytesFromAscii("connection")});
                                switch (x.tag)
                                {
                                  case "false":
-                                   var local_581 = x.data;
+                                   var local_684 = x.data;
                                    return {tag: "nothing",data: {}};
                                  case "true":
-                                   var local_582 = x.data;
+                                   var local_685 = x.data;
                                    return {tag: "just"
                                           ,data: requestHeaderIndex({tag: "connection"
                                                                     ,data: {}})};
@@ -3062,7 +3965,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                                                 ,"0a18521fa15139803614889d5ac640f3");
                                }
                              case "true":
-                               var local_583 = x.data;
+                               var local_686 = x.data;
                                return {tag: "just"
                                       ,data: requestHeaderIndex({tag: "userAgent"
                                                                 ,data: {}})};
@@ -3077,7 +3980,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                                         ,"7b3222baa853ea34afcad794d9b346da");
                        }
                      case "true":
-                       var local_584 = x.data;
+                       var local_687 = x.data;
                        return test({text: rts.bytesFromAscii("if-range")
                                    ,value: {tag: "ifRange",data: {}}});
                      default:
@@ -3086,7 +3989,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                                     ,"0c12468dbe34d1382d0b97b93b5cab94");
                    }
                  case "true":
-                   var local_585 = x.data;
+                   var local_688 = x.data;
                    return test({text: rts.bytesFromAscii("referer")
                                ,value: {tag: "referer",data: {}}});
                  default:
@@ -3095,7 +3998,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                                 ,"13eb12f71c41a5c676528975f4cd2d8f");
                }
              case "true":
-               var local_586 = x.data;
+               var local_689 = x.data;
                return test({text: rts.bytesFromAscii("expect")
                            ,value: {tag: "expect",data: {}}});
              default:
@@ -3104,7 +4007,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                             ,"a709b7964f58d9b479a336260545d465");
            }
          case "true":
-           var local_587 = x.data;
+           var local_690 = x.data;
            return test({text: rts.bytesFromAscii("range")
                        ,value: {tag: "range",data: {}}});
          default:
@@ -3113,7 +4016,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                         ,"1d20a17a150e74e964a7731e9e75cc90");
        }
      case "true":
-       var local_588 = x.data;
+       var local_691 = x.data;
        return test({text: rts.bytesFromAscii("host"),value: {tag: "host",data: {}}});
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
@@ -3121,7 +4024,7 @@ var requestHeaderIndexFromText = function (local_558) {
                                     ,"b082b30c0d03c8abd35416fd055c4e65");
    }
 };
-var parseHeaders = function (local_524) {
+var parseHeaders = function (local_627) {
    var headersArr1 = runMutArray(_3b_({infixl: newMutArray
                                       ,infixr: function (headersArr) {
                                          return _3b_({infixl: sequence__(replicate({count: requestHeaderIndex({tag: "count"
@@ -3129,15 +4032,15 @@ var parseHeaders = function (local_524) {
                                                                                    ,item: appendMutArray({object: headersArr
                                                                                                          ,value: {tag: "nothing"
                                                                                                                  ,data: {}}})}))
-                                                     ,infixr: function (local_538) {
+                                                     ,infixr: function (local_641) {
                                                         return _3b_({infixl: sequence__(map({stream: _2e__2e_({start: 1.0
-                                                                                                              ,stop: length1(local_524)})
+                                                                                                              ,stop: length1(local_627)})
                                                                                             ,mapping: function (i1) {
-                                                                                               var local_557 =
+                                                                                               var local_660 =
                                                                                                parseHeader(item1({index: i1
-                                                                                                                 ,object: local_524}));
+                                                                                                                 ,object: local_627}));
                                                                                                var mIdx =
-                                                                                               requestHeaderIndexFromText(local_557.headerNameLower);
+                                                                                               requestHeaderIndexFromText(local_660.headerNameLower);
                                                                                                var x =
                                                                                                mIdx;
                                                                                                switch (x.tag)
@@ -3153,18 +4056,18 @@ var parseHeaders = function (local_524) {
                                                                                                                   switch (x.tag)
                                                                                                                   {
                                                                                                                     case "just":
-                                                                                                                      var local_589 =
+                                                                                                                      var local_692 =
                                                                                                                       x.data;
                                                                                                                       throw rts.exceptions.ReachedHole("Reached a hole"
                                                                                                                                                       ,"DEF_8552ea85f4a64beeaf6f8d46bcc5e1d4"
                                                                                                                                                       ,"0ba4efe1ab9b937a5c4c329950c130eb");
                                                                                                                     case "nothing":
-                                                                                                                      var local_590 =
+                                                                                                                      var local_693 =
                                                                                                                       x.data;
                                                                                                                       return writeMutArray({index: index8
                                                                                                                                            ,object: headersArr
                                                                                                                                            ,value: {tag: "just"
-                                                                                                                                                   ,data: local_557.__data}});
+                                                                                                                                                   ,data: local_660.__data}});
                                                                                                                     default:
                                                                                                                       throw rts.exceptions.LamduBug("Unhandled case"
                                                                                                                                                    ,"DEF_8552ea85f4a64beeaf6f8d46bcc5e1d4"
@@ -3172,7 +4075,7 @@ var parseHeaders = function (local_524) {
                                                                                                                   }
                                                                                                                }});
                                                                                                  case "nothing":
-                                                                                                   var local_591 =
+                                                                                                   var local_694 =
                                                                                                    x.data;
                                                                                                    return __return({});
                                                                                                  default:
@@ -3181,7 +4084,7 @@ var parseHeaders = function (local_524) {
                                                                                                                                 ,"96d7c2e4942aa324705674b28c8d8892");
                                                                                                }
                                                                                             }}))
-                                                                    ,infixr: function (local_592) {
+                                                                    ,infixr: function (local_695) {
                                                                        return __return(headersArr);
                                                                     }});
                                                      }});
@@ -3201,48 +4104,48 @@ var parseHeaders = function (local_524) {
           ,expect: value2({tag: "expect",data: {}})
           ,ifUnmodifiedSince: value2({tag: "ifUnmodifiedSince",data: {}})};
 };
-var parseHttpVersion = function (local_596) {
-   var x = _26__26_({infixl: _3d__3d_({infixl: slice1({object: local_596
+var parseHttpVersion = function (local_699) {
+   var x = _26__26_({infixl: _3d__3d_({infixl: slice1({object: local_699
                                                       ,start: 0.0
                                                       ,stop: 5.0})
                                       ,infixr: rts.bytesFromAscii("HTTP/")})
-                    ,infixr: function (local_597) {
-                       return _26__26_({infixl: _3d__3d_({infixl: slice1({object: local_596
+                    ,infixr: function (local_700) {
+                       return _26__26_({infixl: _3d__3d_({infixl: slice1({object: local_699
                                                                          ,start: 6.0
                                                                          ,stop: 7.0})
                                                          ,infixr: rts.bytesFromAscii(".")})
-                                       ,infixr: function (local_598) {
-                                          return _2265_({infixl: length(local_596)
+                                       ,infixr: function (local_701) {
+                                          return _2265_({infixl: length(local_699)
                                                         ,infixr: 8.0});
                                        }});
                     }});
    switch (x.tag)
    {
      case "false":
-       var local_599 = x.data;
+       var local_702 = x.data;
        throw rts.exceptions.ReachedHole("Reached a hole"
                                        ,"DEF_cdde9ce31af346e5879cd20194adf297"
                                        ,"d4d438d8b8c3035dd13c03c182e694f8");
      case "true":
-       var local_600 = x.data;
-       var majByte = byteAt({index: 5.0,object: local_596});
-       var minByte = byteAt({index: 7.0,object: local_596});
+       var local_703 = x.data;
+       var majByte = byteAt({index: 5.0,object: local_699});
+       var minByte = byteAt({index: 7.0,object: local_699});
        var x = _3d__3d_({infixl: majByte,infixr: 49.0});
        switch (x.tag)
        {
          case "false":
-           var local_601 = x.data;
+           var local_704 = x.data;
            var x = _26__26_({infixl: _3d__3d_({infixl: majByte,infixr: 50.0})
-                            ,infixr: function (local_602) {
+                            ,infixr: function (local_705) {
                                return _3d__3d_({infixl: minByte,infixr: 48.0});
                             }});
            switch (x.tag)
            {
              case "false":
-               var local_603 = x.data;
+               var local_706 = x.data;
                return {minor: 0.0,major: 1.0};
              case "true":
-               var local_604 = x.data;
+               var local_707 = x.data;
                return {minor: 0.0,major: 2.0};
              default:
                throw rts.exceptions.LamduBug("Unhandled case"
@@ -3250,15 +4153,15 @@ var parseHttpVersion = function (local_596) {
                                             ,"6d72ed51030c146e142824d8c5608502");
            }
          case "true":
-           var local_605 = x.data;
+           var local_708 = x.data;
            var x = _3d__3d_({infixl: minByte,infixr: 49.0});
            switch (x.tag)
            {
              case "false":
-               var local_606 = x.data;
+               var local_709 = x.data;
                return {minor: 0.0,major: 1.0};
              case "true":
-               var local_607 = x.data;
+               var local_710 = x.data;
                return {minor: 1.0,major: 1.0};
              default:
                throw rts.exceptions.LamduBug("Unhandled case"
@@ -3276,41 +4179,41 @@ var parseHttpVersion = function (local_596) {
                                     ,"0a155af817e30618f126869341b69d73");
    }
 };
-var parseHttpPathAndQuery = function (local_608) {
-   var x = find1({start: 0.0,__bytes: local_608,byte: 63.0});
+var parseHttpPathAndQuery = function (local_711) {
+   var x = find1({start: 0.0,__bytes: local_711,byte: 63.0});
    switch (x.tag)
    {
      case "just":
        var queryStart = x.data;
-       return {path: slice1({object: local_608,start: 0.0,stop: queryStart})
-              ,query1: slice1({object: local_608
+       return {path: slice1({object: local_711,start: 0.0,stop: queryStart})
+              ,query1: slice1({object: local_711
                               ,start: queryStart
-                              ,stop: length(local_608)})};
+                              ,stop: length(local_711)})};
      case "nothing":
-       var local_609 = x.data;
-       return {path: local_608,query1: rts.bytesFromAscii("")};
+       var local_712 = x.data;
+       return {path: local_711,query1: rts.bytesFromAscii("")};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_e1ddf2e103fc4a77ba877761b12b0489"
                                     ,"7b5454e4261c24d201d9384e83ca385c");
    }
 };
-var parseRequestLine = function (local_593) {
-   var parts3 = toArray(split({text: local_593,seperator: rts.bytesFromAscii(" ")}));
-   var x = _3d__3d_({infixl: length1(parts3),infixr: 3.0});
+var parseRequestLine = function (local_696) {
+   var parts4 = toArray(split({text: local_696,seperator: rts.bytesFromAscii(" ")}));
+   var x = _3d__3d_({infixl: length1(parts4),infixr: 3.0});
    switch (x.tag)
    {
      case "false":
-       var local_594 = x.data;
+       var local_697 = x.data;
        throw rts.exceptions.ReachedHole("Reached a hole"
                                        ,"DEF_28113fa9b1e04cb29f6f52fbde130f67"
                                        ,"a7de8d96fb5e1479e6bb2a3ddb6eeaaa");
      case "true":
-       var local_595 = x.data;
+       var local_698 = x.data;
        var x = Object.assign({httpVersion: parseHttpVersion(item1({index: 2.0
-                                                                  ,object: parts3}))
-                             ,method: item1({index: 0.0,object: parts3})}
-                            ,parseHttpPathAndQuery(item1({index: 1.0,object: parts3})));
+                                                                  ,object: parts4}))
+                             ,method: item1({index: 0.0,object: parts4})}
+                            ,parseHttpPathAndQuery(item1({index: 1.0,object: parts4})));
        delete x.cacheId;
        return x;
      default:
@@ -3319,30 +4222,19 @@ var parseRequestLine = function (local_593) {
                                     ,"1a29dea7dd98168ceba76256560b374b");
    }
 };
-var isPrefixOf = function (local_617) {
-   var lw1 = length(local_617.whole);
-   var lp = length(local_617.prefix);
-   return _26__26_({infixl: _2265_({infixl: lw1,infixr: lp})
-                   ,infixr: function (local_618) {
-                      return _3d__3d_({infixl: slice1({object: local_617.whole
-                                                      ,start: 0.0
-                                                      ,stop: lp})
-                                      ,infixr: local_617.prefix});
-                   }});
-};
-var unprefixed = function (local_616) {
-   var x = isPrefixOf({whole: local_616.whole,prefix: local_616.prefix});
+var unprefixed = function (local_719) {
+   var x = isPrefixOf({whole: local_719.whole,prefix: local_719.prefix});
    switch (x.tag)
    {
      case "false":
-       var local_619 = x.data;
+       var local_720 = x.data;
        return {tag: "nothing",data: {}};
      case "true":
-       var local_620 = x.data;
+       var local_721 = x.data;
        return {tag: "just"
-              ,data: slice1({object: local_616.whole
-                            ,start: length(local_616.prefix)
-                            ,stop: length(local_616.whole)})};
+              ,data: slice1({object: local_719.whole
+                            ,start: length(local_719.prefix)
+                            ,stop: length(local_719.whole)})};
      default:
        throw rts.exceptions.LamduBug("Unhandled case"
                                     ,"DEF_1d18b3f94ac64cc39b8dc131624a5e9f"
@@ -3351,15 +4243,15 @@ var unprefixed = function (local_616) {
 };
 var httpAddLocalPath = function (r) {
    var p = r.path;
-   var nonEmpty1 = function (local_610) {
-      var x = _3d__3d_({infixl: local_610,infixr: rts.bytesFromAscii("")});
+   var nonEmpty1 = function (local_713) {
+      var x = _3d__3d_({infixl: local_713,infixr: rts.bytesFromAscii("")});
       switch (x.tag)
       {
         case "false":
-          var local_611 = x.data;
-          return local_610;
+          var local_714 = x.data;
+          return local_713;
         case "true":
-          var local_612 = x.data;
+          var local_715 = x.data;
           return rts.bytesFromAscii("/");
         default:
           throw rts.exceptions.LamduBug("Unhandled case"
@@ -3367,18 +4259,18 @@ var httpAddLocalPath = function (r) {
                                        ,"5ae9e78cf85c5d6952c38eb479596553");
       }
    };
-   var afterSlash = function (local_613) {
+   var afterSlash = function (local_716) {
       return nonEmpty1(function () {
-             var x = find1({start: 0.0,__bytes: local_613,byte: 47.0});
+             var x = find1({start: 0.0,__bytes: local_716,byte: 47.0});
              switch (x.tag)
              {
                case "just":
-                 var local_614 = x.data;
-                 return slice1({object: local_613
-                               ,start: local_614
-                               ,stop: length(local_613)});
+                 var local_717 = x.data;
+                 return slice1({object: local_716
+                               ,start: local_717
+                               ,stop: length(local_716)});
                case "nothing":
-                 var local_615 = x.data;
+                 var local_718 = x.data;
                  return rts.bytesFromAscii("");
                default:
                  throw rts.exceptions.LamduBug("Unhandled case"
@@ -3395,7 +4287,7 @@ var httpAddLocalPath = function (r) {
                              case "just":
                                return afterSlash(x.data);
                              case "nothing":
-                               var local_621 = x.data;
+                               var local_722 = x.data;
                                var x = unprefixed({whole: p
                                                   ,prefix: rts.bytesFromAscii("https://")});
                                switch (x.tag)
@@ -3403,7 +4295,7 @@ var httpAddLocalPath = function (r) {
                                  case "just":
                                    return afterSlash(x.data);
                                  case "nothing":
-                                   var local_622 = x.data;
+                                   var local_723 = x.data;
                                    return nonEmpty1(p);
                                  default:
                                    throw rts.exceptions.LamduBug("Unhandled case"
@@ -3420,17 +4312,17 @@ var httpAddLocalPath = function (r) {
    delete x.cacheId;
    return x;
 };
-var httpContinueMessage = function (local_625) {
+var httpContinueMessage = function (local_726) {
    return concat2(_3a__3a_({infixl: function () {
-                              var x = _3d__3d_({infixl: local_625
+                              var x = _3d__3d_({infixl: local_726
                                                ,infixr: {minor: 1.0,major: 1.0}});
                               switch (x.tag)
                               {
                                 case "false":
-                                  var local_626 = x.data;
+                                  var local_727 = x.data;
                                   return rts.bytesFromAscii("HTTP/1.0");
                                 case "true":
-                                  var local_627 = x.data;
+                                  var local_728 = x.data;
                                   return rts.bytesFromAscii("HTTP/1.1");
                                 default:
                                   throw rts.exceptions.LamduBug("Unhandled case"
@@ -3438,35 +4330,35 @@ var httpContinueMessage = function (local_625) {
                                                                ,"7a33dc1474f28318b0a1a21410017295");
                               }
                            }()
-                           ,infixr: function (local_628) {
+                           ,infixr: function (local_729) {
                               return _3a__3a_({infixl: rts.bytesFromAscii(" 100 Continue")
-                                              ,infixr: function (local_629) {
+                                              ,infixr: function (local_730) {
                                                  return _3a__3a_({infixl: rts.bytes([13
                                                                                     ,10
                                                                                     ,13
                                                                                     ,10])
-                                                                 ,infixr: function (local_630) {
+                                                                 ,infixr: function (local_731) {
                                                                     return {tag: "empty"
                                                                            ,data: {}};
                                                                  }});
                                               }});
                            }}));
 };
-var parseHttpRequestPacket = function (local_461) {
-   var parseRemain = _3b_({infixl: popLastMutArray(local_461.unparsedPackets1)
-                          ,infixr: function (local_465) {
-                             var x = local_465;
+var parseHttpRequestPacket = function (local_566) {
+   var parseRemain = _3b_({infixl: popLastMutArray(local_566.unparsedPackets1)
+                          ,infixr: function (local_570) {
+                             var x = local_570;
                              switch (x.tag)
                              {
                                case "just":
-                                 var local_466 = x.data;
-                                 return parseHttpRequestPacket({socket: local_461.socket
-                                                               ,unparsedPackets1: local_461.unparsedPackets1
-                                                               ,newPacket: local_466
-                                                               ,stateRef1: local_461.stateRef1
-                                                               ,handler: local_461.handler});
+                                 var local_571 = x.data;
+                                 return parseHttpRequestPacket({socket: local_566.socket
+                                                               ,unparsedPackets1: local_566.unparsedPackets1
+                                                               ,newPacket: local_571
+                                                               ,stateRef1: local_566.stateRef1
+                                                               ,handler: local_566.handler});
                                case "nothing":
-                                 var local_467 = x.data;
+                                 var local_572 = x.data;
                                  return __return({});
                                default:
                                  throw rts.exceptions.LamduBug("Unhandled case"
@@ -3474,73 +4366,73 @@ var parseHttpRequestPacket = function (local_461) {
                                                               ,"a71ca59bb3302212a2d667ac7d89c4e8");
                              }
                           }});
-   return _3b_({infixl: readMutRef(local_461.stateRef1)
-               ,infixr: function (x468) {
-                  switch (x468.tag)
+   return _3b_({infixl: readMutRef(local_566.stateRef1)
+               ,infixr: function (x573) {
+                  switch (x573.tag)
                   {
                     case "body":
-                      var local_469 = x468.data;
-                      var plen = length(local_461.newPacket);
-                      var x = _3c_({infixl: plen,infixr: local_469.remain});
+                      var local_574 = x573.data;
+                      var plen = length(local_566.newPacket);
+                      var x = _3c_({infixl: plen,infixr: local_574.remain});
                       switch (x.tag)
                       {
                         case "false":
-                          var local_470 = x.data;
-                          return _3b_({infixl: length4(local_461.unparsedPackets1)
+                          var local_575 = x.data;
+                          return _3b_({infixl: length4(local_566.unparsedPackets1)
                                       ,infixr: function (numPackets) {
                                          return _3b_({infixl: sequence(map({stream: _2e__2e_({start: 0.0
                                                                                              ,stop: numPackets})
-                                                                           ,mapping: function (local_471) {
-                                                                              return readMutArray({index: local_471
-                                                                                                  ,object: local_461.unparsedPackets1});
+                                                                           ,mapping: function (local_576) {
+                                                                              return readMutArray({index: local_576
+                                                                                                  ,object: local_566.unparsedPackets1});
                                                                            }}))
                                                      ,infixr: function (packets) {
-                                                        return _3b_({infixl: _3b_({infixl: truncateMutArray({object: local_461.unparsedPackets1
+                                                        return _3b_({infixl: _3b_({infixl: truncateMutArray({object: local_566.unparsedPackets1
                                                                                                             ,stop: 0.0})
-                                                                                  ,infixr: function (local_477) {
-                                                                                     return local_461.handler({request1: function () {
+                                                                                  ,infixr: function (local_582) {
+                                                                                     return local_566.handler({request1: function () {
                                                                                                                  var x =
                                                                                                                  Object.assign({body: {tag: "just"
                                                                                                                                       ,data: concat2(_2b__2b_2({infixl: packets
-                                                                                                                                                               ,infixr: function (local_478) {
-                                                                                                                                                                  return _3a__3a_({infixl: slice1({object: local_461.newPacket
+                                                                                                                                                               ,infixr: function (local_583) {
+                                                                                                                                                                  return _3a__3a_({infixl: slice1({object: local_566.newPacket
                                                                                                                                                                                                   ,start: 0.0
-                                                                                                                                                                                                  ,stop: local_469.remain})
-                                                                                                                                                                                  ,infixr: function (local_479) {
+                                                                                                                                                                                                  ,stop: local_574.remain})
+                                                                                                                                                                                  ,infixr: function (local_584) {
                                                                                                                                                                                      return {tag: "empty"
                                                                                                                                                                                             ,data: {}};
                                                                                                                                                                                   }});
                                                                                                                                                                }}))}}
-                                                                                                                              ,local_469.request1);
+                                                                                                                              ,local_574.request1);
                                                                                                                  delete x.cacheId;
                                                                                                                  return x;
                                                                                                               }()
-                                                                                                              ,socket: local_461.socket});
+                                                                                                              ,socket: local_566.socket});
                                                                                   }})
-                                                                    ,infixr: function (local_480) {
-                                                                       return _3b_({infixl: writeMutRef({object: local_461.stateRef1
+                                                                    ,infixr: function (local_585) {
+                                                                       return _3b_({infixl: writeMutRef({object: local_566.stateRef1
                                                                                                         ,value: {tag: "header"
                                                                                                                 ,data: {}}})
-                                                                                   ,infixr: function (local_481) {
+                                                                                   ,infixr: function (local_586) {
                                                                                       var x =
-                                                                                      _3c_({infixl: local_469.remain
+                                                                                      _3c_({infixl: local_574.remain
                                                                                            ,infixr: plen});
                                                                                       switch (x.tag)
                                                                                       {
                                                                                         case "false":
-                                                                                          var local_482 =
+                                                                                          var local_587 =
                                                                                           x.data;
                                                                                           return __return({});
                                                                                         case "true":
-                                                                                          var local_483 =
+                                                                                          var local_588 =
                                                                                           x.data;
-                                                                                          return parseHttpRequestPacket({socket: local_461.socket
-                                                                                                                        ,unparsedPackets1: local_461.unparsedPackets1
-                                                                                                                        ,newPacket: slice1({object: local_461.newPacket
-                                                                                                                                           ,start: local_469.remain
+                                                                                          return parseHttpRequestPacket({socket: local_566.socket
+                                                                                                                        ,unparsedPackets1: local_566.unparsedPackets1
+                                                                                                                        ,newPacket: slice1({object: local_566.newPacket
+                                                                                                                                           ,start: local_574.remain
                                                                                                                                            ,stop: plen})
-                                                                                                                        ,stateRef1: local_461.stateRef1
-                                                                                                                        ,handler: local_461.handler});
+                                                                                                                        ,stateRef1: local_566.stateRef1
+                                                                                                                        ,handler: local_566.handler});
                                                                                         default:
                                                                                           throw rts.exceptions.LamduBug("Unhandled case"
                                                                                                                        ,"DEF_fb176ed99ba34f26a6d61d63751a555d"
@@ -3551,14 +4443,14 @@ var parseHttpRequestPacket = function (local_461) {
                                                      }});
                                       }});
                         case "true":
-                          var local_484 = x.data;
-                          return _3b_({infixl: appendMutArray({object: local_461.unparsedPackets1
-                                                              ,value: local_461.newPacket})
-                                      ,infixr: function (local_485) {
-                                         return writeMutRef({object: local_461.stateRef1
+                          var local_589 = x.data;
+                          return _3b_({infixl: appendMutArray({object: local_566.unparsedPackets1
+                                                              ,value: local_566.newPacket})
+                                      ,infixr: function (local_590) {
+                                         return writeMutRef({object: local_566.stateRef1
                                                             ,value: {tag: "body"
-                                                                    ,data: {request1: local_469.request1
-                                                                           ,remain: _2d_({infixl: local_469.remain
+                                                                    ,data: {request1: local_574.request1
+                                                                           ,remain: _2d_({infixl: local_574.remain
                                                                                          ,infixr: plen})}}});
                                       }});
                         default:
@@ -3567,12 +4459,12 @@ var parseHttpRequestPacket = function (local_461) {
                                                        ,"4a7857b1e6dc15eee111f928eef30ceb");
                       }
                     case "header":
-                      var local_486 = x468.data;
+                      var local_591 = x573.data;
                       return _3b_({infixl: parseHttpHeaderPacket({start: 0.0
-                                                                 ,newPacket: local_461.newPacket
-                                                                 ,packets1: local_461.unparsedPackets1})
-                                  ,infixr: function (local_523) {
-                                     var x = local_523;
+                                                                 ,newPacket: local_566.newPacket
+                                                                 ,packets1: local_566.unparsedPackets1})
+                                  ,infixr: function (local_626) {
+                                     var x = local_626;
                                      switch (x.tag)
                                      {
                                        case "just":
@@ -3593,19 +4485,19 @@ var parseHttpRequestPacket = function (local_461) {
                                                         switch (x.tag)
                                                         {
                                                           case "false":
-                                                            var local_623 = x.data;
+                                                            var local_724 = x.data;
                                                             return __return({});
                                                           case "true":
-                                                            var local_624 = x.data;
+                                                            var local_725 = x.data;
                                                             return send({__data: httpContinueMessage(request2.httpVersion)
-                                                                        ,socket: local_461.socket});
+                                                                        ,socket: local_566.socket});
                                                           default:
                                                             throw rts.exceptions.LamduBug("Unhandled case"
                                                                                          ,"DEF_fb176ed99ba34f26a6d61d63751a555d"
                                                                                          ,"0010e59778d59572282a2dab5b43c99f");
                                                         }
                                                      }()
-                                                     ,infixr: function (local_631) {
+                                                     ,infixr: function (local_732) {
                                                         return _3b_({infixl: function () {
                                                                        var x =
                                                                        request2.headers.contentLength;
@@ -3614,14 +4506,14 @@ var parseHttpRequestPacket = function (local_461) {
                                                                          case "just":
                                                                            var lenText =
                                                                            x.data;
-                                                                           return writeMutRef({object: local_461.stateRef1
+                                                                           return writeMutRef({object: local_566.stateRef1
                                                                                               ,value: {tag: "body"
                                                                                                       ,data: {request1: request2
                                                                                                              ,remain: parseInt(lenText)}}});
                                                                          case "nothing":
-                                                                           var local_632 =
+                                                                           var local_733 =
                                                                            x.data;
-                                                                           return local_461.handler({request1: function () {
+                                                                           return local_566.handler({request1: function () {
                                                                                                        var x =
                                                                                                        Object.assign({body: {tag: "nothing"
                                                                                                                             ,data: {}}}
@@ -3629,19 +4521,19 @@ var parseHttpRequestPacket = function (local_461) {
                                                                                                        delete x.cacheId;
                                                                                                        return x;
                                                                                                     }()
-                                                                                                    ,socket: local_461.socket});
+                                                                                                    ,socket: local_566.socket});
                                                                          default:
                                                                            throw rts.exceptions.LamduBug("Unhandled case"
                                                                                                         ,"DEF_fb176ed99ba34f26a6d61d63751a555d"
                                                                                                         ,"c91c5cea0890a94419165f2c0e413659");
                                                                        }
                                                                     }()
-                                                                    ,infixr: function (local_633) {
+                                                                    ,infixr: function (local_734) {
                                                                        return parseRemain;
                                                                     }});
                                                      }});
                                        case "nothing":
-                                         var local_634 = x.data;
+                                         var local_735 = x.data;
                                          return __return({});
                                        default:
                                          throw rts.exceptions.LamduBug("Unhandled case"
@@ -3656,51 +4548,51 @@ var parseHttpRequestPacket = function (local_461) {
                   }
                }});
 };
-var parseHttpRequests = function (local_460) {
+var parseHttpRequests = function (local_565) {
    return _3b_({infixl: newMutRef({tag: "header",data: {}})
                ,infixr: function (stateRef) {
                   return _3b_({infixl: newMutArray
                               ,infixr: function (unparsedPackets) {
                                  return __return(function (packet) {
-                                        return parseHttpRequestPacket({socket: local_460.socket
+                                        return parseHttpRequestPacket({socket: local_565.socket
                                                                       ,unparsedPackets1: unparsedPackets
                                                                       ,newPacket: packet
                                                                       ,stateRef1: stateRef
-                                                                      ,handler: local_460.handler});
+                                                                      ,handler: local_565.handler});
                                      });
                               }});
                }});
 };
 var openTcpServer = rts.builtins.IO.network["openTcpServer"];
-var httpServer = function (local_450) {
+var httpServer = function (local_555) {
    return openTcpServer({connectionHandler: function (socket) {
                            return parseHttpRequests({socket: socket
-                                                    ,handler: function (local_451) {
-                                                       return _3b_({infixl: local_450.handler(local_451.request1)
+                                                    ,handler: function (local_556) {
+                                                       return _3b_({infixl: local_555.handler(local_556.request1)
                                                                    ,infixr: function (response) {
                                                                       return send({__data: _2b__2b_1({a: join({texts: _3a__3a_({infixl: join({texts: _3a__3a_({infixl: rts.bytesFromAscii("HTTP/1.1")
-                                                                                                                                                              ,infixr: function (local_452) {
+                                                                                                                                                              ,infixr: function (local_557) {
                                                                                                                                                                  return _3a__3a_({infixl: showNum(response.status.code)
-                                                                                                                                                                                 ,infixr: function (local_453) {
+                                                                                                                                                                                 ,infixr: function (local_558) {
                                                                                                                                                                                     return _3a__3a_({infixl: response.status.message
-                                                                                                                                                                                                    ,infixr: function (local_454) {
+                                                                                                                                                                                                    ,infixr: function (local_559) {
                                                                                                                                                                                                        return {tag: "empty"
                                                                                                                                                                                                               ,data: {}};
                                                                                                                                                                                                     }});
                                                                                                                                                                                  }});
                                                                                                                                                               }})
                                                                                                                                              ,seperator: rts.bytesFromAscii(" ")})
-                                                                                                                               ,infixr: function (local_455) {
+                                                                                                                               ,infixr: function (local_560) {
                                                                                                                                   return _3a__3a_({infixl: _2b__2b_({a: rts.bytesFromAscii("Content-Type: ")
                                                                                                                                                                     ,b: response.content.mimeType})
-                                                                                                                                                  ,infixr: function (local_456) {
+                                                                                                                                                  ,infixr: function (local_561) {
                                                                                                                                                      return _3a__3a_({infixl: _2b__2b_({a: rts.bytesFromAscii("Content-Length: ")
                                                                                                                                                                                        ,b: showNum(length(response.content.__data))})
-                                                                                                                                                                     ,infixr: function (local_457) {
+                                                                                                                                                                     ,infixr: function (local_562) {
                                                                                                                                                                         return _3a__3a_({infixl: rts.bytesFromAscii("")
-                                                                                                                                                                                        ,infixr: function (local_458) {
+                                                                                                                                                                                        ,infixr: function (local_563) {
                                                                                                                                                                                            return _3a__3a_({infixl: rts.bytesFromAscii("")
-                                                                                                                                                                                                           ,infixr: function (local_459) {
+                                                                                                                                                                                                           ,infixr: function (local_564) {
                                                                                                                                                                                                               return {tag: "empty"
                                                                                                                                                                                                                      ,data: {}};
                                                                                                                                                                                                            }});
@@ -3715,8 +4607,8 @@ var httpServer = function (local_450) {
                                                     }});
                         }
                         ,exclusive: {tag: "false",data: {}}
-                        ,host: local_450.host
-                        ,port: local_450.port});
+                        ,host: local_555.host
+                        ,port: local_555.port});
 };
 var pestoval = _3b_({infixl: pestovalDb
                     ,infixr: function (database1) {
