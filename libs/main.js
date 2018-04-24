@@ -3067,8 +3067,10 @@ var pestovalLevelsPage = function (local_479) {
                                         }});
                   return __return(pestovalPage({title: title2
                                                ,body: [overlaysCss
-                                                      ,htmlTable({body: toArray(_3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<h2>")
-                                                                                                         ,infixr: singleton(leaf(title2))})
+                                                      ,htmlTable({body: toArray(_3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<tr>")
+                                                                                                         ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<td>")
+                                                                                                                                   ,infixr: singleton(_22f2_({infixl: rts.bytesFromAscii("<h2>")
+                                                                                                                                                             ,infixr: singleton(leaf(title2))}))}))})
                                                                                          ,infixr: function (local_511) {
                                                                                             return concat(map({stream: fromArray(groups)
                                                                                                               ,mapping: function (group1) {
