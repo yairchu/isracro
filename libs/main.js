@@ -1058,7 +1058,7 @@ var queryFieldLang = function (language3) {
    }
 };
 var pestovalQuerySessionsSql = function (local_262) {
-   return join({texts: _3a__3a_({infixl: rts.bytesFromAscii("SELECT\n  pestoval_session.id,\n  pestoval_timeslot.id AS timeslot_id, pestoval_timeslot.start, pestoval_timeslot.stop,\n  pestoval_location.id AS location_id,\n  pestoval_level.id AS level_id, pestoval_level.color,")
+   return join({texts: _3a__3a_({infixl: rts.bytesFromAscii("SELECT\n  pestoval_session.id,\n  pestoval_timeslot.id AS timeslot_id, pestoval_timeslot.start, pestoval_timeslot.stop,\n  pestoval_location.id AS location_id, pestoval_location.ordering AS location_ordering,\n  pestoval_level.id AS level_id, pestoval_level.color,")
                                 ,infixr: function (local_263) {
                                    return _3a__3a_({infixl: join({texts: map({list: _3a__3a_({infixl: {table: rts.bytesFromAscii("pestoval_session")
                                                                                                       ,field: rts.bytesFromAscii("name")
@@ -1167,7 +1167,7 @@ var pestovalQuerySessionsSql = function (local_262) {
                                                                                                                  }
                                                                                                               }()
                                                                                                               ,infixr: function (local_298) {
-                                                                                                                 return _3a__3a_({infixl: rts.bytesFromAscii("ORDER BY pestoval_timeslot.start, pestoval_location.id")
+                                                                                                                 return _3a__3a_({infixl: rts.bytesFromAscii("ORDER BY pestoval_timeslot.start, pestoval_location.ordering")
                                                                                                                                  ,infixr: function (local_299) {
                                                                                                                                     return {tag: "empty"
                                                                                                                                            ,data: {}};
@@ -1706,7 +1706,8 @@ var pestovalQuerySessions = function (local_251) {
                                      ,color: field1(rts.bytesFromAscii("color"))};
                                      var place =
                                      {name: field1(rts.bytesFromAscii("location_name"))
-                                     ,id: field1(rts.bytesFromAscii("location_id"))};
+                                     ,id: field1(rts.bytesFromAscii("location_id"))
+                                     ,order: field1(rts.bytesFromAscii("location_ordering"))};
                                      var description =
                                      field1(rts.bytesFromAscii("description"));
                                      var prereqs = field1(rts.bytesFromAscii("prereqs"));
@@ -1722,7 +1723,8 @@ var pestovalQuerySessions = function (local_251) {
                                                                     return {prereqs: item2(prereqs)
                                                                            ,name: item2(name)
                                                                            ,place: {name: item2(place.name)
-                                                                                   ,id: parseInt(item2(place.id))}
+                                                                                   ,id: parseInt(item2(place.id))
+                                                                                   ,order: parseInt(item2(place.order))}
                                                                            ,description: item2(description)
                                                                            ,teachers: function () {
                                                                               var x =
@@ -4240,8 +4242,8 @@ var pestovalSessionsTable = function (local_834) {
                                                                   return local_836.place;
                                                                }})
                                                     ,_3c_: function (local_837) {
-                                                       return _3c_({infixl: local_837.infixl.id
-                                                                   ,infixr: local_837.infixr.id});
+                                                       return _3c_({infixl: local_837.infixl.order
+                                                                   ,infixr: local_837.infixr.order});
                                                     }})));
                   var numColumns1 = length1(places);
                   return __return(pestovalPage({title: rts.bytesFromAscii("All Sessions")
