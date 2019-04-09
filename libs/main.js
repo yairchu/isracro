@@ -2485,9 +2485,9 @@ var pestovalPage = function (local_518) {
                                                      ,infixr: [_22f2_({infixl: rts.bytesFromAscii("<head>")
                                                                       ,infixr: [leaf(rts.bytesFromAscii("<meta charset=\"utf-8\" />"))
                                                                                ,_22f2_({infixl: rts.bytesFromAscii("<title>")
-                                                                                       ,infixr: singleton(leaf(local_518.title))})
-                                                                               ,_22f2_({infixl: rts.bytesFromAscii("<body>")
-                                                                                       ,infixr: local_518.body})]})]}))}))
+                                                                                       ,infixr: singleton(leaf(local_518.title))})]})
+                                                              ,_22f2_({infixl: rts.bytesFromAscii("<body>")
+                                                                      ,infixr: local_518.body})]}))}))
                     ,mimeType: rts.bytesFromAscii("text/html")}
           ,status: httpOk200};
 };
