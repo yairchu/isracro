@@ -3664,68 +3664,68 @@ var pestovalSessionCell = function (local_692) {
                                                                                  }});
                                                               }});
                                            }}))
-                 ,infixr: [leaf(concat1(_3a__3a_({infixl: rts.bytesFromAscii("<input type=\"checkbox\" id=\"")
-                                                 ,infixr: function (local_703) {
-                                                    return _3a__3a_({infixl: popupId
-                                                                    ,infixr: function (local_704) {
-                                                                       return _3a__3a_({infixl: rts.bytesFromAscii("\" style=\"display: none;\"/>")
-                                                                                       ,infixr: function (local_705) {
-                                                                                          return {tag: "empty"
-                                                                                                 ,data: {}};
-                                                                                       }});
-                                                                    }});
-                                                 }})))
-                          ,_22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<label for=\"")
-                                                            ,infixr: function (local_707) {
-                                                               return _3a__3a_({infixl: popupId
-                                                                               ,infixr: function (local_708) {
-                                                                                  return _3a__3a_({infixl: rts.bytesFromAscii("\">")
-                                                                                                  ,infixr: function (local_709) {
-                                                                                                     return {tag: "empty"
-                                                                                                            ,data: {}};
-                                                                                                  }});
-                                                                               }});
-                                                            }}))
-                                  ,infixr: toArray(function () {
-                                     var x = function (x712) {
-                                                return x712;
-                                             }(_26__26_({infixl: _3d__3d_({infixl: local_692.session.description
-                                                                          ,infixr: rts.bytesFromAscii("")})
-                                                        ,infixr: function (local_710) {
-                                                           return _26__26_({infixl: _3d__3d_({infixl: local_692.session.prereqs
-                                                                                             ,infixr: rts.bytesFromAscii("")})
-                                                                           ,infixr: function (local_711) {
-                                                                              return _3d__3d_({infixl: local_692.password
-                                                                                              ,infixr: {tag: "nothing"
-                                                                                                       ,data: {}}});
-                                                                           }});
-                                                        }}));
-                                     switch (x.tag)
-                                     {
-                                       case "false":
-                                         var local_713 = x.data;
-                                         return _3a__3a_({infixl: _22f2_({infixl: rts.bytesFromAscii("<div style=\"text-decoration:underline\">")
-                                                                         ,infixr: toArray(local_692.content)})
-                                                         ,infixr: function (local_714) {
-                                                            return _3a__3a_({infixl: htmlPopup({content: pestovalSessionInfo({password: local_692.password
+                 ,infixr: toArray(function () {
+                    var x = function (x705) {
+                               return x705;
+                            }(_26__26_({infixl: _3d__3d_({infixl: local_692.session.description
+                                                         ,infixr: rts.bytesFromAscii("")})
+                                       ,infixr: function (local_703) {
+                                          return _26__26_({infixl: _3d__3d_({infixl: local_692.session.prereqs
+                                                                            ,infixr: rts.bytesFromAscii("")})
+                                                          ,infixr: function (local_704) {
+                                                             return _3d__3d_({infixl: local_692.password
+                                                                             ,infixr: {tag: "nothing"
+                                                                                      ,data: {}}});
+                                                          }});
+                                       }}));
+                    switch (x.tag)
+                    {
+                      case "false":
+                        var local_706 = x.data;
+                        return _3a__3a_({infixl: leaf(concat1(_3a__3a_({infixl: rts.bytesFromAscii("<input type=\"checkbox\" id=\"")
+                                                                       ,infixr: function (local_707) {
+                                                                          return _3a__3a_({infixl: popupId
+                                                                                          ,infixr: function (local_708) {
+                                                                                             return _3a__3a_({infixl: rts.bytesFromAscii("\" style=\"display: none;\"/>")
+                                                                                                             ,infixr: function (local_709) {
+                                                                                                                return {tag: "empty"
+                                                                                                                       ,data: {}};
+                                                                                                             }});
+                                                                                          }});
+                                                                       }})))
+                                        ,infixr: function (local_710) {
+                                           return _3a__3a_({infixl: _22f2_({infixl: concat1(_3a__3a_({infixl: rts.bytesFromAscii("<label for=\"")
+                                                                                                     ,infixr: function (local_711) {
+                                                                                                        return _3a__3a_({infixl: popupId
+                                                                                                                        ,infixr: function (local_712) {
+                                                                                                                           return _3a__3a_({infixl: rts.bytesFromAscii("\">")
+                                                                                                                                           ,infixr: function (local_713) {
+                                                                                                                                              return {tag: "empty"
+                                                                                                                                                     ,data: {}};
+                                                                                                                                           }});
+                                                                                                                        }});
+                                                                                                     }}))
+                                                                           ,infixr: [_22f2_({infixl: rts.bytesFromAscii("<div style=\"text-decoration:underline\">")
+                                                                                            ,infixr: toArray(local_692.content)})
+                                                                                    ,htmlPopup({content: pestovalSessionInfo({password: local_692.password
                                                                                                                              ,language: local_692.language
                                                                                                                              ,session: local_692.session})
                                                                                                ,id: popupId
-                                                                                               ,color: local_692.session.level.color})
-                                                                            ,infixr: function (local_774) {
-                                                                               return {tag: "empty"
-                                                                                      ,data: {}};
-                                                                            }});
-                                                         }});
-                                       case "true":
-                                         var local_775 = x.data;
-                                         return local_692.content;
-                                       default:
-                                         throw rts.exceptions.LamduBug("Unhandled case"
-                                                                      ,"DEF_9020eea8542142a09c1a8813ef9990af"
-                                                                      ,"ca251d05869f9c09e61c190e8fb9840b");
-                                     }
-                                  }())})]});
+                                                                                               ,color: local_692.session.level.color})]})
+                                                           ,infixr: function (local_775) {
+                                                              return {tag: "empty"
+                                                                     ,data: {}};
+                                                           }});
+                                        }});
+                      case "true":
+                        var local_776 = x.data;
+                        return local_692.content;
+                      default:
+                        throw rts.exceptions.LamduBug("Unhandled case"
+                                                     ,"DEF_9020eea8542142a09c1a8813ef9990af"
+                                                     ,"ca251d05869f9c09e61c190e8fb9840b");
+                    }
+                 }())});
 };
 var pestovalTeacherPage = function (local_661) {
    var teacher1 = parseInt(item({index: 0.0,object: local_661.path}));
