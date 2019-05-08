@@ -2,7 +2,7 @@
 /* jshint esversion: 6 */
 "use strict";
 
-var anchors = require("./anchors.js");
+var anchors = require("anchors.js");
 var tags = anchors.tags;
 
 var bool = function (x) {
@@ -81,7 +81,7 @@ var bytesConcat = function (x) {
     return result;
 };
 
-var conf = require('./rtsConfig.js');
+var conf = require('rtsConfig.js');
 
 var curried_error = function(name) {
     return function(globalId, exprId) {

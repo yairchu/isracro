@@ -1,1 +1,1 @@
-web: node --harmony-tailcalls index.js
+web: NODE_PATH=libs node --harmony-tailcalls index.js

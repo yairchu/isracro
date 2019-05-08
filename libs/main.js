@@ -1,5 +1,5 @@
 "use strict";
-var rts = require("./rts.js");
+var rts = require("rts.js");
 var environment = rts.builtins.IO.os["env"];
 var length = rts.builtins.Bytes["length"];
 var _2b_ = rts.builtins.Prelude["+"];
