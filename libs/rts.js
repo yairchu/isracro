@@ -84,8 +84,8 @@ var bytesConcat = function (x) {
 var conf = require('./rtsConfig.js');
 
 var curried_error = function(name) {
-    return function(desc, globalId, exprId) {
-        return conf.error(name, desc, globalId, exprId);
+    return function(globalId, exprId) {
+        return conf.error(name, globalId, exprId);
     };
 };
 
@@ -95,9 +95,9 @@ module.exports = {
     logResult: conf.logResult,
     logNewScope: conf.logNewScope,
     exceptions: {
-        BrokenDef: curried_error("BrokenDef"),
+        DependencyTypeOutOfDate: curried_error("DependencyTypeOutOfDate"),
         ReachedHole: curried_error("ReachedHole"),
-        LamduBug: curried_error("LamduBug"),
+        UnhandledCase: curried_error("UnhandledCase"),
     },
     memo: function (thunk) {
         var done = false;
